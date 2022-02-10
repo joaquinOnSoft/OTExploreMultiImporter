@@ -9,4 +9,5 @@
 
 rootProject.name = 'OTExploreMultiImporter'
 include('explore-importer-core')
+include('explore-importer-reddit')
 include('explore-importer-twitter')

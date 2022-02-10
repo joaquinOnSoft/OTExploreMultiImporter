@@ -10,7 +10,7 @@
 subprojects {
     apply plugin: 'java'
 
-	version = '21.02.08' 
+	version = '22.02.11' 
 
 	java {
 	    sourceCompatibility = JavaVersion.VERSION_11
@@ -19,6 +19,7 @@ subprojects {
 	
     repositories {
         mavenCentral()
+        jcenter()
     }
     
 	dependencies {
