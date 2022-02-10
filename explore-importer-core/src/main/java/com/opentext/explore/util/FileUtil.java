@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * 
- * @author Joaquín Garzón
+ * @author Joaquï¿½n Garzï¿½n
  * @since 20.2 
  */
 public class FileUtil {
@@ -25,12 +25,14 @@ public class FileUtil {
 	
 	/**
 	 * Get file from classpath, resources folder
-	 * SEE: Java – Read a file from resources folder
+	 * SEE: Java Read a file from resources folder
 	 * https://www.mkyong.com/java/java-read-a-file-from-resources-folder/
 	 * @param fileName
 	 * @return
 	 */
 	public static File getFileFromResources(String fileName) {
+	    System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
         URL resource = FileUtil.class.getClassLoader().getResource(fileName);
         if (resource == null) {
             throw new IllegalArgumentException("file is not found!");
