@@ -1,0 +1,130 @@
+{
+	"fields": [
+		{
+			"excelName": "Identificadorticket",
+			"solrName": "reference_id",
+			"type": "integer",
+			"skip": false			
+		},
+		{
+			"excelName": "FechaApertura",
+			"solrName": "published_date",
+			"type": "date",			
+			"skip": false,
+			"format": "MM/dd/yy"					
+		},
+		{
+			"excelName": "FechaCierre",
+			"solrName": "fecha_cierre",
+			"type": "date",					
+			"skip": false,
+			"format": "MM/dd/yy"								
+		},
+		{
+			"excelName": "EsContactar",
+			"solrName": "es_contactar",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "CPI",
+			"solrName": "cpi",
+			"type": "integer",
+			"skip": false					
+		},
+		{
+			"excelName": "Producto",
+			"solrName": "producto",
+			"type": "string",
+			"skip": false					
+		},		
+		{
+			"excelName": "TipoPeticion",
+			"solrName": "tipo_peticion",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Comentarios del back office tramitador",
+			"solrName": "content",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Comentarios_Oficina sobre la queja",
+			"solrName": "comentarios_oficina",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Departamento",
+			"solrName": "departamento",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Estado",
+			"solrName": "estado",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "CPI",
+			"solrName": "cpi",
+			"type": "integer",
+			"skip": true					
+		},
+		{
+			"excelName": "Familia",
+			"solrName": "familia",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Producto",
+			"solrName": "producto",
+			"type": "integer",
+			"skip": true					
+		},		
+		{
+			"excelName": "TipoPeticion",
+			"solrName": "tipo_peticion",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Motivo_Queja",
+			"solrName": "motivo_queja",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Origen_Queja_2",
+			"solrName": "origen_queja",
+			"type": "string",
+			"skip": false					
+		}																												
+	],
+	"fieldHandlers":[
+		{
+			"inputSolrNames": ["reference_id"],
+			"outputSolrNames": ["interaction_id", "ID"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerCopy"
+		},
+		{
+			"inputSolrNames": ["published_date"],
+			"outputSolrNames": ["date_time"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerCopy"
+		},		
+		{
+			"inputSolrNames": ["content", "comentarios_oficina"],
+			"outputSolrNames": ["content"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
+		},
+		{
+			"inputSolrNames": ["reference_id", "producto", "tipo_peticion"],
+			"outputSolrNames": ["title"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
+		}
+	]
+}

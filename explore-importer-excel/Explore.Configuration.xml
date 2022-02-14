@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Explore>
+  <DocTypes>
+    <DocType>
+      <Name>Ticket</Name>
+      <GridFields>
+        <Field column="Source">
+          <Name>Fecha Cierre</Name>
+          <Tag>FechaCierre</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Es Contactar</Name>
+          <Tag>EsContactar</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>CPI</Name>
+          <Tag>CPI</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Producto</Name>
+          <Tag>Producto</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Tipo Peticion</Name>
+          <Tag>TipoPeticion</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Comentarios Oficina</Name>
+          <Tag>ComentariosOficina</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Departamento</Name>
+          <Tag>Departamento</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Estado</Name>
+          <Tag>Estado</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Familia</Name>
+          <Tag>Familia</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Motivo Queja</Name>
+          <Tag>MotivoQueja</Tag>
+        </Field>
+        <Field column="Source">
+          <Name>Origen Queja</Name>
+          <Tag>OrigenQueja</Tag>
+        </Field>
+      </GridFields>
+    </DocType>
+  </DocTypes>
+  <CriteriaItems>
+    <Group name="Ticket">
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Fecha Cierre</Name>
+        <Tag>FechaCierre</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Es Contactar</Name>
+        <Tag>EsContactar</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="numeric" advancedSearch="true" numericStats="true" numberBuckets="20">
+        <Name>CPI</Name>
+        <Tag>CPI</Tag>
+        <ComparatorGroup>numeric</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Producto</Name>
+        <Tag>Producto</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Tipo Peticion</Name>
+        <Tag>TipoPeticion</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Comentarios Oficina</Name>
+        <Tag>ComentariosOficina</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Departamento</Name>
+        <Tag>Departamento</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Estado</Name>
+        <Tag>Estado</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Familia</Name>
+        <Tag>Familia</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Motivo Queja</Name>
+        <Tag>MotivoQueja</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+      <CriteriaItem parametric="true" groupBy="alphabetical" numberBuckets="20">
+        <Name>Origen Queja</Name>
+        <Tag>OrigenQueja</Tag>
+        <ComparatorGroup>string</ComparatorGroup>
+        <AssociatedDocTypes>
+          <DocType>Ticket</DocType>
+        </AssociatedDocTypes>
+      </CriteriaItem>
+    </Group>
+  </CriteriaItems>
+</Explore>

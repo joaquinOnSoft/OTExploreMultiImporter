@@ -1,0 +1,16 @@
+{
+	"fields": [
+		{
+			"excelName": "Nº Ref",
+			"solrName": "reference_id",
+			"type": "integer",
+			"skip": false			
+		},
+		{
+			"excelName": "Title",
+			"solrName": "title",
+			"type": "string",
+			"skip": false			
+		}		
+	]
+}

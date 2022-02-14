@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="default-config" version="1.6">
+  <field name="fecha_cierre" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="fecha_cierre_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="fecha_cierre" dest="fecha_cierre_search" />
+  <field name="es_contactar" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="es_contactar_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="es_contactar" dest="es_contactar_search" />
+  <field name="cpi" type="pint" indexed="true" stored="false" docValues="true" />
+  <field name="cpi_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="cpi" dest="cpi_search" />
+  <field name="producto" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="producto_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="producto" dest="producto_search" />
+  <field name="tipo_peticion" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="tipo_peticion_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="tipo_peticion" dest="tipo_peticion_search" />
+  <field name="comentarios_oficina" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="comentarios_oficina_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="comentarios_oficina" dest="comentarios_oficina_search" />
+  <field name="departamento" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="departamento_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="departamento" dest="departamento_search" />
+  <field name="estado" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="estado_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="estado" dest="estado_search" />
+  <field name="familia" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="familia_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="familia" dest="familia_search" />
+  <field name="motivo_queja" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="motivo_queja_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="motivo_queja" dest="motivo_queja_search" />
+  <field name="origen_queja" type="string" indexed="true" stored="false" docValues="true" />
+  <field name="origen_queja_search" type="explore_filter_text" indexed="true" stored="false" multiValued="true" />
+  <copyField source="origen_queja" dest="origen_queja_search" />
+</schema>

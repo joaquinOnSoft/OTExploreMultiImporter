@@ -1,0 +1,231 @@
+{
+	"fields": [
+		{
+			"excelName": "Identificadorticket",
+			"solrName": "reference_id",
+			"type": "integer",
+			"skip": false			
+		},
+		{
+			"excelName": "FechaApertura",
+			"solrName": "published_date",
+			"type": "date",			
+			"skip": false,
+			"format": "MM/dd/yy"					
+		},
+		{
+			"excelName": "HoraApertura",
+			"solrName": "hora_apertura",
+			"type": "time",			
+			"skip": true,
+			"format": "HH:mm:ss"					
+		},
+		{
+			"excelName": "FechaCierre",
+			"solrName": "fecha_cierre",
+			"type": "date",					
+			"skip": false,
+			"format": "MM/dd/yy"								
+		},
+		{
+			"excelName": "HoraCierre",
+			"solrName": "hora_cierre",
+			"type": "time",			
+			"skip": true,
+			"format": "HH:mm:ss"					
+		},		
+		{
+			"excelName": "FechaEnTramitacion",
+			"solrName": "fecha_tramitation",
+			"type": "date",					
+			"skip": false,
+			"format": "MM/dd/yy"								
+		},
+		{
+			"excelName": "HoraEnTramitacion",
+			"solrName": "hora_en_tramitacion",
+			"type": "time",			
+			"skip": true,
+			"format": "HH:mm:ss"					
+		},	
+		{
+			"excelName": "CPI",
+			"solrName": "cpi",
+			"type": "integer",
+			"skip": false					
+		},
+		{
+			"excelName": "idPeticion",
+			"solrName": "id_peticion",
+			"type": "string",
+			"skip": false					
+		},		
+		{
+			"excelName": "idPeticionPadre",
+			"solrName": "id_peticion_padre",
+			"type": "string",
+			"skip": false					
+		},		
+		{
+			"excelName": "Familia",
+			"solrName": "familia",
+			"type": "string",
+			"skip": false					
+		},				
+		{
+			"excelName": "Producto",
+			"solrName": "producto",
+			"type": "string",
+			"skip": false					
+		},		
+		{
+			"excelName": "TipoPeticion",
+			"solrName": "tipo_peticion",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Comentarios_BO",
+			"solrName": "content",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Comentarios_Oficina",
+			"solrName": "comentarios_oficina",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Departamento",
+			"solrName": "departamento",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Estado",
+			"solrName": "estado",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Familia",
+			"solrName": "familia",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Producto",
+			"solrName": "producto",
+			"type": "integer",
+			"skip": true					
+		},		
+		{
+			"excelName": "TipoPeticion",
+			"solrName": "tipo_peticion",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Anterior_18_11_19",
+			"solrName": "anterior_18_11_19",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Reparadores_compa\u00F1ia",
+			"solrName": "reparadores_compa\u00F1ia",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Motivo_Queja",
+			"solrName": "motivo_queja",
+			"type": "string",
+			"skip": false					
+		},		
+		{
+			"excelName": "Origen_Queja_2",
+			"solrName": "origen_queja_2",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Motivo_Queja1",
+			"solrName": "motivo_queja1",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Documentacion_Solicitada2",
+			"solrName": "documentacion_solicitada2",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Descripcion_1",
+			"solrName": "descripcion_1",
+			"type": "string",
+			"skip": false					
+		},
+		{
+			"excelName": "Descripcion_2",
+			"solrName": "descripcion_2",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "n\u00BA_polissa",
+			"solrName": "n_polissa",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Motiu_Queixa",
+			"solrName": "motiu_queixa",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Descripcion_Queixa_Hog",
+			"solrName": "descripcion_queixa_hog",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Franja_Horaria",
+			"solrName": "franja_horaria",
+			"type": "string",
+			"skip": true					
+		},
+		{
+			"excelName": "Vulneravilidad",
+			"solrName": "vulneravilidad",
+			"type": "string",
+			"skip": false					
+		}
+																														
+	],
+	"fieldHandlers":[
+		{
+			"inputSolrNames": ["reference_id"],
+			"outputSolrNames": ["interaction_id", "ID"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerCopy"
+		},
+		{
+			"inputSolrNames": ["published_date"],
+			"outputSolrNames": ["date_time", "fecha_apertura"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerCopy"
+		},		
+		{
+			"inputSolrNames": ["content", "comentarios_oficina"],
+			"outputSolrNames": ["content"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
+		},
+		{
+			"inputSolrNames": ["reference_id", "producto", "tipo_peticion"],
+			"outputSolrNames": ["title"],
+			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
+		}
+	]
+}
