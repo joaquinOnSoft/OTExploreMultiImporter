@@ -48,4 +48,8 @@ public class DateUtil {
 	public static Date utcToDate(String utc) throws ParseException {
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(utc);  
 	}
+	
+	public static Date strToDate(String strDate, String format) throws ParseException {
+		return new SimpleDateFormat(format).parse(strDate);
+	}	
 }

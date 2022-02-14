@@ -10,7 +10,7 @@
 subprojects {
     apply plugin: 'java'
 
-	version = '22.02.11' 
+	version = '22.02.14' 
 
 	java {
 	    sourceCompatibility = JavaVersion.VERSION_11
@@ -23,6 +23,12 @@ subprojects {
     }
     
 	dependencies {
+		// https://mvnrepository.com/artifact/commons-cli/commons-cli
+		implementation 'commons-cli:commons-cli:1.5.0'    	
+	
+		// https://mvnrepository.com/artifact/org.jdom/jdom
+		implementation 'org.jdom:jdom:2.0.2'	
+	
 		// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
 		implementation 'org.apache.logging.log4j:log4j-api:2.17.1'	
 		// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
@@ -31,5 +37,19 @@ subprojects {
 		
 	    // Use JUnit test framework
 	    testImplementation 'junit:junit:4.12'	 
+	    
+		// https://mvnrepository.com/artifact/org.mockito/mockito-core
+		testImplementation 'org.mockito:mockito-core:4.2.0'
+	
+		// https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
+		testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
+		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule-agent
+		testImplementation 'org.powermock:powermock-module-junit4-rule-agent:2.0.9'	
+		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule
+		testImplementation 'org.powermock:powermock-module-junit4-rule:2.0.9'
+		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4
+		testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
+		// https://mvnrepository.com/artifact/org.powermock/powermock-module-testng
+		testImplementation 'org.powermock:powermock-module-testng:2.0.9'		    
 	}    
 }

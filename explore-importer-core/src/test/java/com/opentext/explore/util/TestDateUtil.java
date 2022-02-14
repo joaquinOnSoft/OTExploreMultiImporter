@@ -62,4 +62,17 @@ public class TestDateUtil extends TestCase {
 		assertEquals(now.get(Calendar.MONTH) + 1, subStringToInt(oneWeekAgo, 5, 7));
 		assertEquals(now.get(Calendar.DAY_OF_MONTH), subStringToInt(oneWeekAgo, 8, 10));	
 	}
+	
+	@Test
+	public void testStrToDate() {
+		final String strDate = "01/12/2020";
+		final String format = "dd/MM/yyyy";
+		
+		try {
+			Date date = DateUtil.strToDate(strDate, format);
+			assertEquals("Tue Dec 01 00:00:00 GMT 2020", date.toString().replace("CET", "GMT"));
+		} catch (ParseException e) {
+			fail(e.getMessage());
+		}
+	}	
 }

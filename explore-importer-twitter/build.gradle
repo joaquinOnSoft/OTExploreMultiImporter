@@ -5,32 +5,12 @@ jar {
 
 dependencies {
 	implementation project(':explore-importer-core')
-
-	// https://mvnrepository.com/artifact/commons-cli/commons-cli
-	implementation 'commons-cli:commons-cli:1.5.0'    
-	
+		
 	// https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
 	implementation 'org.twitter4j:twitter4j-core:4.0.7'
 	// https://mvnrepository.com/artifact/org.twitter4j/twitter4j-stream
 	implementation 'org.twitter4j:twitter4j-stream:4.0.7'
 
-	// https://mvnrepository.com/artifact/org.jdom/jdom
-	implementation 'org.jdom:jdom:2.0.2'
-
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
-	
-		// https://mvnrepository.com/artifact/org.mockito/mockito-core
-	testImplementation 'org.mockito:mockito-core:4.2.0'
-
-	// https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
-	testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
-	// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule-agent
-	testImplementation 'org.powermock:powermock-module-junit4-rule-agent:2.0.9'	
-	// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule
-	testImplementation 'org.powermock:powermock-module-junit4-rule:2.0.9'
-	// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4
-	testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
-	// https://mvnrepository.com/artifact/org.powermock/powermock-module-testng
-	testImplementation 'org.powermock:powermock-module-testng:2.0.9'	
 }
