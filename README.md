@@ -16,4 +16,4 @@ Once the messages are available in **OpenText Explore** you can create your own 
  
  
 ## Applying changes on your instance
-Once you have configured _Explore_ to import a new content type you must [apply the changes on your instance](doc/applying-changes-on-your- instance.md)
+Once you have configured _Explore_ to import a new content type you must [apply the changes on your instance](doc/applying-changes-on-your-instance.md)
