@@ -258,33 +258,3 @@ We must define new fields to be able to import extra metadata related with each 
 ```
 
 > **NOTE:** Field must be named using lowercase
-
-#### Customize the icon of your Doc Type
-
-Each document type defined in Explore has his own icon. All the icons are stored on **[EXPLORE_HOME]\ExploreWeb\resources\images\icons** and follos this pattern:
-
-```
-explore_custom_icon_[DOC_TYPE_NAME_IN_LOWERCASE]_doc_type.png
-```
-
-where:
-
- * explore_custom_icon_: Prefix
- * [[DOC_TYPE_NAME_IN_LOWERCASE]]: Document type name in lowercase
- * _doc_type.png: Suffix
- 
-In our example:
-
-```
-icn_multichannel_reddit_16.png
-```
-
-> A 32x32 pixel image is recommended. 
-
-You must copy the Reddit logo, called **icn_multichannel_reddit_16.png**, from the **img** folder in this project and paste on the **[[EXPLORE_HOME]]\ExploreWeb\resources\images\icons** of your Explore instance, e.g.
-
-```
-D:\Program Files (x86)\OpenText\Explore\ExploreWeb\resources\images\icons
-```
-
-![Custom icon for Reddit document type](../img/explore_custom_icon_reddit_doc_type.png "Custom icon for Reddit document type")
