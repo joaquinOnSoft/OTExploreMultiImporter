@@ -30,6 +30,6 @@ Once you have configured _Explore_ to import a new content type you must [apply 
 ## Warning
 This project deprecates 3 pre-existing projects:
 
- [OTExploreExcelImporter](https://github.com/joaquinOnSoft/OTExploreExcelImporter)
- [OTExploreRedditImporter](https://github.com/joaquinOnSoft/OTExploreRedditImporter) 
- [OTExploreTwitterImporter](https://github.com/joaquinOnSoft/OTExploreTwitterImporter)
+  * [OTExploreExcelImporter](https://github.com/joaquinOnSoft/OTExploreExcelImporter)
+  * [OTExploreRedditImporter](https://github.com/joaquinOnSoft/OTExploreRedditImporter) 
+  * [OTExploreTwitterImporter](https://github.com/joaquinOnSoft/OTExploreTwitterImporter)
