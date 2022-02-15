@@ -37,7 +37,7 @@ public class TrustpilotImporter {
 
 	private static final int MILISECONDS_IN_SECOND = 1000;
 	
-	private RedditClient reddit;
+	private String reddit = null; //TODO remove
 
 	/** Solr URL (this Solr instance is used by Explore) */
 	private String host = null; 
@@ -50,33 +50,6 @@ public class TrustpilotImporter {
 	public TrustpilotImporter(String host) {
 		this.host = host;
 		
-		Properties prop = FileUtil.loadProperties("reddit.properties");
-
-		if(prop != null) {
-			host = prop.getProperty("host");
-			
-			// Create our credentials
-			Credentials credentials = Credentials.script(
-					prop.getProperty("username"), 
-					prop.getProperty("password"),
-					prop.getProperty("clientID"), 
-					prop.getProperty("clientSecret"));
-
-			UserAgent userAgent = new UserAgent("script", "OTExploreRedditImporter", "v20.2", "JoaquinOpenText");
-
-			// This is what really sends HTTP requests
-			NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
-
-			// Authenticate and get a RedditClient instance
-			reddit = OAuthHelper.automatic(adapter, credentials);
-		}
-		else {
-			log.error("reddit.properties configuration file not found.");	
-			
-	        // Get class path by using getProperty static method of System class
-	        String strClassPath = System.getProperty("java.class.path");
-	        log.debug("Classpath is: " + strClassPath);
-		}
 	}
 
 	/**
@@ -97,34 +70,6 @@ public class TrustpilotImporter {
 			do {
 				nPage = 0;
 						
-				if(firstTime) {
-					log.debug("Monthly pagination");
-					paginator = createMonthlyPaginator(subreddit);
-					firstTime = false;
-				}
-				else {
-					log.debug("Hourly pagination");
-					paginator = createHourlyPaginator(subreddit);
-				}
-				
-				Iterator<Listing<Submission>> it = paginator.iterator();
-
-				while (it.hasNext()) {
-				    Listing<Submission> nextPage = it.next();
-				    
-					log.debug("# messages in page: " + nextPage.size());
-					if(filters != null && filters.size() > 0) {
-						nextPage = applyFilters(nextPage, filters);
-						log.debug("# messages in page (after filter): " + nextPage.size());
-					}
-				    
-					
-				    if (nextPage != null && nextPage.size() > 0) {
-						log.debug("Processing page " + nPage++);
-						solrBatchUpdate(rtag, nextPage);					
-					}
-				}
-				
 				try {
 					log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");
 					Thread.sleep(timeInSeconds * MILISECONDS_IN_SECOND);
@@ -136,79 +81,7 @@ public class TrustpilotImporter {
 		}
 	}
 
-	private Listing<Submission> applyFilters(Listing<Submission> nextPage, List<String> filters) {
-		log.debug("Applying filters: " + filters);
-		
-		List<Integer> indexToRemove = new LinkedList<Integer>();
-		
-		String title = null;
-		String selfText = null;
-		boolean containsFilter = false;
-		int size = nextPage.size();
-		
-		for(int i=0; i< size; i++){
-			title = nextPage.get(i).getTitle();
-			selfText = nextPage.get(i).getSelfText();
-			
-			if(title != null && selfText != null) {
-				for (String filter : filters) {
-					if (title.indexOf(filter) > 0 || selfText.indexOf(filter) > 0) {
-						containsFilter = true;
-						log.debug("Message " + i + " filtered due to filter: " + filter);
-					}
-				}				
-			}
-			
-			if(containsFilter == false) {
-				indexToRemove.add(i);
-			}
-			containsFilter = false;
-		}
-		
-		int sizeToRemove = indexToRemove.size();
-		for(int j= (sizeToRemove - 1); j>=0; j--) {
-			log.debug("Removing message, due to filter, with index: " + indexToRemove.get(j));
-			nextPage.remove(nextPage.get(indexToRemove.get(j)));
-		}
-		
-		return nextPage;
-	}
 
-	
-	/**
-	 * The reddit API handles pagination through the Listing structure. 
-	 * Each Listing holds the data from one page and the ID of the 
-	 * model that is next in the list.
-	 * @param subreddit - Reddit thread name
-	 * @return Reddit's paginator
-	 * @see https://mattbdean.gitbooks.io/jraw/quickstart.html
-	 * @see https://mattbdean.gitbooks.io/jraw/pagination.html
-	 * @see https://github.com/mattbdean/JRAW/blob/master/exampleScript/src/main/java/net/dean/jraw/example/script/ScriptExample.java
-	 */
-	private DefaultPaginator<Submission> createPaginator(String subreddit, TimePeriod timePeriod){
-		// "Navigate" to the Subreddit
-		SubredditReference sr = reddit.subreddit(subreddit);
-
-		// Browse through the top posts of the last month, requesting as much data as possible per request
-		Builder<Submission, SubredditSort> builder = sr.posts();
-
-		builder.limit(Paginator.RECOMMENDED_MAX_LIMIT)
-		.sorting(SubredditSort.TOP)
-		.timePeriod(timePeriod)
-		.build();
-
-		DefaultPaginator<Submission> paginator = builder.build();
-		
-		return paginator;
-	}
-	
-	protected DefaultPaginator<Submission> createMonthlyPaginator(String subreddit){
-		return createPaginator(subreddit, TimePeriod.MONTH);
-	}
-
-	protected DefaultPaginator<Submission> createHourlyPaginator(String subreddit){
-		return createPaginator(subreddit, TimePeriod.HOUR);
-	}	
 	
 	/**
 	 * Call to the /solr/interaction/otcaBatchUpdate 
