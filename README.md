@@ -17,7 +17,7 @@ This project contains 3 auto-executable jar files to import different type of co
 
 ## Add languages to Explore
 
-If you are going to import content for any language different to **English** or **German*, 
+If you are going to import content for any language different to **English** or **German**, 
 you must follow the instructions given at [Add languages to Explore](doc/add-a-language-to-explore.md)
  
  
