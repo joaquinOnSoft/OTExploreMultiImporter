@@ -15,32 +15,32 @@
 		},
 		{
 			"excelName": "FechaCierre",
-			"solrName": "FechaCierre",
+			"solrName": "fecha_cierre",
 			"type": "date",					
 			"skip": false,
 			"format": "MM/dd/yy"								
 		},
 		{
 			"excelName": "EsContactar",
-			"solrName": "EsContactar",
+			"solrName": "es_contactar",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "CPI",
-			"solrName": "CPI",
+			"solrName": "cpi",
 			"type": "integer",
 			"skip": false					
 		},
 		{
 			"excelName": "Producto",
-			"solrName": "Producto",
+			"solrName": "producto",
 			"type": "string",
 			"skip": false					
 		},		
 		{
 			"excelName": "TipoPeticion",
-			"solrName": "TipoPeticion",
+			"solrName": "tipo_peticion",
 			"type": "string",
 			"skip": false					
 		},
@@ -52,55 +52,55 @@
 		},
 		{
 			"excelName": "Comentarios_Oficina sobre la queja",
-			"solrName": "ComentariosOficina",
+			"solrName": "comentarios_oficina",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "Departamento",
-			"solrName": "Departamento",
+			"solrName": "departamento",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "Estado",
-			"solrName": "Estado",
+			"solrName": "estado",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "CPI",
-			"solrName": "CPI",
+			"solrName": "cpi",
 			"type": "integer",
 			"skip": true					
 		},
 		{
 			"excelName": "Familia",
-			"solrName": "Familia",
+			"solrName": "familia",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "Producto",
-			"solrName": "Producto",
+			"solrName": "producto",
 			"type": "integer",
 			"skip": true					
 		},		
 		{
 			"excelName": "TipoPeticion",
-			"solrName": "TipoPeticion",
+			"solrName": "tipo_peticion",
 			"type": "string",
 			"skip": true					
 		},
 		{
 			"excelName": "Motivo_Queja",
-			"solrName": "MotivoQueja",
+			"solrName": "motivo_queja",
 			"type": "string",
 			"skip": false					
 		},
 		{
 			"excelName": "Origen_Queja_2",
-			"solrName": "OrigenQueja",
+			"solrName": "origen_queja",
 			"type": "string",
 			"skip": false					
 		}																												
@@ -112,12 +112,12 @@
 			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerCopy"
 		},
 		{
-			"inputSolrNames": ["content", "ComentariosOficina"],
+			"inputSolrNames": ["content", "comentarios_oficina"],
 			"outputSolrNames": ["content"],
 			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
 		},
 		{
-			"inputSolrNames": ["reference_id", "Producto", "TipoPeticion"],
+			"inputSolrNames": ["reference_id", "producto", "tipo_peticion"],
 			"outputSolrNames": ["title"],
 			"javaClass": "com.opentext.explore.importer.excel.fieldhandlers.FieldHandlerConcat"
 		}

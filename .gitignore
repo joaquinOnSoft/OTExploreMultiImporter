@@ -21,10 +21,12 @@ excel_writer_test.xls
 ./schema.xml
 Speech analytics v2.xlsx
 Speech analytics.xlsx
+
 explore-importer-excel/Explore.Configuration.xml
-explore-importer-excel/build.gradle
 explore-importer-excel/schema.xml
-explore-importer-excel/src/test/resources/excel_mapping.json
-explore-importer-reddit/build.gradle
-explore-importer-reddit/ot-explore-reddit-importer.log
+
+
+explore-importer-reddit/*.log
+explore-importer-excel/*.log
+explore-importer-twitter/*.log
 
