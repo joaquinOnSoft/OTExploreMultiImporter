@@ -126,7 +126,7 @@ We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.
   </DocTypes>
 ```
 
-![alt text](img/explore-doc-types.png "Twitter doc type")
+![Twitter doc type](../img/explore-doc-types.png "Twitter doc type")
 
 
 ### Group Twitter
@@ -191,7 +191,7 @@ We must add a new **Group** tag under the **<DoCriteriaItemscTypes>** in Explore
   
   </CriteriaItems>    
 ```
-![alt text](img/explore-groups.png "Twitter groups")
+![Twitter groups](../img/explore-groups.png "Twitter groups")
 
 ## schema.xml (Solr)
 
@@ -248,112 +248,3 @@ We must define new fields to be able to import extra metadata related with each 
 
 If you are going to import Twitter's message for any language different to **English** or **German*, 
 you must follow the instructions given at [Add languages to Explore](doc/add-a-language-to-explore.md)
-
-## Applying changes on your instance
-
-Once you have modified **Explore.Configuration.xml** and **schema.xml** files you must follow these steps:
-
- - Execute this command from a terminal/console as administrator:
-
-```
-d:> cd d:\SolrCloud\solr-7.3.1\bin
-
-d:\SolrCloud\solr-7.3.1\bin> solr.cmd zk -z 127.0.0.1 upconfig -d d:\SolrCloud\solr-7.3.1\server\solr\configsets\interaction_config -n interaction_config 
-```
-
-- Open a browser and access to this URL: 
-
-```
-http://localhost:8983/solr/admin/collections?action=RELOAD&name=interaction&wt=xml
-```
-
-![alt text](img/solr-config-reload.png  "Solr configuration reload")
-		
-- Reset IIS from a terminal/console as administrator:
-
-```
-c:> iisreset
-```
-Once the configuration has been updated Explore will look like this:
-
-![alt text](img/explore-doc-types-and-extra-fields-in-group.png "Explore Doc types and extra fields in group")
-
-## Create a new Project in Explore
-
-In o
-
- - Open your Explore instance.
- - Click on **Administer** in the top menu.
- - Click on **Projects**
- - Click on **New** (+ icon)
- - Set the **Project name**: Madrid
- 
- ![alt text](img/explore-new-project.png "Explore New Project")
- 
- - Click on **Search Criteria**
- - Provide the required fields:
-    - Search expression: *
-    - Types:  Twitter
-    - Include results that have "all" of the followings:
-       - Imported tag: is Ayto. Madrid 
- 
- ![alt text](img/explore-project-filter.png "Explore Select criteria on Project")
- 
-> NOTE: the value used on the "Imported tag" is the same value that you have used in the **itag** property on the configuration file (twitter-importer.properties).
-
-# Utilities
-
-## Removing all the imported Twitts 
-
-During your test you can decide to remove all the Twitts imported. The fastest way to do it is just executing this command from a terminal/console as administrator:
-
-```
-d:> cd d:\SolrCloud\solr-7.3.1\example\exampledocs
-
-d:\SolrCloud\solr-7.3.1\example\exampledocs> java -Dc=interaction -Ddata=args -Dcommit=true -jar post.jar "<delete><query>*:*</query></delete>"
-```
-
-> NOTE: The path of your Solr installation can vary in your environment.
-
-## Version history
-
-### 20.2 (June 3rd, 2020)
-
-* Initial version
-
-### 20.2.06 (June 8th, 2020)
-
-* New properties supported in the config file.
-* New metadata added to each tweet ingested
-  
-### 20.2.06.02 (June 12th, 2020)
-
-* Property renamed in the configuration file: tag -- itag (Importer tag)
-* New property supported in the configuration file: ignoreretweet 
-
-### 20.3 (June 30th, 2020)
-
-* New property in the configuration file: -t --type (Content type) 
-
-
-### 20.3.9 (September 22nd, 2020)
-
-* Query old tweets 
-
-### 21.1 (March 4th, 2021)
-
-* Fix minor bug with config property reference  
-  
-### 21.4 (September 30th, 2021)
-
-* Merge previous version in master. Added support to additional required fields in Qfiniti 20.4 API
-
-### 22.01 (January 13th, 2022)
-
-* Support empty `keywords` list
-* External libraries updated to the latest version (including log4j)
-
-### 22.01.24 (January 24th, 2022)
-
-* Refactoring
-* Fix bug managing empty `keywords` list

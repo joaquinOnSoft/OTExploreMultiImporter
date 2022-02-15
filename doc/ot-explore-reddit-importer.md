@@ -46,7 +46,7 @@ $ java -jar OTExploreRedditImporter-20.4.2.jar --subreddit personafinance --rtag
 #### Create a Reddit OAuth2 app
 Reddit uses OAuth2 to authenticate 3rd party apps. The first thing you'll need to do is to register your app [here](https://www.reddit.com/prefs/apps). For the sake of simplicity, let's create a script app.
 
-![alt text](img/Create_a_reddit_OAuth2_app.png "Create a reddit OAuth2 app")
+![Create a Reddit OAuth2 app](img/Create_a_reddit_OAuth2_app.png "Create a reddit OAuth2 app")
 
 You'll need the client ID and client secret later.
 
@@ -128,7 +128,7 @@ We must add a new DocType tag under the **<DocTypes>** in **Explore.Configuratio
   </DocTypes>
 ```
 
-![alt text](img/explore-doc-types.png "Reddit doc type")
+![Reddit doc type](img/explore-doc-types.png "Reddit doc type")
 
 
 #### Group Redditt
@@ -211,7 +211,7 @@ We must add a new **Group** tag under the **<DoCriteriaItemscTypes>** in **Explo
   
   </CriteriaItems>    
 ```
-![alt text](img/explore_groups.png "Reddit group")
+![Reddit group](img/explore_groups.png "Reddit group")
 
 ### schema.xml (Solr)
 
@@ -287,94 +287,4 @@ You must copy the Reddit logo, called **icn_multichannel_reddit_16.png**, from t
 D:\Program Files (x86)\OpenText\Explore\ExploreWeb\resources\images\icons
 ```
 
-![alt text](img/explore_custom_icon_reddit_doc_type.png "Custom icon for Reddit document type")
-
-
-### Applying changes on your instance
-
-Once you have modified **Explore.Configuration.xml** and **schema.xml** files you must follow these steps:
-
- - Execute this command from a terminal/console as Administrator:
-
-```
-d:> cd d:\SolrCloud\solr-7.3.1\bin
-
-d:\SolrCloud\solr-7.3.1\bin> solr.cmd zk -z 127.0.0.1 upconfig -d d:\SolrCloud\solr-7.3.1\server\solr\configsets\interaction_config -n interaction_config 
-```
-
-- Open a browser and access to this URL: 
-
-```
-http://localhost:8983/solr/admin/collections?action=RELOAD&name=interaction&wt=xml
-```
-
-![alt text](img/solr-config-reload.png  "Solr configuration reload")
-		
-- Reset IIS from a terminal/console as administrator:
-
-```
-c:> iisreset
-```
-
-Once the configuration has been updated Explore will look like this:
-
-![alt text](img/explore-doc-types-and-extra-fields-in-group.png "Explore Doc types and extra fields in group")
-
-### Create a new Project in Explore
-
-In order to manage content from different client in the same instance in a demo environment you can create projects that keep together the info for each client. 
-
-Follow this steps:
-
- - Open your Explore instance.
- - Click on **Administer** in the top menu.
- - Click on **Projects**
- - Click on **New** (+ icon)
- - Set the **Project name**: CanadianPost
- 
- ![alt text](img/explore-new-project.png "Explore New Project")
- 
- - Click on **Search Criteria**
- - Provide the required fields:
-    - Search expression: *
-    - Types:  Reddit
-    - Include results that have "all" of the followings:
-       - Imported tag: is Reddit Canada Post 
- 
- ![alt text](img/explore-project-filter.png "Explore Select criteria on Project")
- 
-> NOTE: the value used on the "Imported tag" is the same value that you have used in the **itag** parameter.
-
-## Utilities
-
-### Removing all the imported Reddit submissions 
-
-During your test you can decide to remove all the Reddit submissions imported. The fastest way to do it is just executing this command from a terminal/console as administrator:
-
-> NOTE: This will delete all the data in your Solr instance!
-
-```
-d:> cd d:\SolrCloud\solr-7.3.1\example\exampledocs
-
-d:\SolrCloud\solr-7.3.1\example\exampledocs> java -Dc=interaction -Ddata=args -Dcommit=true -jar post.jar "<delete><query>*:*</query></delete>"
-```
-
-> NOTE: The path of your Solr installation can vary in your environment.
-
-## Version history
-
-### 20.2 (June 26th, 2020)
-
-* Initial version
-
-### 20.3 (July 1st, 2020)
-
-* Fix pagination bug
-
-### 20.4 (September 18th, 2020)
-
-* Ignore unicode characters in Reddit messages
-
-### 20.4.2 (September 21st, 2020)
-
-* Added 
+![Custom icon for Reddit document type](img/explore_custom_icon_reddit_doc_type.png "Custom icon for Reddit document type")
