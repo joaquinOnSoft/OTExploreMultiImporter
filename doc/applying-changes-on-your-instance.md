@@ -16,7 +16,7 @@ d:\SolrCloud\solr-7.3.1\bin> solr.cmd zk -z 127.0.0.1 upconfig -d d:\SolrCloud\s
 http://localhost:8983/solr/admin/collections?action=RELOAD&name=interaction&wt=xml
 ```
 
-![alt text](img/solr-config-reload.png  "Solr configuration reload")
+![Solr configuration reload](../img/solr-config-reload.png  "Solr configuration reload")
 		
 - Reset IIS from a terminal/console as administrator:
 
@@ -40,7 +40,7 @@ Follow this steps:
  - Click on **New** (+ icon)
  - Set the **Project name**: MyProject
  
- ![alt text](img/explore-new-project.png "Explore New Project")
+ ![Explore New Project](../img/explore-new-project.png "Explore New Project")
  
  - Click on **Search Criteria**
  - Provide the required fields:
@@ -49,6 +49,6 @@ Follow this steps:
     - Include results that have "all" of the followings:
        - Imported tag: is Ticket 
  
- ![alt text](img/explore-project-filter.png "Explore Select criteria on Project")
+ ![Explore Select criteria on Project](../img/explore-project-filter.png "Explore Select criteria on Project")
  
 > NOTE: the value used on the "Imported tag" is the same value that you have used in the **itag** parameter.

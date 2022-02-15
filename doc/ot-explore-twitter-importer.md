@@ -242,9 +242,3 @@ We must define new fields to be able to import extra metadata related with each 
 ```
 
 > **NOTE:** Field must be named using lower case
-
-
-## Add languages to Explore
-
-If you are going to import Twitter's message for any language different to **English** or **German*, 
-you must follow the instructions given at [Add languages to Explore](doc/add-a-language-to-explore.md)
