@@ -46,7 +46,7 @@ $ java -jar OTExploreRedditImporter-20.4.2.jar --subreddit personafinance --rtag
 #### Create a Reddit OAuth2 app
 Reddit uses OAuth2 to authenticate 3rd party apps. The first thing you'll need to do is to register your app [here](https://www.reddit.com/prefs/apps). For the sake of simplicity, let's create a script app.
 
-![Create a Reddit OAuth2 app](img/Create_a_reddit_OAuth2_app.png "Create a reddit OAuth2 app")
+![Create a Reddit OAuth2 app](../img/Create_a_reddit_OAuth2_app.png "Create a reddit OAuth2 app")
 
 You'll need the client ID and client secret later.
 
@@ -128,7 +128,7 @@ We must add a new DocType tag under the **<DocTypes>** in **Explore.Configuratio
   </DocTypes>
 ```
 
-![Reddit doc type](img/explore-doc-types.png "Reddit doc type")
+![Reddit doc type](../img/explore-doc-types.png "Reddit doc type")
 
 
 #### Group Redditt
@@ -211,7 +211,7 @@ We must add a new **Group** tag under the **<DoCriteriaItemscTypes>** in **Explo
   
   </CriteriaItems>    
 ```
-![Reddit group](img/explore_groups.png "Reddit group")
+![Reddit group](../img/explore_groups.png "Reddit group")
 
 ### schema.xml (Solr)
 
@@ -287,4 +287,4 @@ You must copy the Reddit logo, called **icn_multichannel_reddit_16.png**, from t
 D:\Program Files (x86)\OpenText\Explore\ExploreWeb\resources\images\icons
 ```
 
-![Custom icon for Reddit document type](img/explore_custom_icon_reddit_doc_type.png "Custom icon for Reddit document type")
+![Custom icon for Reddit document type](../img/explore_custom_icon_reddit_doc_type.png "Custom icon for Reddit document type")
