@@ -1,6 +1,21 @@
 jar {   
 	//archiveFileName = "${rootProject.name}-${project.name}-${archiveVersion.get()}.jar"
-	archiveFileName = "${rootProject.name}-reddit-${archiveVersion.get()}.jar"
+	archiveFileName = "${rootProject.name}-excel-${archiveVersion.get()}.jar"
+	
+	
+    manifest {
+        attributes 'Implementation-Title': 'OpenText Explore Excel Importer',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.opentext.explore.importer.excel.ExcelImporterLauncher'
+    }
+ 
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    //https://discuss.gradle.org/t/generate-runnable-jar-pakage-dependencies/28171
+	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE		
 }
 
 

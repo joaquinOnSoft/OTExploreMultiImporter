@@ -1,5 +1,14 @@
 jar {   
-	archiveFileName = "${rootProject.name}-${project.name}-${archiveVersion.get()}.jar"
+	//archiveFileName = "${rootProject.name}-${project.name}-${archiveVersion.get()}.jar"	
+	archiveFileName = "${rootProject.name}-core-${archiveVersion.get()}.jar"
+	 
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    //https://discuss.gradle.org/t/generate-runnable-jar-pakage-dependencies/28171
+	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE    	
 }
 
 

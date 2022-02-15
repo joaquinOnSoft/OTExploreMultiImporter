@@ -51,6 +51,11 @@ public abstract class AbstractTransformer {
 	}	
 	
 	private static String ignoreUnicodeGarbage(String str) {
-		return str.replace("", "");
+		if (str != null) {
+			return str.replace("", "");
+		}
+		else {
+			return null;
+		}
 	}
 }
