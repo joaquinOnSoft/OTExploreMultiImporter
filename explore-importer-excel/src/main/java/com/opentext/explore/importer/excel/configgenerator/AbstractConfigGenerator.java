@@ -36,7 +36,7 @@ import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.excel.ISolrFields;
 import com.opentext.explore.importer.excel.pojo.TextDataImporterMapping;
-import com.opentext.explore.util.TextUtil;
+import com.opentext.explore.util.StringUtil;
 
 public abstract class AbstractConfigGenerator  implements ISolrFields {	
 	protected List<String> defaultSolrFieldNames = null;
@@ -114,8 +114,8 @@ public abstract class AbstractConfigGenerator  implements ISolrFields {
 	
 	protected String strToHumanReadable(String str) {
 		if(str!= null) {
-			str = TextUtil.camelCaseToHumanReadable(str);
-			str = TextUtil.snakeCaseToHumanReadable(str);	
+			str = StringUtil.camelCaseToHumanReadable(str);
+			str = StringUtil.snakeCaseToHumanReadable(str);	
 			str = str.replaceAll("\\s{2,}", " ").trim();
 		}
 		return str;
