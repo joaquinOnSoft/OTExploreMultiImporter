@@ -9,10 +9,17 @@ Once the messages are available in **OpenText Explore** you can create your own 
 > [OpenText™ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
 
 ## OpenText Explore importers
-This project contains 3 auto-executable jar file to import different type of contents:
+This project contains 3 auto-executable jar files to import different type of contents:
  * [OpenText Explore Excel Importer](doc/ot-explore-excel-importer.md)
  * [OpenText Explore Twitter Importer](doc/ot-explore-twitter-importer.md)
  * [OpenText Explore Reddit Importer](doc/ot-explore-reddit-importer.md)
+ 
+
+## Add languages to Explore
+
+If you are going to import content for any language different to **English** or **German*, 
+you must follow the instructions given at [Add languages to Explore](doc/add-a-language-to-explore.md)
+ 
  
 ## Tips & Tricks 
 Some [tips & tricks](doc/tips-and-tricks.md) that you can apply in your import process.

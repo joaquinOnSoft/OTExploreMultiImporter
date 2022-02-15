@@ -578,31 +578,3 @@ I was missing the part related to solrconfig.xml. The section related to schemax
   </requestHandler>
 
 ```
-
-#### Customize the icon of your Doc Type
-
-Each document type defined in Explore has his own icon. All the icons are stored on **[EXPLORE_HOME]\ExploreWeb\resources\images\icons** and follows this pattern:
-
-```
-explore_custom_icon_[DOC_TYPE_NAME_IN_LOWERCASE]_doc_type.png
-```
-
-where:
-
- * explore_custom_icon_: Prefix
- * [[DOC_TYPE_NAME_IN_LOWERCASE]]: Document type name in lowercase
- * _doc_type.png: Suffix
- 
-In our example:
-
-```
-icn_multichannel_ticket_16.png
-```
-
-> A 32x32 pixel image is recommended. 
-
-You must copy the ticket logo, called **icn_multichannel_ticket_16.png**, from the **img** folder in this project and paste on the **[[EXPLORE_HOME]]\ExploreWeb\resources\images\icons** of your Explore instance, e.g.
-
-```
-D:\Program Files (x86)\OpenText\Explore\ExploreWeb\resources\images\icons
-```
