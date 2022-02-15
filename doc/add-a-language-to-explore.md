@@ -2,7 +2,7 @@
 To add an additional language to Explore you must follow these steps:
 
 ## schema.xml
-Add the following sections just before the `&lt;field name="language"&gt;` and `&lt;/schema&gt;` tags:
+Add the following sections just before the `<field name="language">` and `</schema>` tags:
 
 ```xml
 <schema name="default-config" version="1.6">
