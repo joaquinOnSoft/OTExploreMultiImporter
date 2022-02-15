@@ -26,7 +26,7 @@ c:> iisreset
 
 Once the configuration has been updated Explore will look like this:
 
-![alt text](img/explore-doc-types-and-extra-fields-in-group.png "Explore Doc types and extra fields in group")
+![Explore Doc types and extra fields in group](../img/explore-doc-types-and-extra-fields-in-group.png "Explore Doc types and extra fields in group")
 
 ## Create a new Project in Explore
 
