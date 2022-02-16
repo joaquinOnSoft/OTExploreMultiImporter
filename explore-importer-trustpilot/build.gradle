@@ -11,5 +11,8 @@ dependencies {
 	implementation 'org.apache.commons:commons-lang3:3.12.0'	
 	
 	// https://mvnrepository.com/artifact/net.dean.jraw/JRAW
-	implementation 'net.dean.jraw:JRAW:1.1.0'		
+	implementation 'net.dean.jraw:JRAW:1.1.0'
+	
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation 'org.jsoup:jsoup:1.14.3'			
 }

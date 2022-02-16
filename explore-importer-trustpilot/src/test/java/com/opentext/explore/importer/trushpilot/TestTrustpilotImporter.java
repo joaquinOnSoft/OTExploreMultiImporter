@@ -3,9 +3,6 @@ package com.opentext.explore.importer.trushpilot;
 import org.junit.Test;
 
 import junit.framework.TestCase;
-import net.dean.jraw.models.Submission;
-import net.dean.jraw.models.TimePeriod;
-import net.dean.jraw.pagination.DefaultPaginator;
 
 public class TestTrustpilotImporter extends TestCase {
 
