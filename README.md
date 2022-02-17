@@ -1,6 +1,6 @@
 # OTExploreMultiImporter
 Multiple content types importer for OpenText Explore (Voice of the customer solution).
-This command-line application read an input (Excel file, Twitter messages, or a Reddit threat) to ingest the information of our interest, into OpenText Explore. 
+This command-line application read an input (**Excel file, Twitter messages, or a Reddit threat**) to ingest the information of our interest, into OpenText Explore. 
 
 These text messages are inserted into the Solr Server used by **OpenText Explore**. 
 
