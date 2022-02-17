@@ -27,14 +27,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReview;
+import com.opentext.explore.importer.trushpilot.pojo.Review;
 
 public class TestTrustpilotScraper {
 
 	@Test
 	public void getReviews() {
 		TrustpilotScraper scraper = new TrustpilotScraper("bancsabadell.com");
-		List<TrustpilotReview> reviews = scraper.getReviews();
+		List<Review> reviews = scraper.getReviews();
 		
 		assertNotNull(reviews);
 		assertTrue(reviews.size() > 0);	

@@ -19,16 +19,23 @@
  */
 package com.opentext.explore.importer.trushpilot;
 
-import java.util.LinkedList;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opentext.explore.importer.http.URLReader;
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReview;
+import com.opentext.explore.importer.trushpilot.pojo.Review;
+import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainer;
 
 public class TrustpilotScraper {
+
+	private static final Logger log = LogManager.getLogger(TrustpilotScraper.class);
 
 	private static final String BASE_URL="https://www.trustpilot.com/review/";
 	
@@ -55,8 +62,8 @@ public class TrustpilotScraper {
 		this.url = urlBase + clientAlias;
 	}
 	
-	public List<TrustpilotReview> getReviews(){
-		List<TrustpilotReview> reviews = new LinkedList<TrustpilotReview>();
+	public List<Review> getReviews(){
+		List<Review> reviews = null;
 		
 		URLReader reader = new URLReader(url);
 		String html = reader.read();
@@ -65,7 +72,15 @@ public class TrustpilotScraper {
 		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
 		
 		if(script != null) {
-			System.out.print("script: " + script.text());	
+			System.out.print("script: " + script.html());	
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			try {
+				TrustpilotReviewContainer[] reviewContainer  = objectMapper.readValue(html, TrustpilotReviewContainer[].class);
+				System.out.print(reviewContainer);
+			} catch (IOException e) {
+				log.error(e.getMessage());
+			}
 		}
 				
 		return reviews;
