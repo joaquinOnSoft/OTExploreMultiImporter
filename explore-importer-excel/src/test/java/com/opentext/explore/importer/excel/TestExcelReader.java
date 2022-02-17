@@ -19,25 +19,30 @@
  */
 package com.opentext.explore.importer.excel;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.List;
 
 import org.junit.Test;
+import org.testng.annotations.BeforeClass;
 
 import com.opentext.explore.importer.excel.fieldhandlers.IFieldHandler;
 import com.opentext.explore.importer.excel.pojo.TextData;
 import com.opentext.explore.importer.excel.pojo.TextDataImporterMapping;
 import com.opentext.explore.util.FileUtil;
 
-import junit.framework.TestCase;
 
-public class TestExcelReader extends TestCase {
+public class TestExcelReader{
 	private static final String CONTENT_TYPE_TICKET = "Ticket";
 	
 	private ExcelReader reader = new ExcelReader();
 	private TextDataImporterMapping mapping;
 	
-	@Override
+	@BeforeClass
 	protected void setUp() {
 		File jsonConfigFile = FileUtil.getFileFromResources("excel_mapping.json");
 		JSonMappingConfigReader jsonConfigReader = new JSonMappingConfigReader();

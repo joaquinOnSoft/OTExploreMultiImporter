@@ -1,11 +1,27 @@
+/*
+ *   (C) Copyright 2022 OpenText and others.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *   Contributors:
+ *     Joaquín Garzón - initial implementation
+ *
+ */
 package com.opentext.explore.importer.trushpilot;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,25 +29,14 @@ import org.apache.logging.log4j.Logger;
 import com.opentext.explore.connector.SolrAPIWrapper;
 import com.opentext.explore.util.FileUtil;
 
-import net.dean.jraw.RedditClient;
-import net.dean.jraw.http.NetworkAdapter;
-import net.dean.jraw.http.OkHttpNetworkAdapter;
-import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
-import net.dean.jraw.models.SubredditSort;
-import net.dean.jraw.models.TimePeriod;
-import net.dean.jraw.oauth.Credentials;
-import net.dean.jraw.oauth.OAuthHelper;
 import net.dean.jraw.pagination.DefaultPaginator;
-import net.dean.jraw.pagination.DefaultPaginator.Builder;
-import net.dean.jraw.pagination.Paginator;
-import net.dean.jraw.references.SubredditReference;
 
 /**
  * Trustpilot importer for OpenText Explore (Voice of the customer solution)
  * @author Joaquín Garzón
- * @since 20.2
+ * @since 22.02.16
  */
 public class TrustpilotImporter {
 

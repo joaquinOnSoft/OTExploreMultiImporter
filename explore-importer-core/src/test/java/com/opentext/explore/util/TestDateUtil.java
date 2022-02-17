@@ -1,5 +1,9 @@
 package com.opentext.explore.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,9 +11,7 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
-import junit.framework.TestCase;
-
-public class TestDateUtil extends TestCase {
+public class TestDateUtil{
 	
 	private int subStringToInt(String str, int init, int end) {
 		return Integer.parseInt(str.substring(init, end));

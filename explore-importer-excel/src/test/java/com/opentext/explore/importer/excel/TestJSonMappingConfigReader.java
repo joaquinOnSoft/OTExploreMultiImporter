@@ -19,6 +19,10 @@
  */
 package com.opentext.explore.importer.excel;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.File;
 import java.util.List;
 
@@ -28,9 +32,7 @@ import com.opentext.explore.importer.excel.pojo.TextDataImporterMapping;
 import com.opentext.explore.importer.excel.pojo.Field;
 import com.opentext.explore.util.FileUtil;
 
-import junit.framework.TestCase;
-
-public class TestJSonMappingConfigReader extends TestCase {
+public class TestJSonMappingConfigReader {
 
 	private TextDataImporterMapping readConfigFile(String jsonFileName) {
 		File jsonConfigFile = FileUtil.getFileFromResources(jsonFileName);

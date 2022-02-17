@@ -19,6 +19,9 @@
  */
 package com.opentext.explore.importer.excel;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,10 +39,8 @@ import org.junit.Test;
 import com.opentext.explore.importer.excel.pojo.TextData;
 import com.opentext.explore.util.DateUtil;
 
-import junit.framework.TestCase;
 
-
-public class TestExcelTransformer extends TestCase {
+public class TestExcelTransformer{
 
 	private List<TextData> txtDatas;
 	
