@@ -43,7 +43,7 @@ public class TestExcelReader{
 	private TextDataImporterMapping mapping;
 	
 	@Before
-	protected void setUp() {
+	public void setUp() {
 		File jsonConfigFile = FileUtil.getFileFromResources("excel_mapping.json");
 		JSonMappingConfigReader jsonConfigReader = new JSonMappingConfigReader();
 		mapping = jsonConfigReader.read(jsonConfigFile);	

@@ -21,8 +21,7 @@ jar {
 
 dependencies {
 	implementation project(':explore-importer-core')
-	
-	
+		
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	implementation 'org.apache.commons:commons-lang3:3.12.0'	
 	
