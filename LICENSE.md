@@ -2,7 +2,7 @@ Apache License
 ==============
 
 _Version 2.0, January 2004_  
-_&lt;<http://www.apache.org/licenses/>&gt;_
+_[http://www.apache.org/licenses/](http://www.apache.org/licenses/)_
 
 ### Terms and Conditions for use, reproduction, and distribution
 
@@ -179,7 +179,7 @@ recommend that a file or class name and description of purpose be included on
 the same “printed page” as the copyright notice for easier identification within
 third-party archives.
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2022 OpenText, Joaquín Garzón and others
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

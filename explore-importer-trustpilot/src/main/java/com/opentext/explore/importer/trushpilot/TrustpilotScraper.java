@@ -39,7 +39,7 @@ public class TrustpilotScraper {
 
 	private static final String BASE_URL="https://www.trustpilot.com/review/";
 	
-	private String url;
+	private String url;	
 	
 	/**
 	 * Initialize trustpilot.com review page scraper 
@@ -63,26 +63,55 @@ public class TrustpilotScraper {
 	}
 	
 	public List<Review> getReviews(){
+		String pageURL = url;
 		List<Review> reviews = null;
 		
-		URLReader reader = new URLReader(url);
+		
+		do {
+			TrustpilotReviewContainer[] reviewContainer= readPage(pageURL);
+			pageURL = null;
+			
+			https://www.trustpilot.com/review/bancsabadell.com?page=2
+		}
+		while(pageURL != null)
+			
+		
+				
+		return reviews;
+	}
+
+	/**
+	 * Read the given page and return the embedded JSON including the Trushpilot review
+	 * @param pageURL - Trustpilot page URL
+	 * @return 
+	 */
+	private TrustpilotReviewContainer[] readPage(String pageURL) {
+		TrustpilotReviewContainer[] reviewContainer = null;
+		
+		log.info("Reading page: " + pageURL);
+		
+		URLReader reader = new URLReader(pageURL);
 		String html = reader.read();
 		
 		Document doc = Jsoup.parse(html);
 		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
 		
 		if(script != null) {
-			System.out.print("script: " + script.html());	
+			String jsonStr = script.html();
+			log.debug("JSON: " + jsonStr);	
+			
+			
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
-				TrustpilotReviewContainer[] reviewContainer  = objectMapper.readValue(html, TrustpilotReviewContainer[].class);
-				System.out.print(reviewContainer);
+				 reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}
+			
+			log.debug(reviewContainer);
 		}
-				
-		return reviews;
+		
+		return reviewContainer;
 	}
 }
