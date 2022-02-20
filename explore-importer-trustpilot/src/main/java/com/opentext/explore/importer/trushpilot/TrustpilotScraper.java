@@ -71,12 +71,10 @@ public class TrustpilotScraper {
 			TrustpilotReviewContainer[] reviewContainer= readPage(pageURL);
 			pageURL = null;
 			
-			https://www.trustpilot.com/review/bancsabadell.com?page=2
+			// https://www.trustpilot.com/review/bancsabadell.com?page=2
 		}
-		while(pageURL != null)
-			
+		while(pageURL != null);
 		
-				
 		return reviews;
 	}
 
