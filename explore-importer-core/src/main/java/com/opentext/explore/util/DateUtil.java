@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  * 
- * @author Joaquín Garzón
+ * @author JoaquÃ­n GarzÃ³n
  * @since 20.2
  */
 public class DateUtil {

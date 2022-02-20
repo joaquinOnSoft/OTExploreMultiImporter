@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     JoaquÃ­n GarzÃ³n - initial implementation
  *
  */
 package com.opentext.explore.importer.http;

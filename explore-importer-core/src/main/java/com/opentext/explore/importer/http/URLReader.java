@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.http;
@@ -57,7 +57,7 @@ public class URLReader {
 			if (entity != null) {
 				// return it as a String
 				result = EntityUtils.toString(entity);
-				log.debug(result);
+				//log.debug(result);
 			}
 		}
 		catch (IOException e) {

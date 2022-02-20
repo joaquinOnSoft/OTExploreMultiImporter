@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.trushpilot;
@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * 
- * @author Joaquín Garzón
+ * @author JoaquÃ­n GarzÃ³n
  * @since 22.02.16
  */
 public class TrustpilotImporterLauncher {
@@ -100,7 +100,7 @@ public class TrustpilotImporterLauncher {
 			}
 					
 			TrustpilotImporter importer = new TrustpilotImporter(host);
-			importer.start(alias, filters, itag, timeInSeconds);
+			importer.start(null, alias, itag, timeInSeconds);
 			
 		}
 		catch (ParseException e) {

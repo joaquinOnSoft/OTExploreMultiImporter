@@ -14,12 +14,13 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.trushpilot;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,28 +33,35 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opentext.explore.importer.http.URLReader;
 import com.opentext.explore.importer.trushpilot.pojo.Review;
 import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainer;
+import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainerType;
 
 public class TrustpilotScraper {
 
 	private static final Logger log = LogManager.getLogger(TrustpilotScraper.class);
 
-	private static final String BASE_URL="https://www.trustpilot.com/review/";
-	
+	private static final String BASE_URL="https://www.trustpilot.com";
+
+	private static final String REVIEW_URL="/review/";
+
 	private String url;	
-	
+
 	/**
 	 * Initialize trustpilot.com review page scraper 
 	 * @param clientAlias - Client alias in <strong>trustpilot.com</strong>
 	 * <i>Example</i>: bancsabadell.com
 	 */
 	public TrustpilotScraper(String clientAlias) {
-		this(BASE_URL, clientAlias);
+		this(BASE_URL + REVIEW_URL, clientAlias);
 	}
-	
+
 	/**
 	 * Initialize trustpilot.com review page scraper 
 	 * @param urlBase - URL base
-	 * <i>Example</i>: https://www.trustpilot.com/review/
+	 * <i>Examples</i>: 
+	 * <ul>
+	 *    <li>https://www.trustpilot.com</li>
+	 *    <li>https://es.trustpilot.com</li>    
+	 * </ul>
 	 * @param clienteAlias - Client alias in <strong>trustpilot.com</strong>
 	 * <i>Example</i>: bancsabadell.com
 	 * 
@@ -61,21 +69,73 @@ public class TrustpilotScraper {
 	public TrustpilotScraper(String urlBase, String clientAlias) {
 		this.url = urlBase + clientAlias;
 	}
-	
+
 	public List<Review> getReviews(){
 		String pageURL = url;
 		List<Review> reviews = null;
-		
-		
-		do {
-			TrustpilotReviewContainer[] reviewContainer= readPage(pageURL);
-			pageURL = null;
-			
-			// https://www.trustpilot.com/review/bancsabadell.com?page=2
+		List<Review> reviewsTmp = null;
+		TrustpilotReviewContainer[] reviewContainers = null;
+		Document doc = null;
+
+		do {	
+			doc = readPage(pageURL);			
+			reviewContainers= getReviewsContainer(doc);
+
+			TrustpilotReviewContainerType type = null;
+			for (TrustpilotReviewContainer container : reviewContainers) {
+
+				type = TrustpilotReviewContainerType.getContainerTypeFromString(container.getType());
+
+				switch(type) {
+				case LOCAL_BUSINESS:
+					reviewsTmp = container.getReview();
+					if(reviewsTmp != null && reviewsTmp.size() > 0 ) {
+						if (reviews == null) {
+							reviews = new LinkedList<Review>();
+						}
+
+						reviews.addAll(reviewsTmp);
+					}
+					break;
+				case BREADCRUMB_LIST:
+					//Intentionally empty
+				case DATASET:
+					//Intentionally empty
+					break;	
+				}
+			}
+
+			pageURL = getNextPageURL(doc);
 		}
 		while(pageURL != null);
-		
+
 		return reviews;
+	}
+
+	private Document readPage(String pageURL) {
+		log.info("Reading page: " + pageURL);
+
+		URLReader reader = new URLReader(pageURL);		
+		return Jsoup.parse(reader.read());
+	}
+
+	private String getNextPageURL(Document doc) {
+		String nextPageURL = null;
+
+		Element link = doc.select("a[name=pagination-button-next]").first();
+
+		if(link != null) {
+			String href = link.attr("href");
+			if (href != null) {
+				if(href.startsWith("http")) {
+					nextPageURL = href;
+				}
+				else {
+					nextPageURL = BASE_URL + href;
+				}
+			}
+		}
+		return nextPageURL;
 	}
 
 	/**
@@ -83,33 +143,27 @@ public class TrustpilotScraper {
 	 * @param pageURL - Trustpilot page URL
 	 * @return 
 	 */
-	private TrustpilotReviewContainer[] readPage(String pageURL) {
+	private TrustpilotReviewContainer[] getReviewsContainer(Document doc) {
 		TrustpilotReviewContainer[] reviewContainer = null;
-		
-		log.info("Reading page: " + pageURL);
-		
-		URLReader reader = new URLReader(pageURL);
-		String html = reader.read();
-		
-		Document doc = Jsoup.parse(html);
+
 		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
-		
+
 		if(script != null) {
 			String jsonStr = script.html();
 			log.debug("JSON: " + jsonStr);	
-			
-			
-			
+
+
+
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
-				 reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
+				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}
-			
+
 			log.debug(reviewContainer);
 		}
-		
+
 		return reviewContainer;
 	}
 }

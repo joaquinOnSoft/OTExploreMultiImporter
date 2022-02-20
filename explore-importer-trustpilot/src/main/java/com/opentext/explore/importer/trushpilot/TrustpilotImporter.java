@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.trushpilot;
@@ -27,30 +27,32 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.opentext.explore.connector.SolrAPIWrapper;
+import com.opentext.explore.importer.trushpilot.pojo.Review;
 import com.opentext.explore.util.FileUtil;
 
-import net.dean.jraw.models.Listing;
-import net.dean.jraw.models.Submission;
-import net.dean.jraw.pagination.DefaultPaginator;
+
 
 /**
  * Trustpilot importer for OpenText Explore (Voice of the customer solution)
- * @author Joaquín Garzón
+ * @author JoaquÃ­n GarzÃ³n
  * @since 22.02.16
  */
 public class TrustpilotImporter {
 
 	private static final int MILISECONDS_IN_SECOND = 1000;
-	
-	private String reddit = null; //TODO remove
-
+	 
 	/** Solr URL (this Solr instance is used by Explore) */
 	private String host = null; 
 
 	protected static final Logger log = LogManager.getLogger(TrustpilotImporter.class);
 	
 	/**
-	 * @see https://mattbdean.gitbooks.io/jraw/quickstart.html
+	 * @param urlBase - URL base
+	 * <i>Examples</i>: 
+	 * <ul>
+	 *    <li>https://www.trustpilot.com</li>
+	 *    <li>https://es.trustpilot.com</li>    
+	 * </ul>
 	 */
 	public TrustpilotImporter(String host) {
 		this.host = host;
@@ -58,32 +60,31 @@ public class TrustpilotImporter {
 	}
 
 	/**
-	 * 
-	 * @param subreddit Reddit's thread name
-	 * @param rtag - Reddit Importer tag
-	 * @param timeInSeconds - Seconds between each call against Reddit API
-	 * @see https://mattbdean.gitbooks.io/jraw/basics.html
-	 * @see https://github.com/mattbdean/JRAW/blob/master/exampleScript/src/main/java/net/dean/jraw/example/script/ScriptExample.java
+	 * @param clientAlias - Trushpilot client alias, e.g. in the URL 
+	 * https://www.trustpilot.com/review/bancsabadell.com the literal
+	 * 'bancsabadell.com' is the client alias
+	 * @param tTag - Trustpilot Importer tag
+	 * @param timeInSeconds - Seconds between each call against Trustpilot site
 	 */
-	public void start(String subreddit, List<String> filters, String rtag, int timeInSeconds) {
-		boolean firstTime = true;
+	public void start(String urlBase, String clientAlias, String tTag, int timeInSeconds) {		
+		List<Review> reviews = null;
+		TrustpilotScraper scraper = new TrustpilotScraper(urlBase, clientAlias);
 		
-		if(reddit != null) {
-			int nPage = 0;
-			DefaultPaginator<Submission> paginator = null;
-			
-			do {
-				nPage = 0;
-						
-				try {
-					log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");
-					Thread.sleep(timeInSeconds * MILISECONDS_IN_SECOND);
-				} catch (InterruptedException e) {
-					log.warn(e.getMessage());
-					System.exit(-1);
+		do {
+					
+			try {
+				reviews = scraper.getReviews();
+				if(reviews != null) {
+					
 				}
-			}while(true);
-		}
+				
+				log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");
+				Thread.sleep(timeInSeconds * MILISECONDS_IN_SECOND);
+			} catch (InterruptedException e) {
+				log.warn(e.getMessage());
+				System.exit(-1);
+			}
+		}while(true);
 	}
 
 
@@ -95,14 +96,14 @@ public class TrustpilotImporter {
 	 * @param firstPage - List of the latest submissions published in Reddit
 	 * @return true if the insertion in Solr was ok, false in other case. 
 	 */
-	protected boolean solrBatchUpdate(String rtag, Listing<Submission> firstPage) {
+	protected boolean solrBatchUpdate(String rtag, List<Review> reviews) {
 		boolean updated = true;
 		
 		String xmlPath = null;
 		String xmlFileName = FileUtil.getRandomFileName(".xml");
 		try {
 			
-			xmlPath = TrustpilotTransformer.submissionsToXMLFile(firstPage, xmlFileName, rtag);
+			xmlPath = TrustpilotTransformer.reviewsToXMLFile(reviews, xmlFileName, rtag);
 			
 			SolrAPIWrapper wrapper = null;
 			if(host == null)
