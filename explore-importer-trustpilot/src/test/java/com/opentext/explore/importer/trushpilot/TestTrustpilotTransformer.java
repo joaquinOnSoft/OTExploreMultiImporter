@@ -44,7 +44,7 @@ public class TestTrustpilotTransformer extends TestCase {
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" + 
-			"    <field name=\"language\"><![CDATA[123456789]]></field>\r\n" +
+			"    <field name=\"language\"><![CDATA[en]]></field>\r\n" +
 			"    <field name=\"sentiment\"><![CDATA[neutral]]></field>\r\n" +
 			"    <field name=\"summary\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
 			"    <field name=\"reference_id\"><![CDATA[123456789]]></field>\r\n" +
@@ -67,6 +67,7 @@ public class TestTrustpilotTransformer extends TestCase {
 		when(review.getHeadline()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
 		when(review.getDatePublished()).thenReturn("2022-02-18T12:46:25.000Z");		
 		when(review.getReviewBody()).thenReturn("Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.");
+		when(review.getInLanguage()).thenReturn("en");
 						
 		Author author = mock(Author.class);
 		when(review.getAuthor()).thenReturn(author);

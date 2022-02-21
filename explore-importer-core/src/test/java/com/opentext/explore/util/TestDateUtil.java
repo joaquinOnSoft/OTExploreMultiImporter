@@ -72,7 +72,7 @@ public class TestDateUtil{
 		
 		try {
 			Date date = DateUtil.strToDate(strDate, format);
-			assertEquals("Tue Dec 01 00:00:00 GMT 2020", date.toString().replace("CET", "GMT"));
+			assertEquals("Tue Dec 01 00:00:00 GMT 2020", date.toString().replace("CET", "GMT").replace("CST", "GMT"));
 		} catch (ParseException e) {
 			fail(e.getMessage());
 		}
