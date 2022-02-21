@@ -71,8 +71,6 @@ public class TrustpilotTransformer extends AbstractTransformer {
 				eDoc.addContent(createElementField("published_date", review.getDatePublished()));
 				eDoc.addContent(createElementField("date_time", review.getDatePublished()));
 				eDoc.addContent(createElementField("content", new CDATA(review.getReviewBody())));				
-				eDoc.addContent(createElementField("bestRating", review.getReviewRating().getBestRating()));
-				eDoc.addContent(createElementField("worstRating", review.getReviewRating().getWorstRating()));				
 				eDoc.addContent(createElementField("ratingValue", review.getReviewRating().getRatingValue()));
 			
 				eDoc.addContent(createElementField("ttag", tag));

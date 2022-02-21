@@ -42,6 +42,10 @@ public class TestTrustpilotScraper {
 		// At the moment of writing this test, February 21th 2022, the figures are:
 		//    Total comments:       656
 		//    Comments in English:  306
-		assertEquals(304, reviews.size());
+		assertEquals(306, reviews.size());
+		assertNotNull(reviews.get(0).getHeadline());
+		assertNotNull(reviews.get(0).getReviewBody());
+		assertNotNull(reviews.get(0).getReviewRating());
+		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
 	}
 }
