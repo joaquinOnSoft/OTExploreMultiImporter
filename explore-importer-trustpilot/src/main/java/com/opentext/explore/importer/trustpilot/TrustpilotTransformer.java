@@ -56,7 +56,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 						
 			
 				//Field required since Qfiniti 20.4: START
-				eDoc.addContent(createElementField("language", review.generateId()));
+				eDoc.addContent(createElementField("language", review.getInLanguage().toLowerCase()));
 				//TODO: Avoid hardcoding sentiment as neutral
 				eDoc.addContent(createElementField("sentiment", "neutral"));				
 				eDoc.addContent(createElementField("summary", review.getHeadline()));
