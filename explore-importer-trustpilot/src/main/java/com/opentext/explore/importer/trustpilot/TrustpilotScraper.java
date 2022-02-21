@@ -44,6 +44,7 @@ public class TrustpilotScraper {
 	private static final String REVIEW_URL="/review/";
 
 	private String url;	
+	private String urlBase;
 
 	/**
 	 * Initialize trustpilot.com review page scraper 
@@ -51,7 +52,7 @@ public class TrustpilotScraper {
 	 * <i>Example</i>: bancsabadell.com
 	 */
 	public TrustpilotScraper(String clientAlias) {
-		this(BASE_URL + REVIEW_URL, clientAlias);
+		this(BASE_URL, clientAlias);
 	}
 
 	/**
@@ -68,12 +69,8 @@ public class TrustpilotScraper {
 	 */
 	public TrustpilotScraper(String urlBase, String clientAlias) {
 		if(urlBase != null) {
-			if(urlBase.contains(REVIEW_URL)) {
-				this.url = urlBase + clientAlias;
-			}
-			else {
-				this.url = urlBase + REVIEW_URL + clientAlias;
-			}
+			this.urlBase = urlBase;
+			this.url = urlBase + REVIEW_URL + clientAlias;
 		}
 	}
 
@@ -138,7 +135,7 @@ public class TrustpilotScraper {
 					nextPageURL = href;
 				}
 				else {
-					nextPageURL = BASE_URL + href;
+					nextPageURL = urlBase + href;
 				}
 			}
 		}

@@ -49,4 +49,21 @@ public class TestTrustpilotScraper {
 		assertNotNull(reviews.get(0).getReviewRating());
 		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
 	}
+	
+	@Test
+	public void getReviewsFromFrenchSubdomain() {
+		TrustpilotScraper scraper = new TrustpilotScraper("https://fr.trustpilot.com", "www.coriolis.com");
+		List<Review> reviews = scraper.getReviews();
+		
+		assertNotNull(reviews);
+		assertTrue(reviews.size() > 0);
+		// The number of comments can vary between execution.
+		// At the moment of writing this test, February 21th 2022, the figures are:
+		//    Total comments:       320
+		assertEquals(299, reviews.size());
+		assertNotNull(reviews.get(0).getHeadline());
+		assertNotNull(reviews.get(0).getReviewBody());
+		assertNotNull(reviews.get(0).getReviewRating());
+		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
+	}	
 }
