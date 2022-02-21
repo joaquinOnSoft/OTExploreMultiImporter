@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquï¿½n Garzï¿½n - initial implementation
+ *     Joaquín Garzón - initial implementation
  *
  */
 package com.opentext.explore.importer.trushpilot;
