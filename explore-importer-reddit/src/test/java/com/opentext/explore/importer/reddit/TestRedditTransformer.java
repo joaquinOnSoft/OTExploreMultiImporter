@@ -46,6 +46,9 @@ public class TestRedditTransformer {
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" + 
+			"    <field name=\"language\"><![CDATA[en]]></field>\r\n" +
+			"    <field name=\"sentiment\"><![CDATA[neutral]]></field>\r\n" + 
+			"    <field name=\"summary\"><![CDATA[Any lawyers here willing to help the Canadian public mount a class action against Canada Post ?]]></field>\r\n" +	
 			"    <field name=\"reference_id\"><![CDATA[h10u12]]></field>\r\n" +
 			"    <field name=\"interaction_id\"><![CDATA[h10u12]]></field>\r\n" +
 			"    <field name=\"title\"><![CDATA[Any lawyers here willing to help the Canadian public mount a class action against Canada Post ?]]></field>\r\n" +
