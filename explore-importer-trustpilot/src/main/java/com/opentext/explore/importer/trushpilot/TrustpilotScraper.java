@@ -67,7 +67,14 @@ public class TrustpilotScraper {
 	 * 
 	 */
 	public TrustpilotScraper(String urlBase, String clientAlias) {
-		this.url = urlBase + REVIEW_URL + clientAlias;
+		if(urlBase != null) {
+			if(urlBase.contains(REVIEW_URL)) {
+				this.url = urlBase + clientAlias;
+			}
+			else {
+				this.url = urlBase + REVIEW_URL + clientAlias;
+			}
+		}
 	}
 
 	public List<Review> getReviews(){
