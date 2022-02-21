@@ -55,7 +55,7 @@ public class TrustpilotImporterLauncher {
 		Option urlOption = new Option("u", "url", true, "Trustpilot URL base, e.g. https://www.trustpilot.com or https://es.trustpilot.com");
 		options.addOption(urlOption);		
 		
-		Option aliasOption = new Option("a", "alias", true, "Trustpilot client alias");
+		Option aliasOption = new Option("a", "alias", true, "Trustpilot client alias, e.g. In https://www.trustpilot.com/review/bancsabadell.com the alias is 'bancsabadell.com'");
 		aliasOption.setRequired(true);
 		options.addOption(aliasOption);
 		
