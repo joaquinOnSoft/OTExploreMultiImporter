@@ -19,8 +19,6 @@
  */
 package com.opentext.explore.importer.trushpilot;
 
-import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -33,14 +31,14 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * 
- * @author JoaquÃ­n GarzÃ³n
+ * @author Joaquín Garzón
  * @since 22.02.16
  */
 public class TrustpilotImporterLauncher {
-	
+	private static final String DEFAULT_TRUSTPILOT_URL_BASE = "https://www.trustpilot.com";
 	private static final String DEFAULT_TRUSTPILOT_THREAD_NAME = "bancsabadell.com";
 	private static final String DEFAULT_SOLR_URL = "http://localhost:8983";
-	private static final String DEFAULT_TRUSTPILOT_IMPORT_TAG = "Trustpilot";
+	private static final String DEFAULT_TRUSTPILOT_IMPORT_TAG = "Trustpilot Review";
 	private static final int DEFAULT_POOLING_TIME_IN_SECONDS = 300;
 	
 	private static final Logger log = LogManager.getLogger(TrustpilotImporterLauncher.class);
@@ -53,6 +51,9 @@ public class TrustpilotImporterLauncher {
 		
 		Option itagOption = new Option("i", "itag", true, "Explore Importer tag. Added to each article importer");
 		options.addOption(itagOption);		
+		
+		Option urlOption = new Option("u", "url", true, "Trustpilot URL base, e.g. https://www.trustpilot.com or https://es.trustpilot.com");
+		options.addOption(urlOption);		
 		
 		Option aliasOption = new Option("a", "alias", true, "Trustpilot client alias");
 		aliasOption.setRequired(true);
@@ -68,12 +69,16 @@ public class TrustpilotImporterLauncher {
 		try {
 			cmd = parser.parse(options, args);
 
+			String url = DEFAULT_TRUSTPILOT_URL_BASE;
 			String itag = DEFAULT_TRUSTPILOT_IMPORT_TAG;
 			String host = DEFAULT_SOLR_URL;
 			String alias = DEFAULT_TRUSTPILOT_THREAD_NAME;
-			List <String> filters = null;
 			
 			int timeInSeconds = DEFAULT_POOLING_TIME_IN_SECONDS;
+
+			if (cmd.hasOption("url") || cmd.hasOption("u")) {
+				url = cmd.getOptionValue("url");
+			}			
 			
 			if (cmd.hasOption("itag") || cmd.hasOption("i")) {
 				itag = cmd.getOptionValue("itag");
@@ -100,7 +105,7 @@ public class TrustpilotImporterLauncher {
 			}
 					
 			TrustpilotImporter importer = new TrustpilotImporter(host);
-			importer.start(null, alias, itag, timeInSeconds);
+			importer.start(url, alias, itag, timeInSeconds);
 			
 		}
 		catch (ParseException e) {

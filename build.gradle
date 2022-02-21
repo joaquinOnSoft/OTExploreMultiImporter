@@ -19,6 +19,8 @@ subprojects {
 	
     repositories {
         mavenCentral()
+        // Maven doesn't find JRAW's dependency
+        // Please see: https://www.reddit.com/r/redditdev/comments/7n12zw/maven_doesnt_find_jraws_dependency/
         jcenter()
     }
     
