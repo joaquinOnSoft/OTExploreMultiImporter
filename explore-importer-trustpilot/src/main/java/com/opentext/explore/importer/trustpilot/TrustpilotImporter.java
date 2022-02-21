@@ -75,7 +75,7 @@ public class TrustpilotImporter {
 			try {
 				reviews = scraper.getReviews();
 				if(reviews != null) {
-					
+					solrBatchUpdate(tTag, reviews);
 				}
 				
 				log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");
