@@ -25,9 +25,21 @@
         <Logger name="com.opentext.explore.connector" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
+        <Logger name="com.opentext.explore.importer.excel" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        <Logger name="com.opentext.explore.importer.http" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        <Logger name="com.opentext.explore.importer.reddit" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>        
         <Logger name="com.opentext.explore.importer.twitter" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>
+        <Logger name="com.opentext.explore.importer.trustpilot" level="debug" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>                
         <Logger name="com.opentext.explore.util" level="debug" additivity="true">
             <appender-ref ref="fileLogger" level="debug" />
         </Logger>                
