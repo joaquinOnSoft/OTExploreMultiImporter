@@ -21,6 +21,8 @@ package com.opentext.explore.importer.trushpilot;
 
 import org.junit.Test;
 
+import com.opentext.explore.importer.trustpilot.TrustpilotImporter;
+
 public class TestTrustpilotImporter {
 
 	@Test

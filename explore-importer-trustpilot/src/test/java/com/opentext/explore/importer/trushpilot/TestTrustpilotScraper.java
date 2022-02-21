@@ -28,6 +28,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.opentext.explore.importer.trushpilot.pojo.Review;
+import com.opentext.explore.importer.trustpilot.TrustpilotScraper;
 
 public class TestTrustpilotScraper {
 

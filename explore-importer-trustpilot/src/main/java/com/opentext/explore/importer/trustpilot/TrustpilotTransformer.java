@@ -17,7 +17,7 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot;
+package com.opentext.explore.importer.trustpilot;
 
 import java.io.File;
 import java.io.FileWriter;

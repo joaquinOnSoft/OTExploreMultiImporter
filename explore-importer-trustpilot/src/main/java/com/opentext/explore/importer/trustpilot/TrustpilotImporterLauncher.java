@@ -17,7 +17,7 @@
  *     Joaqu�n Garz�n - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot;
+package com.opentext.explore.importer.trustpilot;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

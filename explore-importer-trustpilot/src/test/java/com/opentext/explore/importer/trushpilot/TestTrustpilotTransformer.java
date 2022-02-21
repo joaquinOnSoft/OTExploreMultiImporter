@@ -33,6 +33,7 @@ import org.junit.Test;
 import com.opentext.explore.importer.trushpilot.pojo.Author;
 import com.opentext.explore.importer.trushpilot.pojo.Review;
 import com.opentext.explore.importer.trushpilot.pojo.ReviewRating;
+import com.opentext.explore.importer.trustpilot.TrustpilotTransformer;
 
 import junit.framework.TestCase;
 
