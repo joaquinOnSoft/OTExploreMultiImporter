@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.reddit;
@@ -39,11 +39,13 @@ import net.dean.jraw.models.Submission;
 
 /**
  * 
- * @author Joaquín Garzón
+ * @author Joaquï¿½n Garzï¿½n
  * @since 20.2 
  */
 public class RedditTransformer extends AbstractTransformer {
-	
+		
+	private static final String LANGUAG_ENGLISH = "en";
+
 	private static Document submissionsToDoc(Listing<Submission> posts, String tag) {
 		Document doc = null;
 		
@@ -55,7 +57,14 @@ public class RedditTransformer extends AbstractTransformer {
 			
 			for (Submission post : posts) {
 				Element eDoc = new Element("doc");
-							
+										
+				//Field required since Qfiniti 20.4: START
+				eDoc.addContent(createElementField("language", LANGUAG_ENGLISH));
+				//TODO: Avoid hardcoding sentiment as neutral
+				eDoc.addContent(createElementField("sentiment", "neutral"));				
+				eDoc.addContent(createElementField("summary", post.getTitle()));
+				//Field required since Qfiniti 20.4: END				
+				
 				eDoc.addContent(createElementField("reference_id", post.getId()));
 				eDoc.addContent(createElementField("interaction_id", post.getId()));
 				eDoc.addContent(createElementField("title", post.getTitle()));

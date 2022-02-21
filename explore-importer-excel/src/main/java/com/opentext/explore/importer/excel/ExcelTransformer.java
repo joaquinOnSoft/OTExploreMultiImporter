@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.excel;
@@ -39,6 +39,9 @@ import com.opentext.explore.importer.AbstractTransformer;
 import com.opentext.explore.importer.excel.pojo.TextData;
 
 public class ExcelTransformer extends AbstractTransformer {
+
+	private static final String LANGUAG_ENGLISH = "en";
+	
 	protected static final Logger log = LogManager.getLogger(ExcelTransformer.class);
 
 	private static Document textDataToDoc(List<TextData> txtDatas, String tag) {
@@ -53,6 +56,14 @@ public class ExcelTransformer extends AbstractTransformer {
 			for (TextData txtData : txtDatas) {
 				Element eDoc = new Element("doc");
 
+				//Field required since Qfiniti 20.4: START
+				// TODO: Avoid hard
+				eDoc.addContent(createElementField("language", LANGUAG_ENGLISH));
+				// TODO: Avoid hardcoding sentiment as neutral
+				eDoc.addContent(createElementField("sentiment", "neutral"));				
+				eDoc.addContent(createElementField("summary", txtData.getTitle()));
+				//Field required since Qfiniti 20.4: END					
+				
 				eDoc.addContent(createElementField("reference_id", txtData.getReferenceId()));
 				eDoc.addContent(createElementField("interaction_id", txtData.getInteractionId()));
 				eDoc.addContent(createElementField("title", txtData.getTitle()));
