@@ -39,9 +39,9 @@ public class TestTrustpilotScraper {
 		assertNotNull(reviews);
 		assertTrue(reviews.size() > 0);
 		// The number of comments can vary between execution.
-		// At the moment of writing this test, February 20th 2022, the figures are:
-		//    Total comments:       654
-		//    Comments in English:  304
+		// At the moment of writing this test, February 21th 2022, the figures are:
+		//    Total comments:       656
+		//    Comments in English:  306
 		assertEquals(304, reviews.size());
 	}
 }
