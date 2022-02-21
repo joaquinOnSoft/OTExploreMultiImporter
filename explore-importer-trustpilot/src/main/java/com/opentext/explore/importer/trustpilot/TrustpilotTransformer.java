@@ -67,7 +67,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 				eDoc.addContent(createElementField("title", review.getHeadline()));
 				eDoc.addContent(createElementField("author_name", review.getAuthor().getName()));
 				eDoc.addContent(createElementField("ID", review.generateId()));
-				eDoc.addContent(createElementField("type", "Review"));	
+				eDoc.addContent(createElementField("type", "Trustpilot"));	
 				eDoc.addContent(createElementField("published_date", review.getDatePublished()));
 				eDoc.addContent(createElementField("date_time", review.getDatePublished()));
 				eDoc.addContent(createElementField("content", new CDATA(review.getReviewBody())));				
