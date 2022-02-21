@@ -44,7 +44,7 @@ public class ExcelTransformer extends AbstractTransformer {
 	
 	protected static final Logger log = LogManager.getLogger(ExcelTransformer.class);
 
-	private static Document textDataToDoc(List<TextData> txtDatas, String tag) {
+	private static Document textDataToDoc(List<TextData> txtDatas, String tag, String language) {
 		Document doc = null;
 
 		if (txtDatas != null && txtDatas.size() > 0) {
@@ -58,7 +58,7 @@ public class ExcelTransformer extends AbstractTransformer {
 
 				//Field required since Qfiniti 20.4: START
 				// TODO: Avoid hard
-				eDoc.addContent(createElementField("language", LANGUAG_ENGLISH));
+				eDoc.addContent(createElementField("language", language));
 				// TODO: Avoid hardcoding sentiment as neutral
 				eDoc.addContent(createElementField("sentiment", "neutral"));				
 				eDoc.addContent(createElementField("summary", txtData.getTitle()));
@@ -99,11 +99,13 @@ public class ExcelTransformer extends AbstractTransformer {
 	 * https://stackoverflow.com/questions/23520208/how-to-create-xml-file-with-specific-structure-in-java
 	 * 
 	 * @param txtDatas
+	 * @param tag
+	 * @param language  - ISO 639-1 language code
 	 * @return
 	 */
-	public static String textDataToString(List<TextData> txtDatas, String tag) {
+	public static String textDataToString(List<TextData> txtDatas, String tag, String language) {
 		String xml = null;
-		Document doc = textDataToDoc(txtDatas, tag);
+		Document doc = textDataToDoc(txtDatas, tag, language);
 
 		if (doc != null) {
 			// Create the XML
@@ -116,6 +118,19 @@ public class ExcelTransformer extends AbstractTransformer {
 	}
 
 	/**
+	 * NOTE: Assume English as default language
+	 * 
+	 * @param txtData
+	 * @param fileName
+	 * @param tag
+	 * @return
+	 * @throws IOException
+	 */
+	public static String textDataToXMLFile(TextData txtData, String fileName, String tag) throws IOException {
+		return textDataToXMLFile(txtData, fileName, tag, LANGUAG_ENGLISH);
+	}
+	
+	/**
 	 * Generate a XML file using the given TextData (Excel or CSV row)
 	 * 
 	 * @param txtData  - TextData (Excel or CSV row)
@@ -123,11 +138,11 @@ public class ExcelTransformer extends AbstractTransformer {
 	 * @return path of the XML file created
 	 * @throws IOException
 	 */
-	public static String textDataToXMLFile(TextData txtData, String fileName, String tag) throws IOException {
+	public static String textDataToXMLFile(TextData txtData, String fileName, String tag, String language) throws IOException {
 		List<TextData> tempTextDatas = new LinkedList<TextData>();
 		tempTextDatas.add(txtData);
 
-		return textDatasToXMLFile(tempTextDatas, fileName, tag);
+		return textDatasToXMLFile(tempTextDatas, fileName, tag, language);
 	}
 
 	/**
@@ -136,12 +151,13 @@ public class ExcelTransformer extends AbstractTransformer {
 	 * @param textDatas - List of TextData (Excel or CSV row)
 	 * @param fileName  - File name of the XML that will be generated
 	 * @param tag       - Tag to be added to the TextData
+	 * @param language  - ISO 639-1 language code
 	 * @return Absolute path of the XML file created
 	 * @throws IOException
 	 */
-	public static String textDatasToXMLFile(List<TextData> textDatas, String fileName, String tag) throws IOException {
+	public static String textDatasToXMLFile(List<TextData> textDatas, String fileName, String tag, String language) throws IOException {
 		String xmlPath = null;
-		Document doc = textDataToDoc(textDatas, tag);
+		Document doc = textDataToDoc(textDatas, tag, language);
 
 		if (doc != null) {
 			// Create the XML
@@ -158,5 +174,21 @@ public class ExcelTransformer extends AbstractTransformer {
 		}
 
 		return xmlPath;
+	}
+	
+	
+	/**
+	 * Generate a XML file using the given TextData (Excel or CSV row)
+	 * 
+	 * NOTE: Assume English as default language
+	 * 
+	 * @param textDatas - List of TextData (Excel or CSV row)
+	 * @param fileName  - File name of the XML that will be generated
+	 * @param tag       - Tag to be added to the TextData
+	 * @return Absolute path of the XML file created
+	 * @throws IOException
+	 */	
+	public static String textDatasToXMLFile(List<TextData> textDatas, String fileName, String tag) throws IOException {
+		return textDatasToXMLFile(textDatas, fileName, tag, LANGUAG_ENGLISH);
 	}
 }

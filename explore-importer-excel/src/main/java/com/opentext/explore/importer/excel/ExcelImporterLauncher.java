@@ -34,12 +34,16 @@ import org.apache.logging.log4j.Logger;
 public class ExcelImporterLauncher {
 	private static final String DEFAULT_SOLR_URL = "http://localhost:8983";
 	private static final String DEFAULT_EXCEL_IMPORT_TAG = "Excel Importer";
+	private static final String DEFAULT_LANGUAGE_ENGLISH = "en";
 	
 	private static final Logger log = LogManager.getLogger(ExcelImporterLauncher.class);
 
 	public static void main(String[] args) {		
 		Options options = new Options();
 
+		Option languageOption = new Option("l", "lang", true, "ISO 639-1 language code. By default English (en)");
+		options.addOption(languageOption);			
+		
 		Option hostOption = new Option("h", "host", true, "Solr URL. Default value: http://localhost:8983");
 		options.addOption(hostOption);			
 		
@@ -65,11 +69,16 @@ public class ExcelImporterLauncher {
 		try {
 			cmd = parser.parse(options, args);
 
+			String language = DEFAULT_LANGUAGE_ENGLISH;
 			String tag = DEFAULT_EXCEL_IMPORT_TAG;
 			String host = DEFAULT_SOLR_URL;
 			String excelPath = null;
 			String configPath = null;
 			String contentType = null;
+			
+			if (cmd.hasOption("language") || cmd.hasOption("l")) {
+				language = cmd.getOptionValue("language");
+			}
 			
 			if (cmd.hasOption("tag") || cmd.hasOption("t")) {
 				tag = cmd.getOptionValue("tag");
@@ -101,7 +110,7 @@ public class ExcelImporterLauncher {
 			}			
 						
 			ExcelImporter importer = new ExcelImporter(host);
-			importer.start(excelPath, configPath, contentType, tag);
+			importer.start(excelPath, configPath, contentType, tag, language);
 			
 		}
 		catch (ParseException e) {

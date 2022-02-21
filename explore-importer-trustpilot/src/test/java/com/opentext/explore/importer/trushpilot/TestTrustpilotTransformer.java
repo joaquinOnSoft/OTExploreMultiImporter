@@ -24,19 +24,16 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.opentext.explore.importer.trushpilot.pojo.Author;
 import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.util.DateUtil;
 
 import junit.framework.TestCase;
-import net.dean.jraw.models.Listing;
-import net.dean.jraw.models.Submission;
 
 
 public class TestTrustpilotTransformer extends TestCase {
@@ -65,22 +62,23 @@ public class TestTrustpilotTransformer extends TestCase {
 	@Before
 	public void setUp() {
 		Review review = mock(Review.class);
-		when(review.getId()).thenReturn("h10u12");	
-		when(review.getTitle()).thenReturn("Any lawyers here willing to help the Canadian public mount a class action against Canada Post ?");	
-		when(review.getAuthor()).thenReturn("Imaproholdmybeer");	
-		try {
-			when(review.getCreated()).thenReturn(DateUtil.utcToDate("2020-06-11T02:55:40Z"));
-		} catch (ParseException e) {
-			fail(e.getMessage());
-		}
-		when(review.getSelfText()).thenReturn("Hi,\n\nAs you may be aware of, millions of Canadians are experiencing absurd delays with their postal service.\n\nDuring this crisis it became obvious to me that a lot of packages were being delivered on time, while others that are following the same route are accruing late days.\n\nI believe that Canada Post performance management is directly responsible for this situation. It is a way to reduce the charge backs from corporate clients and normal consumers.\n\nA better performance management process would include multiple KPIs and would adapt to ensure that the average wait time of late packs does not exceed reasonable expectations. Canada Post choose not to have such measures in place. And now we're all paying the price.\n\nFurthermore, because of their improper measurement of their network, they had to offer overtime and proceed with new \"emergency hires\". I believe this, along with the fact that their network is overloaded and therefor their surveillance capacity probably diminished, will result in an unprecedented amount of missing / stolen packages.\n\nI believe the Canadian public deserves answer, and that Canada Post management must be made accountable.\n\nManaging Canada Post on behalf of Canadians is a privilege. This is OUR postal service and we entrusted it in the care of these people, now it's no longer working and their management is creating unfair situations and making the delays worse for everybody.\n\nLets do something.\n\n&amp;#x200B;\n\nEDIT: We should send them a legal notice that they need to deliver the packs in order or face legal actions for violation of Canada Post Corporation Act. You can see the laws I believe were violated in the comments below.\n\n&amp;#x200B;");	
-		when(review.getSubreddit()).thenReturn("CanadaPost");	
-		when(review.getScore()).thenReturn(196);	
-		when(review.getPermalink()).thenReturn("/r/CanadaPost/comments/h10u12/any_lawyers_here_willing_to_help_the_canadian/");	
-		when(review.getUrl()).thenReturn("https://www.reddit.com/r/CanadaPost/comments/h10u12/any_lawyers_here_willing_to_help_the_canadian/");	
-		when(review.getThumbnail()).thenReturn("self");	
+		when(review.generateId()).thenReturn(123456789l);	
+		when(review.getHeadline()).thenReturn("Any lawyers here willing to help the Canadian public mount a class action against Canada Post ?");
 		
+		Author author = new Author();
+		author.setImage("");
+		author.setName("");
+		author.setType("");
+		author.setUrl("");
+		when(review.getAuthor()).thenReturn(author);
 		
+		when(review.getAuthor().getName()).thenReturn("");	
+
+		when(review.getDatePublished()).thenReturn("2020-06-11T02:55:40Z");
+		
+		when(review.getReviewBody()).thenReturn("Hi,\n\nAs you may be aware of, millions of Canadians are experiencing absurd delays with their postal service.\n\nDuring this crisis it became obvious to me that a lot of packages were being delivered on time, while others that are following the same route are accruing late days.\n\nI believe that Canada Post performance management is directly responsible for this situation. It is a way to reduce the charge backs from corporate clients and normal consumers.\n\nA better performance management process would include multiple KPIs and would adapt to ensure that the average wait time of late packs does not exceed reasonable expectations. Canada Post choose not to have such measures in place. And now we're all paying the price.\n\nFurthermore, because of their improper measurement of their network, they had to offer overtime and proceed with new \"emergency hires\". I believe this, along with the fact that their network is overloaded and therefor their surveillance capacity probably diminished, will result in an unprecedented amount of missing / stolen packages.\n\nI believe the Canadian public deserves answer, and that Canada Post management must be made accountable.\n\nManaging Canada Post on behalf of Canadians is a privilege. This is OUR postal service and we entrusted it in the care of these people, now it's no longer working and their management is creating unfair situations and making the delays worse for everybody.\n\nLets do something.\n\n&amp;#x200B;\n\nEDIT: We should send them a legal notice that they need to deliver the packs in order or face legal actions for violation of Canada Post Corporation Act. You can see the laws I believe were violated in the comments below.\n\n&amp;#x200B;");		
+		when(review.getReviewRating().getRatingValue()).thenReturn("1");	
+				
 		reviews = new LinkedList<Review>();
 		reviews.add(review);
 	}
@@ -88,7 +86,7 @@ public class TestTrustpilotTransformer extends TestCase {
 	@Test
 	public void testStatusToString() {
 		
-		String xml = TrustpilotTransformer.reviewsToString(posts, "Canada Post");
+		String xml = TrustpilotTransformer.reviewsToString(reviews, "Canada Post");
 		
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
 				"<add>\r\n" +
@@ -103,7 +101,7 @@ public class TestTrustpilotTransformer extends TestCase {
 		String outputXML = "test_h10u12.xml";
 				
 		try {
-			TrustpilotTransformer.reviewsToXMLFile(posts, outputXML, "Canada Post");
+			TrustpilotTransformer.reviewsToXMLFile(reviews, outputXML, "Canada Post");
 		} catch (IOException e) {
 			fail(e.getMessage());
 		}

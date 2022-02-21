@@ -117,6 +117,7 @@ public abstract class AbstractConfigGenerator  implements ISolrFields {
 			str = StringUtil.camelCaseToHumanReadable(str);
 			str = StringUtil.snakeCaseToHumanReadable(str);	
 			str = str.replaceAll("\\s{2,}", " ").trim();
+			str = str.toLowerCase();
 		}
 		return str;
 	}	

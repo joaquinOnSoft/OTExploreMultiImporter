@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquï¿½n Garzï¿½n - initial implementation
+ *     Joaquín Garzón - initial implementation
  *
  */
 package com.opentext.explore.importer.trushpilot;
@@ -34,30 +34,16 @@ import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.AbstractTransformer;
 import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.util.Hash;
-
-import net.dean.jraw.models.Listing;
-import net.dean.jraw.models.Submission;
 
 /**
  * 
- * @author JoaquÃ­n GarzÃ³n
+ * @author Joaquín Garzón
  * @since 22.02.16 
  */
 public class TrustpilotTransformer extends AbstractTransformer {
-	
-	private static long generateId(Review review) {
-		StringBuffer id = new StringBuffer();
-		id.append(review.getAuthor().getName());
-		id.append(review.getHeadline());
-		id.append(review.getDatePublished());
 		
-		return Hash.hash(id.toString());		
-	}
-	
 	private static Document reviewsToDoc(List<Review> reviews, String tag) {
-		Document doc = null;
-		long id = -1;
+		Document doc = null;		
 		
 		if(reviews != null && reviews.size() > 0) {
 			
@@ -68,20 +54,19 @@ public class TrustpilotTransformer extends AbstractTransformer {
 			for (Review review : reviews) {
 				Element eDoc = new Element("doc");
 						
-				id = generateId(review);
-
+			
 				//Field required since Qfiniti 20.4: START
-				eDoc.addContent(createElementField("language", review.getInLanguage()));
+				eDoc.addContent(createElementField("language", review.generateId()));
 				//TODO: Avoid hardcoding sentiment as neutral
 				eDoc.addContent(createElementField("sentiment", "neutral"));				
 				eDoc.addContent(createElementField("summary", review.getHeadline()));
 				//Field required since Qfiniti 20.4: END				
 				
-				eDoc.addContent(createElementField("reference_id", id));
-				eDoc.addContent(createElementField("interaction_id", id));
+				eDoc.addContent(createElementField("reference_id", review.generateId()));
+				eDoc.addContent(createElementField("interaction_id", review.generateId()));
 				eDoc.addContent(createElementField("title", review.getHeadline()));
 				eDoc.addContent(createElementField("author_name", review.getAuthor().getName()));
-				eDoc.addContent(createElementField("ID", id));
+				eDoc.addContent(createElementField("ID", review.generateId()));
 				eDoc.addContent(createElementField("type", "Review"));	
 				eDoc.addContent(createElementField("published_date", review.getDatePublished()));
 				eDoc.addContent(createElementField("date_time", review.getDatePublished()));
@@ -152,9 +137,9 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @param statuses
 	 * @return
 	 */
-	public static String reviewsToString(Listing<Submission> posts, String tag) {
+	public static String reviewsToString(List<Review> reviews, String tag) {
 		String xml = null;
-		Document doc = submissionsToDoc(posts, tag);
+		Document doc = reviewsToDoc(reviews, tag);
 
 		if(doc != null) {
 			//Create the XML

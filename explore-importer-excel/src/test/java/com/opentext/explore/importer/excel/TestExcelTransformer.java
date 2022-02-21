@@ -42,10 +42,15 @@ import com.opentext.explore.util.DateUtil;
 
 public class TestExcelTransformer{
 
+	private static final String LANGUAGE_SPANISH = "es";
+	
 	private List<TextData> txtDatas;
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" +
+			"    <field name=\"language\"><![CDATA[es]]></field>\r\n" + 
+			"    <field name=\"sentiment\"><![CDATA[neutral]]></field>\r\n" +
+			"    <field name=\"summary\"><![CDATA[1583916 Quejas de siniestros/prestaciones]]></field>\r\n"+ 
 			"    <field name=\"reference_id\"><![CDATA[1583916]]></field>\r\n" +
 			"    <field name=\"interaction_id\"><![CDATA[1583916]]></field>\r\n" +
 			"    <field name=\"title\"><![CDATA[1583916 Quejas de siniestros/prestaciones]]></field>\r\n" +
@@ -116,7 +121,7 @@ public class TestExcelTransformer{
 	@Test
 	public void testTextDataToString() {
 		
-		String xml = ExcelTransformer.textDataToString(txtDatas, "Insurance");
+		String xml = ExcelTransformer.textDataToString(txtDatas, "Insurance", LANGUAGE_SPANISH);
 		
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
 				"<add>\r\n" +
@@ -131,7 +136,7 @@ public class TestExcelTransformer{
 		String outputXML = "test_h10u12.xml";
 				
 		try {
-			ExcelTransformer.textDatasToXMLFile(txtDatas, outputXML, "Insurance");
+			ExcelTransformer.textDatasToXMLFile(txtDatas, outputXML, "Insurance", LANGUAGE_SPANISH);
 		} catch (IOException e) {
 			fail(e.getMessage());
 		}

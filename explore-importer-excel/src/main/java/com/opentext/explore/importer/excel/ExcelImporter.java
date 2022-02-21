@@ -46,7 +46,7 @@ public class ExcelImporter {
 	}
 	
 	
-	public void start(String excelPaht, String configPath, String contentType, String tag) {
+	public void start(String excelPaht, String configPath, String contentType, String tag, String language) {
 		log.debug("Reading config file: " + configPath);
 		JSonMappingConfigReader configReader = new JSonMappingConfigReader();
 		TextDataImporterMapping mapping = configReader.read(configPath);
@@ -59,7 +59,7 @@ public class ExcelImporter {
 			if(txtDatas != null && txtDatas.size() > 0) {
 				log.debug(txtDatas.size() + " excel rows readed");
 				log.debug("Calling Solr method: /solr/interaction/otcaBatchUpdate ");
-				solrBatchUpdate(tag, txtDatas);
+				solrBatchUpdate(tag, language, txtDatas);
 			}
 			else {
 				log.info("Excel file doesn't exists or it doensn't contains data");
@@ -75,17 +75,18 @@ public class ExcelImporter {
 	 * order to insert new content
 	 * 
 	 * @param tag      - Excel Importer tag (used to filter content in Explore)
+	 * @param language
 	 * @param txtDatas - List of Text Data (Excel or CSV row)
 	 * @return true if the insertion in Solr was OK, false in other case.
 	 */
-	protected boolean solrBatchUpdate(String tag, List<TextData> txtDatas) {
+	protected boolean solrBatchUpdate(String tag, String language, List<TextData> txtDatas) {
 		boolean updated = true;
 
 		String xmlPath = null;
 		String xmlFileName = FileUtil.getRandomFileName(".xml");
 		try {
 
-			xmlPath = ExcelTransformer.textDatasToXMLFile(txtDatas, xmlFileName, tag);
+			xmlPath = ExcelTransformer.textDatasToXMLFile(txtDatas, xmlFileName, tag, language);
 			log.debug("Temp XML file generated: " + xmlPath);
 			
 			SolrAPIWrapper wrapper = null;

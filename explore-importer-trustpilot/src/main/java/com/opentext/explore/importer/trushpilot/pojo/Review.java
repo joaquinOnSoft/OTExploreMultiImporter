@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.opentext.explore.util.Hash;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "inLanguage"
 })
 public class Review {
-
+	
     @JsonProperty("@type")
     private String type;
     @JsonProperty("itemReviewed")
@@ -162,5 +163,15 @@ public class Review {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
-
+    
+	public long generateId() {
+		StringBuffer id = new StringBuffer();
+		id.append(author.getName());
+		id.append("-");
+		id.append(headline);
+		id.append("-");
+		id.append(datePublished);
+		
+		return Hash.hash(id.toString());		
+	}
 }
