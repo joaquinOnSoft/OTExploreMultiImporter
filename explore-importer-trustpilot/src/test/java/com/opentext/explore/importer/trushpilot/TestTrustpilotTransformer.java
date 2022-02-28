@@ -52,7 +52,7 @@ public class TestTrustpilotTransformer extends TestCase {
 			"    <field name=\"title\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
 			"    <field name=\"author_name\"><![CDATA[Michael Flick]]></field>\r\n" +
 			"    <field name=\"ID\"><![CDATA[123456789]]></field>\r\n" +
-			"    <field name=\"type\"><![CDATA[Review]]></field>\r\n" +
+			"    <field name=\"type\"><![CDATA[Trustpilot]]></field>\r\n" +
 			"    <field name=\"published_date\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
 			"    <field name=\"date_time\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
 			"    <field name=\"content\"><![CDATA[Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.]]></field>\r\n" +
