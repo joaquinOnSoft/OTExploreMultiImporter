@@ -32,7 +32,7 @@ import com.opentext.explore.importer.trustpilot.TrustpilotScraper;
 
 public class TestTrustpilotScraper {
 
-	@Test
+	//@Test
 	public void getReviews() {
 		TrustpilotScraper scraper = new TrustpilotScraper("bancsabadell.com");
 		List<Review> reviews = scraper.getReviews();
@@ -50,7 +50,7 @@ public class TestTrustpilotScraper {
 		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
 	}
 	
-	@Test
+	//@Test
 	public void getReviewsFromFrenchSubdomain() {
 		TrustpilotScraper scraper = new TrustpilotScraper("https://fr.trustpilot.com", "www.coriolis.com");
 		List<Review> reviews = scraper.getReviews();

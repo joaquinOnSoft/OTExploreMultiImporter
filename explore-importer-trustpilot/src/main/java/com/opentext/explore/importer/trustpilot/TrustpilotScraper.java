@@ -156,8 +156,8 @@ public class TrustpilotScraper {
 			String jsonStr = script.html();
 			log.debug("JSON: " + jsonStr);	
 
-
-
+			jsonStr = jsonStr.replace("\\\\\"", "`");
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
 				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			

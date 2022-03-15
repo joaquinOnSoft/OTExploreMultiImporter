@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="language">es</field>
+    <field name="sentiment">neutral</field>
+    <field name="summary">&#x1f474;&#x1f475; Con motivo del Día Mundial de los Derechos del Consumidor lanzamos una guía para ayudar a las personas #mayores “a saber comprar”.
+#DíaMundialDeLosDerechosDelConsumidor
+ &#x1f449;&#x1f3fb;https://t.co/e542iipCIS https://t.co/mTC3FtFXSA</field>
+    <field name="reference_id">1503711367286738954</field>
+    <field name="interaction_id">1503711367286738954</field>
+    <field name="title">&#x1f474;&#x1f475; Con motivo del Día Mundial de los Derechos del Consumidor lanzamos una guía para ayudar a las personas #mayores “a saber comprar”.
+#DíaMundialDeLosDerechosDelConsumidor
+ &#x1f449;&#x1f3fb;https://t.co/e542iipCIS https://t.co/mTC3FtFXSA</field>
+    <field name="author_name">Ayuntamiento Madrid</field>
+    <field name="ID">1503711367286738954</field>
+    <field name="type">Twitter</field>
+    <field name="published_date">2022-03-15T13:35:02Z</field>
+    <field name="date_time">2022-03-15T13:35:02Z</field>
+    <field name="content">&#x1f474;&#x1f475; Con motivo del Día Mundial de los Derechos del Consumidor lanzamos una guía para ayudar a las personas #mayores “a saber comprar”.
+#DíaMundialDeLosDerechosDelConsumidor
+ &#x1f449;&#x1f3fb;https://t.co/e542iipCIS https://t.co/mTC3FtFXSA</field>
+    <field name="es_content">&#x1f474;&#x1f475; Con motivo del Día Mundial de los Derechos del Consumidor lanzamos una guía para ayudar a las personas #mayores “a saber comprar”.
+#DíaMundialDeLosDerechosDelConsumidor
+ &#x1f449;&#x1f3fb;https://t.co/e542iipCIS https://t.co/mTC3FtFXSA</field>
+    <field name="profile_img">https://pbs.twimg.com/profile_images/1391641762398081024/kbttNbzw_bigger.jpg</field>
+    <field name="followers">763518</field>
+    <field name="following">121</field>
+    <field name="favorite_count">6</field>
+    <field name="retweet_count">3</field>
+    <field name="latitude">0</field>
+    <field name="longitude">0</field>
+    <field name="itag">Ayto. Madrid</field>
+  </doc>
+</add>
