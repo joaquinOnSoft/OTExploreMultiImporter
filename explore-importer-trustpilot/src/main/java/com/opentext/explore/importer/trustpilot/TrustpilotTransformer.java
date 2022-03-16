@@ -33,7 +33,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.AbstractTransformer;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
+import com.opentext.explore.importer.trustpilot.pojo.Graph;
 
 /**
  * 
@@ -42,7 +42,7 @@ import com.opentext.explore.importer.trushpilot.pojo.Review;
  */
 public class TrustpilotTransformer extends AbstractTransformer {
 		
-	private static Document reviewsToDoc(List<Review> reviews, String tag) {
+	private static Document reviewsToDoc(List<Graph> reviews, String tag) {
 		Document doc = null;		
 		
 		if(reviews != null && reviews.size() > 0) {
@@ -51,12 +51,11 @@ public class TrustpilotTransformer extends AbstractTransformer {
 			//Root Element
 			Element root=new Element("add");
 			
-			for (Review review : reviews) {
+			for (Graph review : reviews) {
 				Element eDoc = new Element("doc");
 						
-			
 				//Field required since Qfiniti 20.4: START
-				eDoc.addContent(createElementField("language", review.getInLanguage().toLowerCase()));
+				eDoc.addContent(createElementField("language", review.getInLanguage()));
 				//TODO: Avoid hardcoding sentiment as neutral
 				eDoc.addContent(createElementField("sentiment", "neutral"));				
 				eDoc.addContent(createElementField("summary", review.getHeadline()));
@@ -92,8 +91,8 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @return path of the XML file created
 	 * @throws IOException
 	 */	
-	public static String reviewsToXMLFile(Review review, String fileName, String tag) throws IOException {
-		List<Review> reviews = new LinkedList<Review>();
+	public static String reviewsToXMLFile(Graph review, String fileName, String tag) throws IOException {
+		List<Graph> reviews = new LinkedList<Graph>();
 		reviews.add(review);
 	
 		return reviewsToXMLFile(reviews, fileName, tag);
@@ -107,7 +106,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @return Absolute path of the XML file created
 	 * @throws IOException
 	 */
-	public static String reviewsToXMLFile(List<Review> reviews, String fileName, String tag) throws IOException {
+	public static String reviewsToXMLFile(List<Graph> reviews, String fileName, String tag) throws IOException {
 		String xmlPath = null;
 		Document doc = reviewsToDoc(reviews, tag);
 
@@ -135,7 +134,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @param statuses
 	 * @return
 	 */
-	public static String reviewsToString(List<Review> reviews, String tag) {
+	public static String reviewsToString(List<Graph> reviews, String tag) {
 		String xml = null;
 		Document doc = reviewsToDoc(reviews, tag);
 

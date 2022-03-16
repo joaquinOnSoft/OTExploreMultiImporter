@@ -31,9 +31,8 @@ import org.jsoup.nodes.Element;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opentext.explore.importer.http.URLReader;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainer;
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainerType;
+import com.opentext.explore.importer.trustpilot.pojo.Graph;
+import com.opentext.explore.importer.trustpilot.pojo.TrustpilotReviewContainer;
 
 public class TrustpilotScraper {
 
@@ -74,38 +73,28 @@ public class TrustpilotScraper {
 		}
 	}
 
-	public List<Review> getReviews(){
+	public List<Graph> getReviews(){
 		String pageURL = url;
-		List<Review> reviews = null;
-		List<Review> reviewsTmp = null;
-		TrustpilotReviewContainer[] reviewContainers = null;
+		List<Graph> reviews = null;
+		TrustpilotReviewContainer reviewContainers = null;
 		Document doc = null;
 
 		do {	
 			doc = readPage(pageURL);			
 			reviewContainers= getReviewsContainer(doc);
 
-			TrustpilotReviewContainerType type = null;
-			for (TrustpilotReviewContainer container : reviewContainers) {
+			String type = null;
+			
+			for (Graph graph : reviewContainers.graph) {
 
-				type = TrustpilotReviewContainerType.getContainerTypeFromString(container.getType());
+				type = graph.type;
 
-				switch(type) {
-				case LOCAL_BUSINESS:
-					reviewsTmp = container.getReview();
-					if(reviewsTmp != null && reviewsTmp.size() > 0 ) {
-						if (reviews == null) {
-							reviews = new LinkedList<Review>();
-						}
-
-						reviews.addAll(reviewsTmp);
+				if(type != null && type.compareTo("Review") == 0) {
+					if (reviews == null) {
+						reviews = new LinkedList<Graph>();
 					}
-					break;
-				case BREADCRUMB_LIST:
-					//Intentionally empty
-				case DATASET:
-					//Intentionally empty
-					break;	
+
+					reviews.add(graph);
 				}
 			}
 
@@ -147,8 +136,8 @@ public class TrustpilotScraper {
 	 * @param pageURL - Trustpilot page URL
 	 * @return 
 	 */
-	private TrustpilotReviewContainer[] getReviewsContainer(Document doc) {
-		TrustpilotReviewContainer[] reviewContainer = null;
+	private TrustpilotReviewContainer getReviewsContainer(Document doc) {
+		TrustpilotReviewContainer reviewContainer = null;
 
 		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
 
@@ -160,7 +149,7 @@ public class TrustpilotScraper {
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
-				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
+				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer.class);			
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}

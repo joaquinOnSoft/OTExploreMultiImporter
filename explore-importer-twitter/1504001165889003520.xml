@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="language">es</field>
+    <field name="sentiment">neutral</field>
+    <field name="summary">@Laura87alc En relación con la consulta planteada le informamos de que puede dirigirse al servicio oficial de atención a la ciudadanía del Ayuntamiento de Madrid a través de:
+- Teléfono 010
+- Perfil de Twitter: @Lineamadrid
+- Asistente bot virtual de https://t.co/WdG0gi97xg</field>
+    <field name="reference_id">1504001165889003520</field>
+    <field name="interaction_id">1504001165889003520</field>
+    <field name="title">@Laura87alc En relación con la consulta planteada le informamos de que puede dirigirse al servicio oficial de atención a la ciudadanía del Ayuntamiento de Madrid a través de:
+- Teléfono 010
+- Perfil de Twitter: @Lineamadrid
+- Asistente bot virtual de https://t.co/WdG0gi97xg</field>
+    <field name="author_name">Ayuntamiento Madrid</field>
+    <field name="ID">1504001165889003520</field>
+    <field name="type">Twitter</field>
+    <field name="published_date">2022-03-16T08:46:35Z</field>
+    <field name="date_time">2022-03-16T08:46:35Z</field>
+    <field name="content">@Laura87alc En relación con la consulta planteada le informamos de que puede dirigirse al servicio oficial de atención a la ciudadanía del Ayuntamiento de Madrid a través de:
+- Teléfono 010
+- Perfil de Twitter: @Lineamadrid
+- Asistente bot virtual de https://t.co/WdG0gi97xg</field>
+    <field name="es_content">@Laura87alc En relación con la consulta planteada le informamos de que puede dirigirse al servicio oficial de atención a la ciudadanía del Ayuntamiento de Madrid a través de:
+- Teléfono 010
+- Perfil de Twitter: @Lineamadrid
+- Asistente bot virtual de https://t.co/WdG0gi97xg</field>
+    <field name="profile_img">https://pbs.twimg.com/profile_images/1391641762398081024/kbttNbzw_bigger.jpg</field>
+    <field name="followers">763578</field>
+    <field name="following">121</field>
+    <field name="favorite_count">0</field>
+    <field name="retweet_count">0</field>
+    <field name="latitude">0</field>
+    <field name="longitude">0</field>
+    <field name="itag">Ayto. Madrid</field>
+  </doc>
+</add>
