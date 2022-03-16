@@ -1,5 +1,7 @@
 package com.opentext.explore.importer.mail;
 
+import java.io.File;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -32,16 +34,25 @@ public class EML2ExcelLauncher {
 				path = cmd.getOptionValue("path");
 			}
 			
+			if(path != null) {
+				File parentFolder = new File(path);
+				if(parentFolder.isDirectory()) {
+					Eml2Excel converter = new Eml2Excel();
+					String outputFile = converter.process(parentFolder);
+					
+					System.out.println("Output file generated: " + outputFile);
+				}
+				else {
+					System.err.println("'path' should be a directory");
+				}
+			}
+			
 		}
 		catch (ParseException e) {
 			formatter.printHelp("java -jar OTExploreRedditImporter.20.4.jar --rtag \"Reddit Canada Post\" --subreddit CanadaPost", options);
 
-			exitInError(e);	
+			log.error(e.getMessage());
+			System.exit(-1);	
 		}
-	}
-	
-	private static void exitInError(Exception e) {
-		log.error(e.getMessage());
-		System.exit(-1);	
 	}
 }

@@ -13,6 +13,6 @@ public class TestEml2Excel {
 		String fileName = converter.createOutputFileName();
 		assertNotNull(fileName);
 		assertTrue(fileName.startsWith("EML2Excel-"));
-		assertTrue(fileName.endsWith(".xls"));
+		assertTrue(fileName.endsWith(".xlsx"));
 	}	
 }
