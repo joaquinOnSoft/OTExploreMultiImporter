@@ -37,7 +37,7 @@ public class EML2ExcelLauncher {
 			if(path != null) {
 				File parentFolder = new File(path);
 				if(parentFolder.isDirectory()) {
-					Eml2Excel converter = new Eml2Excel();
+					EML2Excel converter = new EML2Excel();
 					String outputFile = converter.process(parentFolder);
 					
 					System.out.println("Output file generated: " + outputFile);

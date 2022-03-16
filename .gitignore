@@ -26,7 +26,12 @@ explore-importer-excel/Explore.Configuration.xml
 explore-importer-excel/schema.xml
 
 explore-importer-core/*.log
-explore-importer-reddit/*.log
 explore-importer-excel/*.log
+explore-importer-mail/*.xlsx
+explore-importer-mail/*.log
+explore-importer-reddit/*.log
 explore-importer-trustpilot/*.log
 explore-importer-twitter/*.log
+explore-importer-twitter/*.xml
+
+

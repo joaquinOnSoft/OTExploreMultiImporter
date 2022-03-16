@@ -36,4 +36,6 @@ dependencies {
 	//Vulnerabilities from dependencies: CVE-2020-15250
 	implementation 'com.sun.mail:javax.mail:1.6.2'
 	
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation 'org.jsoup:jsoup:1.14.3'	
 }
