@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -14,6 +15,15 @@ import java.util.Date;
  * @since 20.2
  */
 public class DateUtil {
+	
+	public static String now(String format) {
+		Date date = Calendar.getInstance().getTime();  
+		DateFormat dateFormat = new SimpleDateFormat(format);  
+		String strDate = dateFormat.format(date);  
+		
+		return strDate;
+	}
+	
 	/**
 	 * Return current time in UTC format, e.g.
 	 * 2020-05-21T16:30:52.123Z

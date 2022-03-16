@@ -19,6 +19,7 @@
  */
 package com.opentext.explore.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -27,6 +28,8 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -67,5 +70,22 @@ public class TestFileUtil{
 		}
 		
 		assertFalse(FileUtil.isFile(cwd));
+	}
+	
+	@Test
+	public void testFindFiles() {
+		File mail = FileUtil.getFileFromResources("mail-sample-01.eml");
+		assertNotNull(mail);
+		
+		String folder = mail.getParent();
+		List<String> mails = null;
+		try {
+			mails = FileUtil.findFiles(Paths.get(folder), "eml");
+		} catch (IOException e) {
+			fail(e.getMessage());
+		}
+		
+		assertNotNull(mails);
+		assertEquals(2, mails.size());
 	}
 }
