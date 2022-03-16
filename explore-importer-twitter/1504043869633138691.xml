@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="language">es</field>
+    <field name="sentiment">neutral</field>
+    <field name="summary">@aespejom_7 @JMD_SanBlas Hola. Ya hay un aviso cursado con número  7029383, el cual se encuentra asignado a la  Unidad de Conservación de Zonas Verdes - ÁG. Medio Ambiente del Ayuntamiento de Madrid para su tramitación. Un saludo</field>
+    <field name="reference_id">1504043869633138691</field>
+    <field name="interaction_id">1504043869633138691</field>
+    <field name="title">@aespejom_7 @JMD_SanBlas Hola. Ya hay un aviso cursado con número  7029383, el cual se encuentra asignado a la  Unidad de Conservación de Zonas Verdes - ÁG. Medio Ambiente del Ayuntamiento de Madrid para su tramitación. Un saludo</field>
+    <field name="author_name">Línea Madrid</field>
+    <field name="ID">1504043869633138691</field>
+    <field name="type">Twitter</field>
+    <field name="published_date">2022-03-16T11:36:16Z</field>
+    <field name="date_time">2022-03-16T11:36:16Z</field>
+    <field name="content">@aespejom_7 @JMD_SanBlas Hola. Ya hay un aviso cursado con número  7029383, el cual se encuentra asignado a la  Unidad de Conservación de Zonas Verdes - ÁG. Medio Ambiente del Ayuntamiento de Madrid para su tramitación. Un saludo</field>
+    <field name="es_content">@aespejom_7 @JMD_SanBlas Hola. Ya hay un aviso cursado con número  7029383, el cual se encuentra asignado a la  Unidad de Conservación de Zonas Verdes - ÁG. Medio Ambiente del Ayuntamiento de Madrid para su tramitación. Un saludo</field>
+    <field name="profile_img">https://pbs.twimg.com/profile_images/1199975871706255360/5WPMGIA2_bigger.jpg</field>
+    <field name="followers">175833</field>
+    <field name="following">411</field>
+    <field name="favorite_count">0</field>
+    <field name="retweet_count">0</field>
+    <field name="latitude">0</field>
+    <field name="longitude">0</field>
+    <field name="itag">Ayto. Madrid</field>
+  </doc>
+</add>

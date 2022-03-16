@@ -3,7 +3,7 @@ jar {
 	
     manifest {
         attributes 'Implementation-Title': 'OpenText Explore Twitter Importer',  
-        	'Implementation-Version': version,
+        	'Implementation-Version': archiveVersion.get(),
         	'Main-Class': 'com.opentext.explore.importer.twitter.TwitterImporterLauncher'
     }
  			 				

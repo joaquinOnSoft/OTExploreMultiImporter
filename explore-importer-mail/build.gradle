@@ -1,11 +1,11 @@
 jar {   
 	//archiveFileName = "${rootProject.name}-${project.name}-${archiveVersion.get()}.jar"
-	archiveFileName = "${rootProject.name}-trustpilot-${archiveVersion.get()}.jar"
+	archiveFileName = "${rootProject.name}-mail-${archiveVersion.get()}.jar"
 
     manifest {
-        attributes 'Implementation-Title': 'OpenText Explore Trustpilot Importer',  
+        attributes 'Implementation-Title': 'OpenText Explore mail Importer',  
         	'Implementation-Version': archiveVersion.get(),
-        	'Main-Class': 'com.opentext.explore.importer.trustpilot.TrustpilotImporterLauncher'
+        	'Main-Class': 'com.opentext.explore.importer.mail.MailImporterLauncher'
     }
  
     from {

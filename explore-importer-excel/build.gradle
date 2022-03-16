@@ -5,7 +5,7 @@ jar {
 	
     manifest {
         attributes 'Implementation-Title': 'OpenText Explore Excel Importer',  
-        	'Implementation-Version': version,
+        	'Implementation-Version': archiveVersion.get(),
         	'Main-Class': 'com.opentext.explore.importer.excel.ExcelImporterLauncher'
     }
  
