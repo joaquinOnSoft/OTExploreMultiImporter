@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class TestFile2MimeMessage {
 		
 		try {
 			assertNotNull(message.getFrom());
-			assertEquals("joaquin.opentext@gmail.com", message.getFrom()[0].toString());
+			assertEquals("joaquin.opentext@gmail.com", ((InternetAddress) message.getFrom()[0]).getAddress());
 		} catch (MessagingException e) {
 			fail(e.getMessage());
 		}		

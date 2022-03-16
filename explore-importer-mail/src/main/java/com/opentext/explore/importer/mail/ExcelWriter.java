@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.mail.Address;
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.logging.log4j.LogManager;
@@ -80,15 +81,15 @@ public class ExcelWriter {
 	
 	            //"From", "TO", "CC", "Subject", "Body", "Date"
 	
-	            row.createCell(0).setCellValue(message.getFrom()[0].toString()); //FROM
+	            row.createCell(0).setCellValue(((InternetAddress) message.getFrom()[0]).getAddress()); //FROM
 	
 	            for(Address address: message.getAllRecipients()) {
 	            	switch (address.getType()) {
 					case "TO":
-						to.append(address.toString()).append(" ");
+						to.append(((InternetAddress) address).getAddress()).append(" ");
 						break;
 					case "CC":
-						cc.append(address.toString()).append(" ");
+						cc.append(((InternetAddress) address).getAddress()).append(" ");
 						break;
 					}
 	            }
