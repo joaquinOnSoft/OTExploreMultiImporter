@@ -24,37 +24,37 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.opentext.explore.importer.trushpilot.pojo.Author;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.importer.trushpilot.pojo.ReviewRating;
+import com.opentext.explore.importer.trustpilot.TrustpilotReview;
 import com.opentext.explore.importer.trustpilot.TrustpilotTransformer;
+import com.opentext.explore.util.DateUtil;
 
 import junit.framework.TestCase;
 
 
 public class TestTrustpilotTransformer extends TestCase {
 
-	List<Review> reviews;
+	List<TrustpilotReview> reviews;
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" + 
 			"    <field name=\"language\"><![CDATA[en]]></field>\r\n" +
 			"    <field name=\"sentiment\"><![CDATA[neutral]]></field>\r\n" +
 			"    <field name=\"summary\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
-			"    <field name=\"reference_id\"><![CDATA[123456789]]></field>\r\n" +
-			"    <field name=\"interaction_id\"><![CDATA[123456789]]></field>\r\n" +
+			"    <field name=\"reference_id\"><![CDATA[https://www.trustpilot.com/#/schema/Review/www.sabadell.com/5fb22f7e5e693f0acce99fc6]]></field>\r\n" +
+			"    <field name=\"interaction_id\"><![CDATA[https://www.trustpilot.com/#/schema/Review/www.sabadell.com/5fb22f7e5e693f0acce99fc6]]></field>\r\n" +
 			"    <field name=\"title\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
 			"    <field name=\"author_name\"><![CDATA[Michael Flick]]></field>\r\n" +
-			"    <field name=\"ID\"><![CDATA[123456789]]></field>\r\n" +
+			"    <field name=\"ID\"><![CDATA[https://www.trustpilot.com/#/schema/Review/www.sabadell.com/5fb22f7e5e693f0acce99fc6]]></field>\r\n" +
 			"    <field name=\"type\"><![CDATA[Trustpilot]]></field>\r\n" +
-			"    <field name=\"published_date\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
-			"    <field name=\"date_time\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
+			"    <field name=\"published_date\"><![CDATA[2022-02-18T12:46:25Z]]></field>\r\n" +
+			"    <field name=\"date_time\"><![CDATA[2022-02-18T12:46:25Z]]></field>\r\n" +
 			"    <field name=\"content\"><![CDATA[Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.]]></field>\r\n" +
 			"    <field name=\"ratingValue\"><![CDATA[1]]></field>\r\n" +
 			"    <field name=\"ttag\"><![CDATA[TrustPilot Review]]></field>\r\n" +
@@ -62,22 +62,21 @@ public class TestTrustpilotTransformer extends TestCase {
 	
 	@Before
 	public void setUp() {
-		Review review = mock(Review.class);
-		when(review.generateId()).thenReturn(123456789l);	
+		TrustpilotReview review = mock(TrustpilotReview.class);
+		
+		when(review.getId()).thenReturn("https://www.trustpilot.com/#/schema/Review/www.sabadell.com/5fb22f7e5e693f0acce99fc6");	
 		when(review.getHeadline()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
-		when(review.getDatePublished()).thenReturn("2022-02-18T12:46:25.000Z");		
+		try {
+			when(review.getDatePublished()).thenReturn(DateUtil.strToDate("2022-02-18T12:46:25.000Z", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+		} catch (ParseException e) {
+			fail(e.getLocalizedMessage());
+		}		
 		when(review.getReviewBody()).thenReturn("Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.");
-		when(review.getInLanguage()).thenReturn("en");
-						
-		Author author = mock(Author.class);
-		when(review.getAuthor()).thenReturn(author);
-		when(review.getAuthor().getName()).thenReturn("Michael Flick");	
-				
-		ReviewRating rating = mock(ReviewRating.class);
-		when(review.getReviewRating()).thenReturn(rating);		
-		when(review.getReviewRating().getRatingValue()).thenReturn("1");	
-				
-		reviews = new LinkedList<Review>();
+		when(review.getLanguage()).thenReturn("en");							
+		when(review.getAuthor()).thenReturn("Michael Flick");						
+		when(review.getRating()).thenReturn(1);
+		
+		reviews = new LinkedList<TrustpilotReview>();
 		reviews.add(review);
 	}
 	

@@ -19,7 +19,6 @@
  */
 package com.opentext.explore.importer.trushpilot;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -27,7 +26,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.opentext.explore.importer.trushpilot.pojo.Review;
+import com.opentext.explore.importer.trustpilot.TrustpilotReview;
 import com.opentext.explore.importer.trustpilot.TrustpilotScraper;
 
 public class TestTrustpilotScraper {
@@ -35,7 +34,7 @@ public class TestTrustpilotScraper {
 	@Test
 	public void getReviews() {
 		TrustpilotScraper scraper = new TrustpilotScraper("bancsabadell.com");
-		List<Review> reviews = scraper.getReviews();
+		List<TrustpilotReview> reviews = scraper.getReviews();
 		
 		assertNotNull(reviews);
 		assertTrue(reviews.size() > 0);
@@ -43,27 +42,27 @@ public class TestTrustpilotScraper {
 		// At the moment of writing this test, February 21th 2022, the figures are:
 		//    Total comments:       656
 		//    Comments in English:  306
-		assertEquals(306, reviews.size());
+		assertTrue(306 <= reviews.size());
+
 		assertNotNull(reviews.get(0).getHeadline());
 		assertNotNull(reviews.get(0).getReviewBody());
-		assertNotNull(reviews.get(0).getReviewRating());
-		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
+		assertNotNull(reviews.get(0).getRating());
 	}
 	
 	@Test
 	public void getReviewsFromFrenchSubdomain() {
 		TrustpilotScraper scraper = new TrustpilotScraper("https://fr.trustpilot.com", "www.coriolis.com");
-		List<Review> reviews = scraper.getReviews();
+		List<TrustpilotReview> reviews = scraper.getReviews();
 		
 		assertNotNull(reviews);
 		assertTrue(reviews.size() > 0);
 		// The number of comments can vary between execution.
 		// At the moment of writing this test, February 21th 2022, the figures are:
 		//    Total comments:       320
-		assertEquals(299, reviews.size());
+		assertTrue(299 <= reviews.size());
 		assertNotNull(reviews.get(0).getHeadline());
 		assertNotNull(reviews.get(0).getReviewBody());
-		assertNotNull(reviews.get(0).getReviewRating());
-		assertNotNull(reviews.get(0).getReviewRating().getRatingValue());
+		assertNotNull(reviews.get(0).getRating());
+
 	}	
 }
