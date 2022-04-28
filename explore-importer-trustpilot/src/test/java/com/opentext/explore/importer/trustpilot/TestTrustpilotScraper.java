@@ -17,7 +17,7 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot;
+package com.opentext.explore.importer.trustpilot;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -25,9 +25,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Test;
-
-import com.opentext.explore.importer.trustpilot.TrustpilotReview;
-import com.opentext.explore.importer.trustpilot.TrustpilotScraper;
 
 public class TestTrustpilotScraper {
 

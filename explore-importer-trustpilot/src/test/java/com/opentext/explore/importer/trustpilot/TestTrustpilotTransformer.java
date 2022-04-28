@@ -17,7 +17,7 @@
  *     Joaqu�n Garz�n - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot;
+package com.opentext.explore.importer.trustpilot;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,8 +31,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.opentext.explore.importer.trustpilot.TrustpilotReview;
-import com.opentext.explore.importer.trustpilot.TrustpilotTransformer;
 import com.opentext.explore.util.DateUtil;
 
 import junit.framework.TestCase;
