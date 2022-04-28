@@ -258,3 +258,7 @@ We must define new fields to be able to import extra metadata related with each 
 ```
 
 > **NOTE:** Field must be named using lowercase
+
+
+## Apply the changes on your instance
+Please, see [apply the changes on your instance](.(applying-changes-on-your-instance.md)
