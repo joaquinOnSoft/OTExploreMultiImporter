@@ -7,7 +7,7 @@ These text messages are inserted into the Solr Server used by **OpenText Explore
 Once the messages are available in **OpenText Explore** you can create your owns dashboards to analyze the information listened.
 
 
-> [OpenText™ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
+> [OpenTextâ„¢ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
 
 ## Command line execution 
 
@@ -467,4 +467,4 @@ We must define new fields to be able to import extra metadata related with each 
 
 
 ## Apply the changes on your instance
-Please, see [apply the changes on your instance](.(applying-changes-on-your-instance.md)
+Please, see [apply the changes on your instance](./applying-changes-on-your-instance.md)
