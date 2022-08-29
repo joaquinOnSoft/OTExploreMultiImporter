@@ -11,5 +11,6 @@ rootProject.name = 'OTExploreMultiImporter'
 include('explore-importer-core')
 include('explore-importer-excel')
 include('explore-importer-reddit')
+include('explore-importer-tripadvisor')
 include('explore-importer-trustpilot')
 include('explore-importer-twitter')
