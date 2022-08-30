@@ -28,5 +28,8 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'		
 	
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
-	implementation 'org.jsoup:jsoup:1.14.3'			
+	implementation 'org.jsoup:jsoup:1.14.3'		
+	
+	// https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit
+	implementation 'net.sourceforge.htmlunit:htmlunit:2.64.0'		
 }

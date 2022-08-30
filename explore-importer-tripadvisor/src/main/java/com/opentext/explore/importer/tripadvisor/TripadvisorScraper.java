@@ -19,26 +19,26 @@
  */
 package com.opentext.explore.importer.tripadvisor;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
 
-import org.apache.http.cookie.Cookie;
+import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.Connection.Method;
-import org.jsoup.Connection.Response;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.opentext.explore.importer.http.URLReader;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.HttpHeader;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.opentext.explore.importer.tripadvisor.pojo.Review;
-import com.opentext.explore.importer.tripadvisor.pojo.TrustpilotReviewContainer;
-import com.opentext.explore.importer.tripadvisor.pojo.TrustpilotReviewContainerType;
+import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public class TripadvisorScraper {
 
@@ -50,6 +50,7 @@ public class TripadvisorScraper {
 
 	private String url;	
 	private String urlBase;
+	private WebClient webClient;
 
 	/**
 	 * Initialize tripadvisor.com review page scraper 
@@ -67,174 +68,188 @@ public class TripadvisorScraper {
 	 * <ul>
 	 *    <li>https://www.tripadvisor.com</li>    
 	 * </ul>
-	 * @param clienteAlias - Client alias in <strong>trustpilot.com</strong>
-	 * <i>Example</i>: bancsabadell.com
+	 * @param searchTerm - search term in <strong>tripadvisor.com</strong>
+	 * <i>Example</i>: clubmed
 	 * 
 	 */
 	public TripadvisorScraper(String urlBase, String searchTerm) {
 		if(urlBase != null) {
 			this.urlBase = urlBase;
 			this.url = urlBase + SEARCH_URL + searchTerm;
+			
+			LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+
+			java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF); 
+			java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.OFF);		
+			
+			webClient = new WebClient(BrowserVersion.CHROME);
+			webClient.getOptions().setThrowExceptionOnScriptError(false);		
+			webClient.getCookieManager().setCookiesEnabled(true);
+			//TODO make language accepted a parameter
+			webClient.addRequestHeader(HttpHeader.ACCEPT_LANGUAGE, "en");
 		}
 	}
 
 	public List<Review> getReviews(){
 		String pageURL = url;
-		List<Review> reviews = null;
-		List<Review> reviewsTmp = null;
-		TrustpilotReviewContainer[] reviewContainers = null;
-		Document doc = null;
+		List<TAReview> reviews = null;
 
-		do {	
-			doc = readPage(pageURL);
-			if(doc != null) {
-				reviewContainers= getReviewsContainer(doc);
-	
-				TrustpilotReviewContainerType type = null;
-				for (TrustpilotReviewContainer container : reviewContainers) {
-	
-					type = TrustpilotReviewContainerType.getContainerTypeFromString(container.getType());
-	
-					switch(type) {
-					case LOCAL_BUSINESS:
-						reviewsTmp = container.getReview();
-						if(reviewsTmp != null && reviewsTmp.size() > 0 ) {
-							if (reviews == null) {
-								reviews = new LinkedList<Review>();
-							}
-	
-							reviews.addAll(reviewsTmp);
-						}
-						break;
-					case BREADCRUMB_LIST:
-						//Intentionally empty
-					case DATASET:
-						//Intentionally empty
-						break;	
-					}
-				}
-	
-				pageURL = getNextPageURL(doc);
-			}
-			else {
-				pageURL = null;
-			}
-		}
-		while(pageURL != null);
+		HtmlPage page = null;
 
-		return reviews;
-	}
-
-	private Document readPage(String pageURL) {
-		log.info("Reading page: " + pageURL);
-
-		/*
-		URLReader reader = new URLReader(pageURL);
-		reader.setHeader(URLReader.HEADER_USER_AGENT, URLReader.LATEST_CHROME_ON_WINDOWS);
-		reader.setHeader(URLReader.HEADER_REFERRER_POLICY, URLReader. STRICT_ORIGIN_WHEN_CROSS_ORIGIN);
-		
-		String html = reader.read();
-		
-		Cookie coockie = reader.getCoockieByName("OptanonConsent");
-		log.debug("\t OptanonConsent: " + coockie.getValue());
-		*/
-		Document doc;
-		try {
-			int calls = 0;
-			String sid = null;
-			do {
-				pageURL = pageURL + "&searchSessionId=nullsession" + Instant.now().toEpochMilli();
-				if(sid != null) {
-					pageURL = pageURL + "&sid=" + sid;
-				}
-				
-				log.info("URL({}): {}", calls, pageURL);
-				Response res = Jsoup
-					    .connect(pageURL)				    
-					    .method(Method.GET)
-					    .cookie("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36")
-					    .followRedirects(true)
-					    .execute();
-	
-				log.debug("\t ----------------- BODY:\n\n");
-				//log.debug(res.body());
-	
-				//This will get you cookies
-				Map<String, String> cookies = res.cookies();
-				
-				log.debug("\t ----------------- COOKIES:");			
-				log.debug(cookies.toString());
-				sid = cookies.get("TASID");
-				
-				calls++;
-			}while(calls < 2);
+		page = readSearchPage(pageURL);
+		if(page != null) {
+			List<String> hotelLinks = getListSearchResults(page);
 			
-			/*
-			String url2= pageURL + "&sid=" + cookies.get("TASID") + "&searchSessionId=nullsession" + Instant.now().toEpochMilli() ;
-			log.info("Reading page: " + url2);
-			res = Jsoup
-				    .connect(url2)				    
-				    .method(Method.GET)
-				    .cookie("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36")				    
-				    .execute();
-			log.debug("\t ----------------- BODY 2:\n\n");
-			log.debug("\t ----------------- COOKIES:");			
-			log.debug(cookies.toString());			
-			//log.debug(res.body());			
-			*/
-		} catch (IOException e) {
-			log.debug( e );
-		}
-				
-		return null;
-		//return Jsoup.parse(html);
-	}
+			if(hotelLinks != null && hotelLinks.size() > 0) {
+				Document hotelPage = null;
+				for(String link: hotelLinks) {
+					page = readPage(link);
+					
+					log.debug("----------------------------------");
+					log.debug(link);
+					log.debug("----------------------------------");
+					log.debug(page.getDocumentElement().getElementsByTagName("title"));
+					log.debug("----------------------------------");
+					
+					//List<DomElement> reviewCards = page.getByXPath("//div[@class='member_info']");
+					List<DomElement> quoteDivs = page.getByXPath("//div[@class='quote']");
+					List<DomElement> entryDivs = page.getByXPath("//div[@class='entry']");
+					
+					if(quoteDivs != null) {
+						int numQuotes = quoteDivs.size();
+						if(numQuotes > 0) {
+							List<DomElement> partialEntryP = null; 
+							List<DomElement> postSnippetSpan = null;
+							String partialEntryStr= null; 
+							String postSnippetStr = null;
+							
+							if(reviews == null) {
+								reviews = new LinkedList<TAReview>();								
+							}
+							TAReview taReview = new TAReview();
+							for(int i=0; i<numQuotes; i++) {
+								taReview.setTitle(quoteDivs.get(i).asNormalizedText());
 
-	private String getNextPageURL(Document doc) {
-		String nextPageURL = null;
-
-		Element link = doc.select("a[name=pagination-button-next]").first();
-
-		if(link != null) {
-			String href = link.attr("href");
-			if (href != null) {
-				if(href.startsWith("http")) {
-					nextPageURL = href;
-				}
-				else {
-					nextPageURL = urlBase + href;
+								partialEntryP = entryDivs.get(i).getByXPath("//p[@class='partial_entry']");
+								if(partialEntryP != null && partialEntryP.size() > 0) {
+									partialEntryStr = partialEntryP.get(0).asNormalizedText().replace("...More", "");
+								}								
+								
+								postSnippetSpan = entryDivs.get(i).getByXPath("//span[@class='postSnippet']");
+								if(postSnippetSpan != null && postSnippetSpan.size() > 0) {
+									postSnippetStr = postSnippetSpan.get(0).asNormalizedText();
+								}
+								
+								if(partialEntryStr != null && postSnippetStr != null) {
+									taReview.setContent(partialEntryStr + " " + postSnippetStr);
+								}
+							}
+							
+							reviews.add(taReview);
+						}
+					}
+					
+					for(TAReview rev: reviews) {
+						log.debug("Review:{}", rev.toString());
+					}
+					
+					return null;
 				}
 			}
 		}
-		return nextPageURL;
+		
+		return null; //TODO change for reviews
 	}
 
 	/**
-	 * Read the given page and return the embedded JSON including the Trushpilot review
-	 * @param pageURL - Trustpilot page URL
-	 * @return 
+	 * Read Tripadvisor search page.
+	 * <strong>NOTE</strong>: It requires 2 reads of the page.
+	 *    - 1st read doesn't includes the 'searchSessionId'. It's generated in 
+	 *      the client browser (executing js code), so we need library that 
+	 *      emulates a browser, not just a pure URL reader 
+	 *    - 2nd read includes the 'searchSessionId' recovered from the 1st read
+	 * This behavior force us to use an additional library called <strong>HTMLUnit</strong>
+	 * @param pageURL - Tripadvisor search URL 
+	 * @return
 	 */
-	private TrustpilotReviewContainer[] getReviewsContainer(Document doc) {
-		TrustpilotReviewContainer[] reviewContainer = null;
-
-		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
-
-		if(script != null) {
-			String jsonStr = script.html();
-			log.debug("JSON: " + jsonStr);	
-
-
-
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
-			} catch (IOException e) {
-				log.error(e.getMessage());
+	private HtmlPage readSearchPage(String pageURL) {
+		log.info("Read page: " + pageURL);
+		HtmlPage page = null;
+		
+		if(webClient != null) {		
+			int count= 0;
+			String searchSessionId = null;			
+			
+			do {
+				if (searchSessionId != null) {
+					pageURL += "&searchSessionId=" + searchSessionId;
+				}
+											
+				page = readPage(pageURL);
+				
+				if(page != null) {
+					List<DomElement> nodeList = page.getElementsByName("searchSessionId");
+					for (DomElement element : nodeList) {
+						log.debug("searchSessionId: " + element.getAttribute("value"));
+						searchSessionId = element.getAttribute("value");
+					}				
+				}
+				count++;
 			}
-
-			log.debug(reviewContainer);
+			while(count < 2);
+			
+			webClient.close();
 		}
 
-		return reviewContainer;
+		return page;
 	}
+
+	private List<String> getListSearchResults(HtmlPage page){
+		List<String> searchResults = null;
+		if(page != null) {
+			int start, end= -1;
+			String onClicTxt=null;
+			String link = null;
+			
+			List<DomElement> resultTitles = page.getByXPath("//div[@class='location-meta-block']/div[@class='result-title']");
+			for (DomElement element : resultTitles) {
+				log.debug(element.getAttribute("onclick"));
+				onClicTxt = element.getAttribute("onclick");
+				
+				start = onClicTxt.indexOf("/");
+				end = onClicTxt.indexOf("', {type");
+				
+				if(start != -1 && end != -1) {
+					link = urlBase + onClicTxt.substring(start, end);
+					log.debug(link);
+					
+					if(searchResults == null) {
+						searchResults = new LinkedList<String>();
+					}
+					
+					searchResults.add(link);
+				}
+			}			
+		}
+		return searchResults;
+	}
+	
+	/**
+	 * Read a HTML page using HTMLUnit library
+	 * @param pageURL - page URL
+	 * @return
+	 */
+	private HtmlPage readPage(String pageURL) {
+		HtmlPage page = null;
+		
+		log.info("Reading page: " + pageURL);
+		
+		try {			
+			page = webClient.getPage(pageURL);
+		} catch (FailingHttpStatusCodeException | IOException e) {
+			log.error("Initializing web client: ", e);
+		}
+		
+		return page;
+	}	
 }
