@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.opentext.explore.connector.SolrAPIWrapper;
 import com.opentext.explore.importer.tripadvisor.pojo.Review;
+import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.FileUtil;
 
 
@@ -67,7 +68,7 @@ public class TripadvisorImporter {
 	 * @param timeInSeconds - Seconds between each call against Trustpilot site
 	 */
 	public void start(String urlBase, String clientAlias, String tTag, int timeInSeconds) {		
-		List<Review> reviews = null;
+		List<TAReview> reviews = null;
 		TripadvisorScraper scraper = new TripadvisorScraper(urlBase, clientAlias);
 		
 		do {
@@ -75,7 +76,7 @@ public class TripadvisorImporter {
 			try {
 				reviews = scraper.getReviews();
 				if(reviews != null) {
-					solrBatchUpdate(tTag, reviews);
+					//solrBatchUpdate(tTag, reviews);
 				}
 				
 				log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");

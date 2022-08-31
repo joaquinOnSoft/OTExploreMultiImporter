@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 
@@ -51,5 +52,13 @@ public class DateUtil {
 	
 	public static Date strToDate(String strDate, String format) throws ParseException {
 		return new SimpleDateFormat(format).parse(strDate);
+	}
+
+	public static Date strEngToDate(String strDate, String format) throws ParseException {
+		return new SimpleDateFormat(format, Locale.ENGLISH).parse(strDate);
 	}	
+	
+	public static Date strToDate(String strDate, Locale locale, String format) throws ParseException {
+		return new SimpleDateFormat(format, locale).parse(strDate);
+	}		
 }

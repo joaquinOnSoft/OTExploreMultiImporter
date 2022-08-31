@@ -1,6 +1,6 @@
 package com.opentext.explore.importer.tripadvisor.pojo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TAReview {
 	private String author;

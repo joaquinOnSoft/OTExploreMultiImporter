@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import org.junit.Test;
 
@@ -76,5 +77,31 @@ public class TestDateUtil{
 		} catch (ParseException e) {
 			fail(e.getMessage());
 		}
-	}	
+	}
+
+	@Test
+	public void testStrWithLocaleToDate() {
+		final String strDate = "June 22, 2022";
+		final String format = "MMM d, yyyy";
+		
+		try {
+			Date date = DateUtil.strToDate(strDate, Locale.ENGLISH, format);
+			assertEquals("Wed Jun 22 00:00:00 CEST 2022", date.toString());
+		} catch (ParseException e) {
+			fail(e.getMessage());
+		}
+	}		
+	
+	@Test
+	public void testStrEngToDate() {
+		final String strDate = "June 22, 2022";
+		final String format = "MMM d, yyyy";
+		
+		try {
+			Date date = DateUtil.strEngToDate(strDate, format);
+			assertEquals("Wed Jun 22 00:00:00 CEST 2022", date.toString());
+		} catch (ParseException e) {
+			fail(e.getMessage());
+		}
+	}		
 }

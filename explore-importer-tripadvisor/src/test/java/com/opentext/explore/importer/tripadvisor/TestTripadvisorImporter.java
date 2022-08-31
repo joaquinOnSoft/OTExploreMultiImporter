@@ -21,8 +21,6 @@ package com.opentext.explore.importer.tripadvisor;
 
 import org.junit.Test;
 
-import com.opentext.explore.importer.tripadvisor.TripadvisorImporter;
-
 public class TestTripadvisorImporter {
 
 	@Test

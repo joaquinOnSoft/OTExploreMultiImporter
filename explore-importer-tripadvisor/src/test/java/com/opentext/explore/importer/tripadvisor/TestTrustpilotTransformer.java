@@ -33,7 +33,6 @@ import org.junit.Test;
 import com.opentext.explore.importer.tripadvisor.pojo.Author;
 import com.opentext.explore.importer.tripadvisor.pojo.Review;
 import com.opentext.explore.importer.tripadvisor.pojo.ReviewRating;
-import com.opentext.explore.importer.tripadvisor.TripadvisorTransformer;
 
 import junit.framework.TestCase;
 
