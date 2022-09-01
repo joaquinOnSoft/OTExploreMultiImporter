@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.GregorianCalendar;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
+import com.opentext.explore.util.DateUtil;
 
 import junit.framework.TestCase;
 
@@ -44,31 +45,35 @@ public class TestTripAdvisorTransformer extends TestCase {
 			"  <doc>\r\n" + 
 			"    <field name=\"language\"><![CDATA[en]]></field>\r\n" +
 			"    <field name=\"sentiment\"><![CDATA[neutral]]></field>\r\n" +
-			"    <field name=\"summary\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
-			"    <field name=\"reference_id\"><![CDATA[123456789]]></field>\r\n" +
-			"    <field name=\"interaction_id\"><![CDATA[123456789]]></field>\r\n" +
-			"    <field name=\"title\"><![CDATA[Banco Sabadell's attitude & 'Customer…]]></field>\r\n" +
-			"    <field name=\"author_name\"><![CDATA[Michael Flick]]></field>\r\n" +
-			"    <field name=\"ID\"><![CDATA[123456789]]></field>\r\n" +
-			"    <field name=\"type\"><![CDATA[Trustpilot]]></field>\r\n" +
-			"    <field name=\"published_date\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
-			"    <field name=\"date_time\"><![CDATA[2022-02-18T12:46:25.000Z]]></field>\r\n" +
-			"    <field name=\"content\"><![CDATA[Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.]]></field>\r\n" +
-			"    <field name=\"ratingValue\"><![CDATA[1]]></field>\r\n" +
-			"    <field name=\"ttag\"><![CDATA[TrustPilot Review]]></field>\r\n" +
+			"    <field name=\"summary\"><![CDATA[Good for family]]></field>\r\n" +
+			"    <field name=\"reference_id\"><![CDATA[857585531]]></field>\r\n" +
+			"    <field name=\"interaction_id\"><![CDATA[857585531]]></field>\r\n" +
+			"    <field name=\"title\"><![CDATA[Good for family]]></field>\r\n" +
+			"    <field name=\"author_name\"><![CDATA[Renee Nien Yi P]]></field>\r\n" +
+			"    <field name=\"ID\"><![CDATA[857585531]]></field>\r\n" +
+			"    <field name=\"type\"><![CDATA[TripAdvisor]]></field>\r\n" +
+			"    <field name=\"published_date\"><![CDATA[2022-08-01T00:00:00Z]]></field>\r\n" +
+			"    <field name=\"date_time\"><![CDATA[2022-08-01T00:00:00Z]]></field>\r\n" +
+			"    <field name=\"content\"><![CDATA[Great choice for family trip,  friendly sport / activity teams members that keep you occupied during your stay.  All inclusive with child care provided! Looking forward to join Club Med in different location.]]></field>\r\n" +
+			"    <field name=\"ratingValue\"><![CDATA[5]]></field>\r\n" +
+			"    <field name=\"ttag\"><![CDATA[TripAdvisor Review]]></field>\r\n" +
 			"  </doc>\r\n"; 
 	
 	@Before
 	public void setUp() {
 		TAReview review = mock(TAReview.class);
-		when(review.getId()).thenReturn("123456789l2");	
-		when(review.getTitle()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
-		when(review.getCreationDate()).thenReturn(GregorianCalendar.getInstance().getTime());//"2022-02-18T12:46:25.000Z"		
-		when(review.getContent()).thenReturn("Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.");
+		when(review.getId()).thenReturn("857585531");	
+		when(review.getTitle()).thenReturn("Good for family");		
+		try {
+			when(review.getCreationDate()).thenReturn(DateUtil.strToDate("2022-08-01", "yyyy-MM-dd"));
+		} catch (ParseException e) {
+			fail(e.getMessage());
+		}		
+		when(review.getContent()).thenReturn("Great choice for family trip,  friendly sport / activity teams members that keep you occupied during your stay.  All inclusive with child care provided! Looking forward to join Club Med in different location. ");
 		when(review.getLanguage()).thenReturn("en");
 								
-		when(review.getAuthor()).thenReturn("");			
-		when(review.getRating()).thenReturn(1);	
+		when(review.getAuthor()).thenReturn("Renee Nien Yi P");			
+		when(review.getRating()).thenReturn(5);	
 				
 		reviews = new LinkedList<TAReview>();
 		reviews.add(review);
@@ -77,7 +82,7 @@ public class TestTripAdvisorTransformer extends TestCase {
 	@Test
 	public void testStatusToString() {
 		
-		String xml = TripadvisorTransformer.reviewsToString(reviews, "TrustPilot Review");
+		String xml = TripadvisorTransformer.reviewsToString(reviews, "TripAdvisor Review");
 		
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
 				"<add>\r\n" +
@@ -89,7 +94,7 @@ public class TestTripAdvisorTransformer extends TestCase {
 	
 	@Test 
 	public void testStatusToXMLFile() {
-		String outputXML = "test_20220221_927653.xml";
+		String outputXML = "test_20220901_927653.xml";
 				
 		try {
 			TripadvisorTransformer.reviewsToXMLFile(reviews, outputXML, "TrustPilot Review");

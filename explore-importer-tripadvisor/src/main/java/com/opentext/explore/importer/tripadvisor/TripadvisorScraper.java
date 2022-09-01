@@ -15,7 +15,7 @@
  *
  *   Contributors:
  *     Joaquín Garzón - initial implementation
- * @since 22.08.25
+ * @since 22.09.01
  */
 package com.opentext.explore.importer.tripadvisor;
 
@@ -58,16 +58,22 @@ public class TripadvisorScraper {
 	
 	private String url;	
 	private String urlBase;
+	private String searchTerm;
+	private boolean exactSearch;
 	private WebClient webClient;
 
 	/**
 	 * Initialize tripadvisor.com review page scraper 
 	 * @param searchTearm - search term in <strong>tripadvisor.com</strong>
-	 * <i>Example</i>: clubmed
+	 * <i>Example</i>: clubmed or 'club med'
 	 */
 	public TripadvisorScraper(String searchTearm) {
-		this(BASE_URL, searchTearm);
+		this(searchTearm, false);
 	}
+	
+	public TripadvisorScraper(String searchTearm, boolean exactSearch) {
+		this(BASE_URL, searchTearm, exactSearch);
+	}	
 
 	/**
 	 * Initialize tripadvisor.com review page scraper 
@@ -80,10 +86,12 @@ public class TripadvisorScraper {
 	 * <i>Example</i>: clubmed
 	 * 
 	 */
-	public TripadvisorScraper(String urlBase, String searchTerm) {
+	public TripadvisorScraper(String urlBase, String searchTerm, boolean exactSearch) {
 		if(urlBase != null) {
 			this.urlBase = urlBase;
 			this.url = urlBase + SEARCH_URL + searchTerm;
+			this.searchTerm = searchTerm;
+			this.exactSearch = exactSearch;
 
 			//Disable logs for 'HTMLUnit' library, is too noisy. 
 			LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
@@ -117,6 +125,13 @@ public class TripadvisorScraper {
 
 			if(links != null && links.size() > 0) {
 				for(String link: links) {
+					if(exactSearch) {
+						if(link.contains(searchTerm.replace(" ", "_"))) {
+							log.info("Skipping link: {}", link);
+							continue;
+						}
+					}
+					
 					if(link.startsWith(URL_INIT_RESTAURANT_REVIEW)) {
 						//Do nothing 
 						//We just want to process Hotel at this time.

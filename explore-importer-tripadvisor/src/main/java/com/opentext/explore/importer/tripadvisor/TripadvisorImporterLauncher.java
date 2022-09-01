@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquï¿½n Garzï¿½n - initial implementation
+ *     Joaquín Garzón - initial implementation
  *
  */
 package com.opentext.explore.importer.tripadvisor;
@@ -32,13 +32,11 @@ import org.apache.logging.log4j.Logger;
 /**
  * 
  * @author Joaquín Garzón
- * @since 22.08.25
+ * @since 22.09.01
  */
 public class TripadvisorImporterLauncher {
-	private static final String DEFAULT_TRUSTPILOT_URL_BASE = "https://www.trustpilot.com";
-	private static final String DEFAULT_TRUSTPILOT_THREAD_NAME = "bancsabadell.com";
 	private static final String DEFAULT_SOLR_URL = "http://localhost:8983";
-	private static final String DEFAULT_TRUSTPILOT_IMPORT_TAG = "Trustpilot Review";
+	private static final String DEFAULT_TRIPADVISOR_IMPORT_TAG = "TripaAdvisor Review";
 	private static final int DEFAULT_POOLING_TIME_IN_SECONDS = 300;
 	
 	private static final Logger log = LogManager.getLogger(TripadvisorImporterLauncher.class);
@@ -49,13 +47,13 @@ public class TripadvisorImporterLauncher {
 		Option hostOption = new Option("h", "host", true, "Solr URL. Default value: http://localhost:8983");
 		options.addOption(hostOption);			
 		
-		Option itagOption = new Option("i", "itag", true, "Explore Importer tag. Added to each article importer");
-		options.addOption(itagOption);		
+		Option itagOption = new Option("i", "itag", true, "Explore Importer tag. Added to each article importer. Default value `TripaAdvisor Review`");
+		options.addOption(itagOption);
 		
-		Option urlOption = new Option("u", "url", true, "Trustpilot URL base, e.g. https://www.trustpilot.com or https://es.trustpilot.com");
-		options.addOption(urlOption);		
-		
-		Option aliasOption = new Option("a", "alias", true, "Trustpilot client alias, e.g. In https://www.trustpilot.com/review/bancsabadell.com the alias is 'bancsabadell.com'");
+		Option exactOption = new Option("e", "exact", false, "Exact match. If set the search term must be contained in the page title or url");
+		options.addOption(exactOption);				
+				
+		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com");
 		aliasOption.setRequired(true);
 		options.addOption(aliasOption);
 		
@@ -69,16 +67,12 @@ public class TripadvisorImporterLauncher {
 		try {
 			cmd = parser.parse(options, args);
 
-			String url = DEFAULT_TRUSTPILOT_URL_BASE;
-			String itag = DEFAULT_TRUSTPILOT_IMPORT_TAG;
+			String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
 			String host = DEFAULT_SOLR_URL;
-			String alias = DEFAULT_TRUSTPILOT_THREAD_NAME;
-			
+			boolean exactMatch = false;
+			String searchTerm = null;
+						
 			int timeInSeconds = DEFAULT_POOLING_TIME_IN_SECONDS;
-
-			if (cmd.hasOption("url") || cmd.hasOption("u")) {
-				url = cmd.getOptionValue("url");
-			}			
 			
 			if (cmd.hasOption("itag") || cmd.hasOption("i")) {
 				itag = cmd.getOptionValue("itag");
@@ -87,9 +81,13 @@ public class TripadvisorImporterLauncher {
 			if (cmd.hasOption("host") || cmd.hasOption("h")) {
 				host = cmd.getOptionValue("host");
 			}				
+
+			if (cmd.hasOption("exact") || cmd.hasOption("e")) {
+				exactMatch = true;
+			}				
 			
-			if (cmd.hasOption("alias") || cmd.hasOption("a")) {
-				alias = cmd.getOptionValue("alias");
+			if (cmd.hasOption("search") || cmd.hasOption("s")) {
+				searchTerm = cmd.getOptionValue("search");
 			}	
 			
 			if (cmd.hasOption("time") || cmd.hasOption("t")) {
@@ -98,14 +96,14 @@ public class TripadvisorImporterLauncher {
 					timeInSeconds = Integer.parseInt(strTimeInSeconds);
 				}
 				catch(NumberFormatException e) {
-					formatter.printHelp("java -jar OTExploreTrustImporter.22.02.16.jar --itag Trustpilot --alias bancsabadell.com", options);
+					formatter.printHelp("java -jar OTExploreTripAdvisorImporter.22.09.01.jar --itag TripAdvisor --search \"club med\"", options);
 
 					exitInError(e);
 				}
 			}
 					
 			TripadvisorImporter importer = new TripadvisorImporter(host);
-			importer.start(url, alias, itag, timeInSeconds);
+			importer.start(searchTerm, exactMatch, itag, timeInSeconds);
 			
 		}
 		catch (ParseException e) {

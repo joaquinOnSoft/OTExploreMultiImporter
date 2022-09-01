@@ -35,7 +35,7 @@ import com.opentext.explore.util.FileUtil;
 /**
  * Tripadvisor importer for OpenText Explore (Voice of the customer solution)
  * @author Joaquín Garzón
- * @since 22.08.25
+ * @since 22.09.01
  */
 public class TripadvisorImporter {
 
@@ -60,22 +60,22 @@ public class TripadvisorImporter {
 	}
 
 	/**
-	 * @param clientAlias - Trushpilot client alias, e.g. in the URL 
+	 * @param searchTerm - Trushpilot client alias, e.g. in the URL 
 	 * https://www.trustpilot.com/review/bancsabadell.com the literal
 	 * 'bancsabadell.com' is the client alias
 	 * @param tTag - Trustpilot Importer tag
 	 * @param timeInSeconds - Seconds between each call against Trustpilot site
 	 */
-	public void start(String urlBase, String clientAlias, String tTag, int timeInSeconds) {		
+	public void start(String searchTerm, boolean exactSearch, String tTag, int timeInSeconds) {		
 		List<TAReview> reviews = null;
-		TripadvisorScraper scraper = new TripadvisorScraper(urlBase, clientAlias);
+		TripadvisorScraper scraper = new TripadvisorScraper(searchTerm, exactSearch);
 		
 		do {
 					
 			try {
 				reviews = scraper.getReviews();
 				if(reviews != null) {
-					//solrBatchUpdate(tTag, reviews);
+					solrBatchUpdate(tTag, reviews);
 				}
 				
 				log.debug("Sleeping " + timeInSeconds +  " seconds: ZZZZZZZ!");
@@ -86,8 +86,6 @@ public class TripadvisorImporter {
 			}
 		}while(true);
 	}
-
-
 	
 	/**
 	 * Call to the /solr/interaction/otcaBatchUpdate 
