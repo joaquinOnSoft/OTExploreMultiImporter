@@ -27,7 +27,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.opentext.explore.connector.SolrAPIWrapper;
-import com.opentext.explore.importer.tripadvisor.pojo.Review;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.FileUtil;
 
@@ -97,7 +96,7 @@ public class TripadvisorImporter {
 	 * @param firstPage - List of the latest submissions published in Reddit
 	 * @return true if the insertion in Solr was ok, false in other case. 
 	 */
-	protected boolean solrBatchUpdate(String rtag, List<Review> reviews) {
+	protected boolean solrBatchUpdate(String rtag, List<TAReview> reviews) {
 		boolean updated = true;
 		
 		String xmlPath = null;

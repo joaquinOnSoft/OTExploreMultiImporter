@@ -33,16 +33,16 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.AbstractTransformer;
-import com.opentext.explore.importer.tripadvisor.pojo.Review;
+import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 /**
  * 
  * @author Joaquín Garzón
- * @since 22.08.25 
+ * @since 22.09.01 
  */
 public class TripadvisorTransformer extends AbstractTransformer {
 		
-	private static Document reviewsToDoc(List<Review> reviews, String tag) {
+	private static Document reviewsToDoc(List<TAReview> reviews, String tag) {
 		Document doc = null;		
 		
 		if(reviews != null && reviews.size() > 0) {
@@ -51,27 +51,26 @@ public class TripadvisorTransformer extends AbstractTransformer {
 			//Root Element
 			Element root=new Element("add");
 			
-			for (Review review : reviews) {
+			for (TAReview review : reviews) {
 				Element eDoc = new Element("doc");
-						
-			
+									
 				//Field required since Qfiniti 20.4: START
-				eDoc.addContent(createElementField("language", review.getInLanguage().toLowerCase()));
+				eDoc.addContent(createElementField("language", review.getLanguage()));
 				//TODO: Avoid hardcoding sentiment as neutral
 				eDoc.addContent(createElementField("sentiment", "neutral"));				
-				eDoc.addContent(createElementField("summary", review.getHeadline()));
+				eDoc.addContent(createElementField("summary", review.getTitle()));
 				//Field required since Qfiniti 20.4: END				
 				
-				eDoc.addContent(createElementField("reference_id", review.generateId()));
-				eDoc.addContent(createElementField("interaction_id", review.generateId()));
-				eDoc.addContent(createElementField("title", review.getHeadline()));
-				eDoc.addContent(createElementField("author_name", review.getAuthor().getName()));
-				eDoc.addContent(createElementField("ID", review.generateId()));
-				eDoc.addContent(createElementField("type", "Trustpilot"));	
-				eDoc.addContent(createElementField("published_date", review.getDatePublished()));
-				eDoc.addContent(createElementField("date_time", review.getDatePublished()));
-				eDoc.addContent(createElementField("content", new CDATA(review.getReviewBody())));				
-				eDoc.addContent(createElementField("ratingValue", review.getReviewRating().getRatingValue()));
+				eDoc.addContent(createElementField("reference_id", review.getId()));
+				eDoc.addContent(createElementField("interaction_id", review.getId()));
+				eDoc.addContent(createElementField("title", review.getTitle()));
+				eDoc.addContent(createElementField("author_name", review.getAuthor()));
+				eDoc.addContent(createElementField("ID", review.getId()));
+				eDoc.addContent(createElementField("type", "TripAdvisor"));	
+				eDoc.addContent(createElementField("published_date", review.getCreationDate()));
+				eDoc.addContent(createElementField("date_time", review.getCreationDate()));
+				eDoc.addContent(createElementField("content", new CDATA(review.getContent())));				
+				eDoc.addContent(createElementField("ratingValue", review.getRating()));
 			
 				eDoc.addContent(createElementField("ttag", tag));
 
@@ -92,8 +91,8 @@ public class TripadvisorTransformer extends AbstractTransformer {
 	 * @return path of the XML file created
 	 * @throws IOException
 	 */	
-	public static String reviewsToXMLFile(Review review, String fileName, String tag) throws IOException {
-		List<Review> reviews = new LinkedList<Review>();
+	public static String reviewsToXMLFile(TAReview review, String fileName, String tag) throws IOException {
+		List<TAReview> reviews = new LinkedList<TAReview>();
 		reviews.add(review);
 	
 		return reviewsToXMLFile(reviews, fileName, tag);
@@ -107,7 +106,7 @@ public class TripadvisorTransformer extends AbstractTransformer {
 	 * @return Absolute path of the XML file created
 	 * @throws IOException
 	 */
-	public static String reviewsToXMLFile(List<Review> reviews, String fileName, String tag) throws IOException {
+	public static String reviewsToXMLFile(List<TAReview> reviews, String fileName, String tag) throws IOException {
 		String xmlPath = null;
 		Document doc = reviewsToDoc(reviews, tag);
 
@@ -135,7 +134,7 @@ public class TripadvisorTransformer extends AbstractTransformer {
 	 * @param statuses
 	 * @return
 	 */
-	public static String reviewsToString(List<Review> reviews, String tag) {
+	public static String reviewsToString(List<TAReview> reviews, String tag) {
 		String xml = null;
 		Document doc = reviewsToDoc(reviews, tag);
 

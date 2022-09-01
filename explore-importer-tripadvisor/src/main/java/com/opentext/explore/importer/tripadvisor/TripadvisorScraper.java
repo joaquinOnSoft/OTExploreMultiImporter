@@ -26,8 +26,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.swing.text.AbstractDocument.Content;
-
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,6 +50,12 @@ public class TripadvisorScraper {
 	private static final String URL_INIT_RESTAURANT_REVIEW = "https://www.tripadvisor.com/Restaurant_Review";
 	private static final String URL_INIT_HOTEL_REVIEW = "https://www.tripadvisor.com/Hotel_Review";
 
+	private static final String RATING_CLASS_1 = "bubble_10"; 
+	private static final String RATING_CLASS_2 = "bubble_20";
+	private static final String RATING_CLASS_3 = "bubble_30";
+	private static final String RATING_CLASS_4 = "bubble_40";
+	private static final String RATING_CLASS_5 = "bubble_50";
+	
 	private String url;	
 	private String urlBase;
 	private WebClient webClient;
@@ -97,6 +101,10 @@ public class TripadvisorScraper {
 	}
 
 	public List<TAReview> getReviews(){
+		return getReviews(false);
+	}
+	
+	public List<TAReview> getReviews(boolean mustContainKeyWord){
 		String pageURL = url;
 		List<TAReview> reviews = null;
 		List<TAReview> reviewsSinglePage = null;
@@ -110,10 +118,13 @@ public class TripadvisorScraper {
 			if(links != null && links.size() > 0) {
 				for(String link: links) {
 					if(link.startsWith(URL_INIT_RESTAURANT_REVIEW)) {
-						reviewsSinglePage = getRestaurantReviews(link);
+						//Do nothing 
+						//We just want to process Hotel at this time.
+						
+						//reviewsSinglePage = getRestaurantReviews(link);						
 					}
 					else if(link.startsWith(URL_INIT_HOTEL_REVIEW)) {
-						reviewsSinglePage = getRestaurantReviews(link);
+						reviewsSinglePage = getHotelReviews(link);
 					}
 
 					if(reviewsSinglePage != null && reviewsSinglePage.size() > 0) {
@@ -136,40 +147,57 @@ public class TripadvisorScraper {
 		return reviews; 
 	}
 
+	protected List<TAReview> getHotelReviews(String hotelLink){
+		return getHotelReviews(hotelLink, 1);
+	}
+	
 	/**
 	 * Get all the reviews for a given hotel
 	 * @param TripAdvisor hotel link, usually start with 'https://www.tripadvisor.com/Hotel_Review', 
 	 * i.e. https://www.tripadvisor.com/Hotel_Review-g666315-d579713-Reviews-Club_Med_Cherating_Malaysia-Cherating_Kuantan_District_Pahang.html
 	 * @return List of reviews for the given hotel
 	 */
-	protected List<TAReview> getHotelReviews(String hotelLink){
+	private List<TAReview> getHotelReviews(String hotelLink, int reviewsPageNumber){
 		List<TAReview> reviews = null;
 
 		HtmlPage page = readPage(hotelLink);
 
+		reviews = getHotelReviews(page, reviewsPageNumber);
+
+		return reviews;
+	}
+
+	private List<TAReview> getHotelReviews(HtmlPage page, int reviewsPageNumber) {
+		List<TAReview> reviews = null;
+		
 		List<DomElement> reviewTabDivs = page.getByXPath("//div[@data-test-target='reviews-tab']");
 
 		if(reviewTabDivs != null && reviewTabDivs.size() > 0) {
 			StringBuilder content = new StringBuilder(); 
 			String ratingDateStr = null;
-			Date ratingDate = null;
+			String ratingClassStr = null;
+			Date ratingDate = null;			
 
 			List<DomElement> titleList = reviewTabDivs.get(0).getByXPath("//div[@data-test-target='review-title']"); 
-			List<DomElement> contentList = reviewTabDivs.get(0).getByXPath("//q[@class='QewHA H4 _a']//span");  
-			List<DomElement> ratingDateList  = reviewTabDivs.get(0).getByXPath("//span[@class='teHYY _R Me S4 H3']");
-			List<DomElement> authorList  = reviewTabDivs.get(0).getByXPath("//a[@class='ui_header_link uyyBf']"); 
-			//List<DomElement> locationList  = reviewTabDivs.get(0).getByXPath("//span[@class='default LXUOn small']");
-			
-			if(reviews == null) {
-				reviews = new LinkedList<TAReview>();								
-			}
 			
 			if(titleList != null) {
+				reviews = new LinkedList<TAReview>();
 				TAReview taReview = null;
+				
+				List<DomElement> idList = reviewTabDivs.get(0).getByXPath("//div[@class='WAllg _T']");
+				List<DomElement> contentList = reviewTabDivs.get(0).getByXPath("//q[@class='QewHA H4 _a']//span");
+				List<DomElement> ratingList  = reviewTabDivs.get(0).getByXPath("//div[@data-test-target='review-rating']//span");
+				List<DomElement> ratingDateList  = reviewTabDivs.get(0).getByXPath("//span[@class='teHYY _R Me S4 H3']");
+				List<DomElement> authorList  = reviewTabDivs.get(0).getByXPath("//a[@class='ui_header_link uyyBf']"); 
+				//Location is not always provided in the page.
+				//List<DomElement> locationList  = reviewTabDivs.get(0).getByXPath("//span[@class='default LXUOn small']");
+				List<DomElement> nextList  = reviewTabDivs.get(0).getByXPath("//a[@class='ui_button nav next primary ']");				
 				
 				int numTitles = titleList.size();
 				for(int i=0; i<numTitles; i++) {
 					taReview = new TAReview();
+					
+					taReview.setId(idList.get(i).getAttribute("data-reviewid"));
 					
 					taReview.setTitle(titleList.get(i).asNormalizedText());
 
@@ -179,6 +207,9 @@ public class TripadvisorScraper {
 					taReview.setContent(content.toString());
 					content.setLength(0); //Clear the content
 					
+					ratingClassStr = ratingList.get(i).getAttribute("class");
+					taReview.setRating(getRatingFromClass(ratingClassStr));
+										
 					ratingDateStr = ratingDateList.get(i).asNormalizedText();
 					try {
 						ratingDate = DateUtil.strEngToDate(ratingDateStr.replace("Date of stay: ", "").trim(), "MMM yyyy");
@@ -193,9 +224,29 @@ public class TripadvisorScraper {
 					
 					reviews.add(taReview);
 				}
+				
+				log.debug("# reviews found in page {}: {}", reviewsPageNumber, reviews.size());
+				int counter = 0;
+				for(TAReview rev: reviews) {
+					log.debug("\t{}) {}", counter++, rev.getTitle());
+				}
+				
+				if(nextList != null && nextList.size() > 0) {
+					try {
+						HtmlPage nextPage = nextList.get(0).click();
+						//log.debug(nextPage.asXml()) ;
+						log.debug("Loading next reviews in page...");
+						
+						List<TAReview> nextReviews = getHotelReviews(nextPage, ++reviewsPageNumber);
+						if(nextReviews != null && nextReviews.size() > 0) {
+							reviews.addAll(nextReviews);
+						}
+					} catch (IOException e) {
+						log.error("Error reading next page: ", e);
+					}
+				}
 			}
 		}
-
 		return reviews;
 	}	
 
@@ -223,13 +274,17 @@ public class TripadvisorScraper {
 				Date ratingDate = null;
 				String memberInfoStr = null;
 				String location = null;
+				List<DomElement> idDivs = null;
 
 				if(reviews == null) {
 					reviews = new LinkedList<TAReview>();								
 				}
 
 				TAReview taReview = new TAReview();
-				for(int i=0; i<numReviewSelectorDivs; i++) {
+				for(int i=0; i<numReviewSelectorDivs; i++) {					
+					idDivs = reviewSelectorDivs.get(i).getByXPath("//div[@class='reviewSelector']");
+					taReview.setId(idDivs.get(0).getAttribute("data-reviewid"));
+						
 					title = getTextContentFromElementByXPath(reviewSelectorDivs.get(i), "//div[@class='quote']");					
 					taReview.setTitle(title);
 
@@ -329,7 +384,6 @@ public class TripadvisorScraper {
 
 			List<DomElement> resultTitles = page.getByXPath("//div[@class='location-meta-block']/div[@class='result-title']");
 			for (DomElement element : resultTitles) {
-				//log.debug(element.getAttribute("onclick"));
 				onClicTxt = element.getAttribute("onclick");
 
 				start = onClicTxt.indexOf("/");
@@ -368,4 +422,26 @@ public class TripadvisorScraper {
 
 		return page;
 	}	
+	
+	protected int getRatingFromClass(String ratingClass) {
+		int rating = 5;
+		if(ratingClass != null) {
+			if(ratingClass.contains(RATING_CLASS_1) ) {
+				rating = 1;
+			}
+			else if(ratingClass.contains(RATING_CLASS_2) ) {
+				rating = 2;
+			}
+			else if(ratingClass.contains(RATING_CLASS_3) ) {
+				rating = 3;
+			}		
+			else if(ratingClass.contains(RATING_CLASS_4) ) {
+				rating = 4;
+			}		
+			else if(ratingClass.contains(RATING_CLASS_5) ) {
+				rating = 5;
+			}					
+		}
+		return rating;
+	}
 }

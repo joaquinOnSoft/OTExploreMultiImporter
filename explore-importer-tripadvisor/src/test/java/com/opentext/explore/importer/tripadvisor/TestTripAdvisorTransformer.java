@@ -24,22 +24,21 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.opentext.explore.importer.tripadvisor.pojo.Author;
-import com.opentext.explore.importer.tripadvisor.pojo.Review;
-import com.opentext.explore.importer.tripadvisor.pojo.ReviewRating;
+import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 import junit.framework.TestCase;
 
 
-public class TestTrustpilotTransformer extends TestCase {
+public class TestTripAdvisorTransformer extends TestCase {
 
-	List<Review> reviews;
+	List<TAReview> reviews;
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" + 
@@ -61,22 +60,17 @@ public class TestTrustpilotTransformer extends TestCase {
 	
 	@Before
 	public void setUp() {
-		Review review = mock(Review.class);
-		when(review.generateId()).thenReturn(123456789l);	
-		when(review.getHeadline()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
-		when(review.getDatePublished()).thenReturn("2022-02-18T12:46:25.000Z");		
-		when(review.getReviewBody()).thenReturn("Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.");
-		when(review.getInLanguage()).thenReturn("en");
-						
-		Author author = mock(Author.class);
-		when(review.getAuthor()).thenReturn(author);
-		when(review.getAuthor().getName()).thenReturn("Michael Flick");	
+		TAReview review = mock(TAReview.class);
+		when(review.getId()).thenReturn("123456789l2");	
+		when(review.getTitle()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
+		when(review.getCreationDate()).thenReturn(GregorianCalendar.getInstance().getTime());//"2022-02-18T12:46:25.000Z"		
+		when(review.getContent()).thenReturn("Banco Sabadell's attitude & 'Customer Care Service' is appalling. At today's date, Friday 18/02/2022 we have been advised of the bank's decision, that, after 3 months of correspondence back and forth detailing our situation, we have to present ourselves IN PERSON at our branch of the bank in Spain, if we wish to close our account and transfer the funds to our home bank in Ireland. This 'Customer Care Service' totally disregards our advanced ages, susceptibility to covid, advice against travel, cost of travel & insurance, accommodation, etc.Avoid Banco Sabadell.");
+		when(review.getLanguage()).thenReturn("en");
+								
+		when(review.getAuthor()).thenReturn("");			
+		when(review.getRating()).thenReturn(1);	
 				
-		ReviewRating rating = mock(ReviewRating.class);
-		when(review.getReviewRating()).thenReturn(rating);		
-		when(review.getReviewRating().getRatingValue()).thenReturn("1");	
-				
-		reviews = new LinkedList<Review>();
+		reviews = new LinkedList<TAReview>();
 		reviews.add(review);
 	}
 	
