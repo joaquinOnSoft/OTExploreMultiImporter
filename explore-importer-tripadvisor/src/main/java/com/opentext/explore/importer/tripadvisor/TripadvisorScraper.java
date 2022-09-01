@@ -41,6 +41,8 @@ import com.opentext.explore.util.DateUtil;
 
 public class TripadvisorScraper {
 
+	private static final int FIRST_REVIEWS_PAGE_NUMBER = 1;
+
 	private static final Logger log = LogManager.getLogger(TripadvisorScraper.class);
 
 	private static final String BASE_URL="https://www.tripadvisor.com";
@@ -65,7 +67,7 @@ public class TripadvisorScraper {
 	/**
 	 * Initialize tripadvisor.com review page scraper 
 	 * @param searchTearm - search term in <strong>tripadvisor.com</strong>
-	 * <i>Example</i>: clubmed or 'club med'
+	 * <i>Example</i>: 'clubmed' or 'club med'
 	 */
 	public TripadvisorScraper(String searchTearm) {
 		this(searchTearm, false);
@@ -87,61 +89,67 @@ public class TripadvisorScraper {
 	 * 
 	 */
 	public TripadvisorScraper(String urlBase, String searchTerm, boolean exactSearch) {
-		if(urlBase != null) {
-			this.urlBase = urlBase;
-			this.url = urlBase + SEARCH_URL + searchTerm;
-			this.searchTerm = searchTerm;
-			this.exactSearch = exactSearch;
+		this.urlBase = urlBase;
+		this.url = urlBase + SEARCH_URL + searchTerm;
+		this.searchTerm = searchTerm;
+		this.exactSearch = exactSearch;
 
-			//Disable logs for 'HTMLUnit' library, is too noisy. 
-			LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+		//Disable logs for 'HTMLUnit' library, is too noisy. 
+		LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
-			java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF); 
-			java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.OFF);		
+		java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF); 
+		java.util.logging.Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.OFF);		
 
-			//Initialize 'HTMLUnit' web client
-			webClient = new WebClient(BrowserVersion.CHROME);
-			webClient.getOptions().setThrowExceptionOnScriptError(false);		
-			webClient.getCookieManager().setCookiesEnabled(true);
-			//TODO make language accepted a parameter
-			webClient.addRequestHeader(HttpHeader.ACCEPT_LANGUAGE, "en");
-		}
+		initWebClient();
 	}
+
+	private void initWebClient() {
+		//Initialize 'HTMLUnit' web client
+		webClient = new WebClient(BrowserVersion.CHROME);
+		webClient.getOptions().setThrowExceptionOnScriptError(false);		
+		webClient.getCookieManager().setCookiesEnabled(true);
+		//TODO make language accepted a parameter
+		webClient.addRequestHeader(HttpHeader.ACCEPT_LANGUAGE, "en");
+	}
+
 
 	public List<TAReview> getReviews(){
-		return getReviews(false);
-	}
-	
-	public List<TAReview> getReviews(boolean mustContainKeyWord){
 		String pageURL = url;
 		List<TAReview> reviews = null;
 		List<TAReview> reviewsSinglePage = null;
 
 		HtmlPage page = null;
 
+		//Reach search page with the given search criteria
 		page = readSearchPage(pageURL);
+		
 		if(page != null) {
+			//Recover links to hotels, restaurants... that match the search criteria
 			List<String> links = getListSearchResults(page);
 
 			if(links != null && links.size() > 0) {
 				for(String link: links) {
 					if(exactSearch) {
-						if(link.contains(searchTerm.replace(" ", "_"))) {
+						//Ignore links that not include the search term in the link
+						if(!link.toLowerCase().contains(searchTerm.toLowerCase().replace(" ", "_"))) {
 							log.info("Skipping link: {}", link);
 							continue;
 						}
 					}
 					
-					if(link.startsWith(URL_INIT_RESTAURANT_REVIEW)) {
-						//Do nothing 
-						//We just want to process Hotel at this time.
-						
-						//reviewsSinglePage = getRestaurantReviews(link);						
-					}
-					else if(link.startsWith(URL_INIT_HOTEL_REVIEW)) {
+					log.info("Clear coockies and relinitialize web client after search and before next URL read.");
+					webClient.getCookieManager().clearCookies();
+					webClient.close();
+					initWebClient();					
+					
+					if(link.startsWith(URL_INIT_HOTEL_REVIEW)) {						
 						reviewsSinglePage = getHotelReviews(link);
 					}
-
+					else if(link.startsWith(URL_INIT_RESTAURANT_REVIEW)) { 
+						//We just want to process Hotel at this time. Ignoring restaurants						
+						//reviewsSinglePage = getRestaurantReviews(link);						
+					}
+					
 					if(reviewsSinglePage != null && reviewsSinglePage.size() > 0) {
 						if(reviews == null) {
 							reviews = new LinkedList<TAReview>();
@@ -163,7 +171,7 @@ public class TripadvisorScraper {
 	}
 
 	protected List<TAReview> getHotelReviews(String hotelLink){
-		return getHotelReviews(hotelLink, 1);
+		return getHotelReviews(hotelLink, FIRST_REVIEWS_PAGE_NUMBER);
 	}
 	
 	/**
@@ -248,8 +256,8 @@ public class TripadvisorScraper {
 				
 				if(nextList != null && nextList.size() > 0) {
 					try {
-						HtmlPage nextPage = nextList.get(0).click();
-						//log.debug(nextPage.asXml()) ;
+						HtmlPage nextPage = nextList.get(0).click();												
+						//log.debug(nextPage.asXml()) ;						
 						log.debug("Loading next reviews in page...");
 						
 						List<TAReview> nextReviews = getHotelReviews(nextPage, ++reviewsPageNumber);
@@ -406,7 +414,7 @@ public class TripadvisorScraper {
 
 				if(start != -1 && end != -1) {
 					link = urlBase + onClicTxt.substring(start, end);
-					log.debug(link);
+					log.debug("Search result (link): {}", link);
 
 					if(searchResults == null) {
 						searchResults = new LinkedList<String>();
@@ -459,4 +467,13 @@ public class TripadvisorScraper {
 		}
 		return rating;
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		if(webClient != null) {
+			webClient.close();
+		}
+	}
+	
+	
 }
