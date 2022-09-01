@@ -112,6 +112,13 @@ public class TripadvisorScraper {
 		webClient.addRequestHeader(HttpHeader.ACCEPT_LANGUAGE, "en");
 	}
 
+	private void resetWebClient() {
+		webClient.getCookieManager().clearCookies();
+		webClient.close();
+		webClient = null; //Help garbage collector
+		
+		initWebClient();		
+	}
 
 	public List<TAReview> getReviews(){
 		String pageURL = url;
@@ -138,9 +145,7 @@ public class TripadvisorScraper {
 					}
 					
 					log.info("Clear coockies and relinitialize web client after search and before next URL read.");
-					webClient.getCookieManager().clearCookies();
-					webClient.close();
-					initWebClient();					
+					resetWebClient();
 					
 					if(link.startsWith(URL_INIT_HOTEL_REVIEW)) {						
 						reviewsSinglePage = getHotelReviews(link);
