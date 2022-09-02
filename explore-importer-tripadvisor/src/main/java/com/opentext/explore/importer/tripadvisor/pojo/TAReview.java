@@ -35,6 +35,8 @@ public class TAReview {
 	
 	private String language;
 	
+	private TAFacility facility;
+	
 	public TAReview() {
 		this.language = LANG_ENGLISH;
 	}
@@ -106,6 +108,14 @@ public class TAReview {
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+	
+	public TAFacility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(TAFacility facility) {
+		this.facility = facility;
+	}
 
 	@Override
 	public String toString() {
@@ -116,7 +126,8 @@ public class TAReview {
 			.append(", content=").append(content)
 			.append(", rating=").append(rating)
 			.append(", creationDate=").append(creationDate)
-			.append(", language=").append(language).append("]");
+			.append(", language=").append(language)
+			.append(", facility=").append(facility).append("]");
 		
 		return sBuilder.toString();
 	}

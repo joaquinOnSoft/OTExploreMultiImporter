@@ -68,12 +68,12 @@ public class TripadvisorImporter {
 	 */
 	public void start(String searchTerm, boolean exactSearch, String tTag, int timeInSeconds) {		
 		List<TAReview> reviews = null;
-		TripadvisorScraper scraper = new TripadvisorScraper(searchTerm, exactSearch);
+		TripadvisorScraper scraper = new TripadvisorScraper();
 		
 		do {
 					
 			try {
-				reviews = scraper.getReviews();
+				reviews = scraper.getReviews(searchTerm, exactSearch);
 				if(reviews != null) {
 					solrBatchUpdate(tTag, reviews);
 				}

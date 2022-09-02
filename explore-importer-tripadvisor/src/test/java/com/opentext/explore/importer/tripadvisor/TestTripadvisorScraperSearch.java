@@ -26,19 +26,18 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
+public class TestTripadvisorScraperSearch {
 
-public class TestTripadvisorScraper {
-	private TripadvisorScraper scraper = new TripadvisorScraper();
+	private TripadvisorScraperSearch scraper = new TripadvisorScraperSearch();
 	
-	//@Test
-	public void getReviews() {
-		List<TAReview> reviews = scraper.getReviews("clubmed", true);
+	@Test
+	public void search() {
+		List<String> links = scraper.search("club med");
 
-		assertNotNull(reviews);
+		assertNotNull(links);
 		// The number of comments can vary between execution.
 		// At the moment of writing this test, September 1st 2022, the figures are:
-		// Total comments: 4902		
-		assertTrue(reviews.size() > 0);		
-	}		
+		// Total comments: 	
+		assertTrue(links.size() > 0);
+	}	
 }
