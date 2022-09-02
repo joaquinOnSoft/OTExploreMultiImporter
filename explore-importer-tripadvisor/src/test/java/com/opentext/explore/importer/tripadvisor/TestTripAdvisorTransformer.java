@@ -31,6 +31,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.opentext.explore.importer.tripadvisor.pojo.TAFacility;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.DateUtil;
 
@@ -56,7 +57,11 @@ public class TestTripAdvisorTransformer extends TestCase {
 			"    <field name=\"date_time\"><![CDATA[2022-08-01T00:00:00Z]]></field>\r\n" +
 			"    <field name=\"content\"><![CDATA[Great choice for family trip,  friendly sport / activity teams members that keep you occupied during your stay.  All inclusive with child care provided! Looking forward to join Club Med in different location.]]></field>\r\n" +
 			"    <field name=\"ratingValue\"><![CDATA[5]]></field>\r\n" +
-			"    <field name=\"ttag\"><![CDATA[TripAdvisor Review]]></field>\r\n" +
+			"    <field name=\"facility_name\"><![CDATA[Club Med Punta Cana]]></field>\r\n" +
+			"    <field name=\"facility_address\"><![CDATA[Apt Postal 106 Higuey, Punta Cana Dominican Republic]]></field>\r\n" +
+			"    <field name=\"facility_phone\"><![CDATA[00 1 844-514-1572]]></field>\r\n" +
+			"    <field name=\"facility_web\"><![CDATA[https://www.clubmed.es/r/punta-cana/y?utm_medium=Partnerships&utm_campaign=PA_On_Going_Business_Listing_Hotel_Website&utm_source=TripAdvisor&utm_content=PCAC]]></field>\r\n" +			
+			"    <field name=\"ttag\"><![CDATA[TripAdvisor Review]]></field>\r\n" +			
 			"  </doc>\r\n"; 
 	
 	@Before
@@ -74,7 +79,14 @@ public class TestTripAdvisorTransformer extends TestCase {
 								
 		when(review.getAuthor()).thenReturn("Renee Nien Yi P");			
 		when(review.getRating()).thenReturn(5);	
-				
+		
+		TAFacility facility = mock(TAFacility.class);
+		when(review.getFacility()).thenReturn(facility);
+		when(facility.getName()).thenReturn("Club Med Punta Cana");
+		when(facility.getAddress()).thenReturn("Apt Postal 106 Higuey, Punta Cana Dominican Republic");
+		when(facility.getPhone()).thenReturn("00 1 844-514-1572");
+		when(facility.getWeb()).thenReturn("https://www.clubmed.es/r/punta-cana/y?utm_medium=Partnerships&utm_campaign=PA_On_Going_Business_Listing_Hotel_Website&utm_source=TripAdvisor&utm_content=PCAC");
+		
 		reviews = new LinkedList<TAReview>();
 		reviews.add(review);
 	}

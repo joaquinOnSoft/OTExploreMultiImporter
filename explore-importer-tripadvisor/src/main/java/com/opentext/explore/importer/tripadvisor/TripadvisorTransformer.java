@@ -33,6 +33,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.AbstractTransformer;
+import com.opentext.explore.importer.tripadvisor.pojo.TAFacility;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 /**
@@ -46,6 +47,7 @@ public class TripadvisorTransformer extends AbstractTransformer {
 		Document doc = null;		
 		
 		if(reviews != null && reviews.size() > 0) {
+			TAFacility facility = null;
 			
 			doc=new Document();
 			//Root Element
@@ -71,6 +73,20 @@ public class TripadvisorTransformer extends AbstractTransformer {
 				eDoc.addContent(createElementField("date_time", review.getCreationDate()));
 				eDoc.addContent(createElementField("content", new CDATA(review.getContent())));				
 				eDoc.addContent(createElementField("ratingValue", review.getRating()));
+				
+				facility = review.getFacility();
+				if (facility.getName() != null) {
+					eDoc.addContent(createElementField("facility_name", facility.getName()));
+				}
+				if (facility.getAddress() != null) {
+					eDoc.addContent(createElementField("facility_address", facility.getAddress()));
+				}
+				if (facility.getPhone() != null) {
+					eDoc.addContent(createElementField("facility_phone", facility.getPhone()));
+				}
+				if (facility.getWeb() != null) {
+					eDoc.addContent(createElementField("facility_web", facility.getWeb()));
+				}
 			
 				eDoc.addContent(createElementField("ttag", tag));
 

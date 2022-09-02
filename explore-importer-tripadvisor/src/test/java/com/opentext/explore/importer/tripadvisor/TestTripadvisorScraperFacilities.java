@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.opentext.explore.importer.tripadvisor.pojo.TAFacility;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public class TestTripadvisorScraperFacilities {
@@ -86,6 +87,13 @@ public class TestTripadvisorScraperFacilities {
 		assertNotNull(reviews.get(0).getCreationDate());
 		assertEquals("Fri Jul 01 00:00:00 CEST 2022", reviews.get(0).getCreationDate().toString());
 		//assertNotNull(reviews.get(0).getLocation());
+		
+		TAFacility facility = reviews.get(0).getFacility();
+		assertNotNull(facility);
+		assertEquals("LaVilla by Holiday Villa Cherating", facility.getName());
+		assertEquals("Lot 1303 Mukim Sungai Karang, Kuantan 26080 Malaysia", facility.getAddress());
+		assertEquals(null, facility.getPhone());
+		assertEquals(null, facility.getWeb());
 	}	
 
 	@Test

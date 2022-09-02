@@ -1,7 +1,5 @@
 package com.opentext.explore.importer.tripadvisor;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -81,6 +79,8 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 			String link = null;
 
 			List<DomElement> resultTitles = page.getByXPath("//div[@class='location-meta-block']/div[@class='result-title']");
+			//List<DomElement> showMoreList = page.getByXPath("//a[@class='ui_button nav next primary ']");
+			
 			for (DomElement element : resultTitles) {
 				onClicTxt = element.getAttribute("onclick");
 
@@ -97,7 +97,25 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 
 					searchResults.add(link);
 				}
-			}			
+			}
+			
+			/*
+			//Manage pagination. Get additional results
+			if(showMoreList != null && showMoreList.size() > 0) {
+				log.info("Reading addtional links...");
+				try {
+					HtmlPage nextPage = showMoreList.get(0).click();
+					if(nextPage != null) {
+						List<String> linksShowMore = getListSearchResults(nextPage);
+						if(linksShowMore != null && linksShowMore.size() > 0) {
+							searchResults.addAll(linksShowMore);
+						}
+					}
+				} catch (IOException e) {
+					log.error("Error reading next search results page: ", e);
+				}
+			}
+			*/
 		}
 		return searchResults;
 	}

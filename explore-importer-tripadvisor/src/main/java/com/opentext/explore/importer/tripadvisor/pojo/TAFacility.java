@@ -47,7 +47,5 @@ public class TAFacility {
 			.append(", web=").append(web).append("]");
 		
 		return str.toString();
-	}	
-	
-	
+	}		
 }

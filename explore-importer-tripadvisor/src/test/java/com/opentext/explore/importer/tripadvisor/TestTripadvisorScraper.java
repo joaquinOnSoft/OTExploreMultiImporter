@@ -24,8 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public class TestTripadvisorScraper {

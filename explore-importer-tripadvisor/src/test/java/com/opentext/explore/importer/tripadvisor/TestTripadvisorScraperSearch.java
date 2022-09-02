@@ -19,6 +19,7 @@
  */
 package com.opentext.explore.importer.tripadvisor;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -35,9 +36,7 @@ public class TestTripadvisorScraperSearch {
 		List<String> links = scraper.search("club med");
 
 		assertNotNull(links);
-		// The number of comments can vary between execution.
-		// At the moment of writing this test, September 1st 2022, the figures are:
-		// Total comments: 	
 		assertTrue(links.size() > 0);
+		assertEquals(30, links.size());
 	}	
 }

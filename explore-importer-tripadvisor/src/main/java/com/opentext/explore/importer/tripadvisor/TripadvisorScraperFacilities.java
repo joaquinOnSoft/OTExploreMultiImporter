@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.opentext.explore.importer.tripadvisor.pojo.TAFacility;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.DateUtil;
 
@@ -59,7 +60,18 @@ public class TripadvisorScraperFacilities extends AbstractTripadvisorScraper {
 	}
 
 	private List<TAReview> getHotelReviews(HtmlPage page, int reviewsPageNumber) {
+		TAFacility facility = null;
 		List<TAReview> reviews = null;
+		
+		//Read facility information (Hotel name, address, phone and web page URL)
+		List<DomElement> hotelDivs = page.getByXPath("//div[@id='taplc_hotel_review_atf_hotel_info_web_component_0']");
+		if(hotelDivs != null && hotelDivs.size() > 0) {
+			facility = new TAFacility();
+			facility.setName(getTextContentFromElementByXPath(hotelDivs.get(0), "//h1[@id='HEADING']"));
+			facility.setAddress(getTextContentFromElementByXPath(hotelDivs.get(0), "//span[@class='fHvkI PTrfg']"));
+			facility.setPhone(getTextContentFromElementByXPath(hotelDivs.get(0), "//span[@class='zNXea NXOxh NjUDn']"));
+			facility.setWeb(getTextContentFromElementByXPath(hotelDivs.get(0), "//a[@class='YnKZo Ci Wc _S C pInXB _S ITocq jNmfd']"));
+		}
 		
 		List<DomElement> reviewTabDivs = page.getByXPath("//div[@data-test-target='reviews-tab']");
 
@@ -112,6 +124,10 @@ public class TripadvisorScraperFacilities extends AbstractTripadvisorScraper {
 					taReview.setAuthor(authorList.get(i).asNormalizedText());
 
 					//taReview.setLocation(locationList.get(i).asNormalizedText());
+					
+					if(facility != null) {
+						taReview.setFacility(facility);
+					}
 					
 					reviews.add(taReview);
 				}
