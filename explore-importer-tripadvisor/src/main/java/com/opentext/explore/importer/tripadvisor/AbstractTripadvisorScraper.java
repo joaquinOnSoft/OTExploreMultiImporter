@@ -33,9 +33,14 @@ public abstract class AbstractTripadvisorScraper {
 		initWebClient();	
 	}
 	
+	/**
+	 * @see https://stackoverflow.com/questions/47415580/how-to-faster-htmlunit
+	 */
 	protected void initWebClient() {
 		//Initialize 'HTMLUnit' web client
 		webClient = new WebClient(BrowserVersion.CHROME);
+		webClient.getOptions().setPopupBlockerEnabled(true);
+		webClient.getOptions().setDownloadImages(false);
 		webClient.getOptions().setThrowExceptionOnScriptError(false);		
 		webClient.getCookieManager().setCookiesEnabled(true);
 		//TODO make language accepted a parameter

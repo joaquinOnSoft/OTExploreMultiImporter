@@ -47,12 +47,7 @@ public class TripadvisorImporter {
 	protected static final Logger log = LogManager.getLogger(TripadvisorImporter.class);
 	
 	/**
-	 * @param urlBase - URL base
-	 * <i>Examples</i>: 
-	 * <ul>
-	 *    <li>https://www.trustpilot.com</li>
-	 *    <li>https://es.trustpilot.com</li>    
-	 * </ul>
+	 * @param host - Solr URL (this Solr instance is used by Explore) 
 	 */
 	public TripadvisorImporter(String host) {
 		this.host = host;
