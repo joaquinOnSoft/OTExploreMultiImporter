@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,62 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@type",
-    "position",
-    "name",
-    "item"
+    "@id"
 })
-public class ItemListElement {
+public class HasPart {
 
-    @JsonProperty("@type")
-    private String type;
-    @JsonProperty("position")
-    private Integer position;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("item")
-    private String item;
+    @JsonProperty("@id")
+    private String id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @JsonProperty("position")
-    public Integer getPosition() {
-        return position;
-    }
-
-    @JsonProperty("position")
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @JsonProperty("item")
-    public String getItem() {
-        return item;
-    }
-
-    @JsonProperty("item")
-    public void setItem(String item) {
-        this.item = item;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

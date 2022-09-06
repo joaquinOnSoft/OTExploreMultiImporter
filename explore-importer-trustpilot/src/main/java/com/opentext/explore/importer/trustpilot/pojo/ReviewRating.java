@@ -17,10 +17,10 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -31,23 +31,62 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "csvw:columns"
+    "@type",
+    "bestRating",
+    "worstRating",
+    "ratingValue"
 })
-public class CsvwTableSchema {
+public class ReviewRating {
 
-    @JsonProperty("csvw:columns")
-    private List<CsvwColumn> csvwColumns = null;
+    @JsonProperty("@type")
+    private String type;
+    @JsonProperty("bestRating")
+    private String bestRating;
+    @JsonProperty("worstRating")
+    private String worstRating;
+    @JsonProperty("ratingValue")
+    private String ratingValue;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("csvw:columns")
-    public List<CsvwColumn> getCsvwColumns() {
-        return csvwColumns;
+    @JsonProperty("@type")
+    public String getType() {
+        return type;
     }
 
-    @JsonProperty("csvw:columns")
-    public void setCsvwColumns(List<CsvwColumn> csvwColumns) {
-        this.csvwColumns = csvwColumns;
+    @JsonProperty("@type")
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @JsonProperty("bestRating")
+    public String getBestRating() {
+        return bestRating;
+    }
+
+    @JsonProperty("bestRating")
+    public void setBestRating(String bestRating) {
+        this.bestRating = bestRating;
+    }
+
+    @JsonProperty("worstRating")
+    public String getWorstRating() {
+        return worstRating;
+    }
+
+    @JsonProperty("worstRating")
+    public void setWorstRating(String worstRating) {
+        this.worstRating = worstRating;
+    }
+
+    @JsonProperty("ratingValue")
+    public String getRatingValue() {
+        return ratingValue;
+    }
+
+    @JsonProperty("ratingValue")
+    public void setRatingValue(String ratingValue) {
+        this.ratingValue = ratingValue;
     }
 
     @JsonAnyGetter

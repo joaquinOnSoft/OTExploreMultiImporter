@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,30 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@context",
     "@type",
-    "name"
+    "value",
+    "unitCode",
+    "unitText"
 })
-public class ItemReviewed {
+public class Height {
 
-    @JsonProperty("@context")
-    private String context;
     @JsonProperty("@type")
     private String type;
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("value")
+    private Integer value;
+    @JsonProperty("unitCode")
+    private String unitCode;
+    @JsonProperty("unitText")
+    private String unitText;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    @JsonProperty("@context")
-    public String getContext() {
-        return context;
-    }
-
-    @JsonProperty("@context")
-    public void setContext(String context) {
-        this.context = context;
-    }
 
     @JsonProperty("@type")
     public String getType() {
@@ -65,14 +59,34 @@ public class ItemReviewed {
         this.type = type;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("value")
+    public Integer getValue() {
+        return value;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("value")
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    @JsonProperty("unitCode")
+    public String getUnitCode() {
+        return unitCode;
+    }
+
+    @JsonProperty("unitCode")
+    public void setUnitCode(String unitCode) {
+        this.unitCode = unitCode;
+    }
+
+    @JsonProperty("unitText")
+    public String getUnitText() {
+        return unitText;
+    }
+
+    @JsonProperty("unitText")
+    public void setUnitText(String unitText) {
+        this.unitText = unitText;
     }
 
     @JsonAnyGetter

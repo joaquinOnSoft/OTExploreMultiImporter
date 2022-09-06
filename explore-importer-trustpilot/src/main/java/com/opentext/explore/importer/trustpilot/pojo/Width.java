@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,23 +32,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "@type",
-    "bestRating",
-    "worstRating",
-    "ratingValue",
-    "reviewCount"
+    "value",
+    "unitCode",
+    "unitText"
 })
-public class AggregateRating {
+public class Width {
 
     @JsonProperty("@type")
     private String type;
-    @JsonProperty("bestRating")
-    private String bestRating;
-    @JsonProperty("worstRating")
-    private String worstRating;
-    @JsonProperty("ratingValue")
-    private String ratingValue;
-    @JsonProperty("reviewCount")
-    private String reviewCount;
+    @JsonProperty("value")
+    private Integer value;
+    @JsonProperty("unitCode")
+    private String unitCode;
+    @JsonProperty("unitText")
+    private String unitText;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -61,44 +59,34 @@ public class AggregateRating {
         this.type = type;
     }
 
-    @JsonProperty("bestRating")
-    public String getBestRating() {
-        return bestRating;
+    @JsonProperty("value")
+    public Integer getValue() {
+        return value;
     }
 
-    @JsonProperty("bestRating")
-    public void setBestRating(String bestRating) {
-        this.bestRating = bestRating;
+    @JsonProperty("value")
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
-    @JsonProperty("worstRating")
-    public String getWorstRating() {
-        return worstRating;
+    @JsonProperty("unitCode")
+    public String getUnitCode() {
+        return unitCode;
     }
 
-    @JsonProperty("worstRating")
-    public void setWorstRating(String worstRating) {
-        this.worstRating = worstRating;
+    @JsonProperty("unitCode")
+    public void setUnitCode(String unitCode) {
+        this.unitCode = unitCode;
     }
 
-    @JsonProperty("ratingValue")
-    public String getRatingValue() {
-        return ratingValue;
+    @JsonProperty("unitText")
+    public String getUnitText() {
+        return unitText;
     }
 
-    @JsonProperty("ratingValue")
-    public void setRatingValue(String ratingValue) {
-        this.ratingValue = ratingValue;
-    }
-
-    @JsonProperty("reviewCount")
-    public String getReviewCount() {
-        return reviewCount;
-    }
-
-    @JsonProperty("reviewCount")
-    public void setReviewCount(String reviewCount) {
-        this.reviewCount = reviewCount;
+    @JsonProperty("unitText")
+    public void setUnitText(String unitText) {
+        this.unitText = unitText;
     }
 
     @JsonAnyGetter

@@ -17,10 +17,10 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -31,36 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "csvw:value",
-    "csvw:notes"
+    "@id"
 })
-public class CsvwCell {
+public class MainEntity {
 
-    @JsonProperty("csvw:value")
-    private String csvwValue;
-    @JsonProperty("csvw:notes")
-    private List<String> csvwNotes = null;
+    @JsonProperty("@id")
+    private String id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("csvw:value")
-    public String getCsvwValue() {
-        return csvwValue;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("csvw:value")
-    public void setCsvwValue(String csvwValue) {
-        this.csvwValue = csvwValue;
-    }
-
-    @JsonProperty("csvw:notes")
-    public List<String> getCsvwNotes() {
-        return csvwNotes;
-    }
-
-    @JsonProperty("csvw:notes")
-    public void setCsvwNotes(List<String> csvwNotes) {
-        this.csvwNotes = csvwNotes;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

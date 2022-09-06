@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,36 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@type",
-    "csvw:tableSchema"
+    "@id"
 })
-public class MainEntity {
+public class ItemReviewed {
 
-    @JsonProperty("@type")
-    private String type;
-    @JsonProperty("csvw:tableSchema")
-    private CsvwTableSchema csvwTableSchema;
+    @JsonProperty("@id")
+    private String id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @JsonProperty("csvw:tableSchema")
-    public CsvwTableSchema getCsvwTableSchema() {
-        return csvwTableSchema;
-    }
-
-    @JsonProperty("csvw:tableSchema")
-    public void setCsvwTableSchema(CsvwTableSchema csvwTableSchema) {
-        this.csvwTableSchema = csvwTableSchema;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

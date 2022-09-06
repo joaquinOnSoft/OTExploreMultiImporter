@@ -30,17 +30,17 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.opentext.explore.importer.trushpilot.pojo.Author;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.importer.trushpilot.pojo.ReviewRating;
 import com.opentext.explore.importer.trustpilot.TrustpilotTransformer;
+import com.opentext.explore.importer.trustpilot.pojo.Author;
+import com.opentext.explore.importer.trustpilot.pojo.ReviewRating;
+import com.opentext.explore.importer.trustpilot.pojo.TrustpilotReview;
 
 import junit.framework.TestCase;
 
 
 public class TestTrustpilotTransformer extends TestCase {
 
-	List<Review> reviews;
+	List<TrustpilotReview> reviews;
 	
 	private String docXMLFragment = 
 			"  <doc>\r\n" + 
@@ -62,7 +62,7 @@ public class TestTrustpilotTransformer extends TestCase {
 	
 	@Before
 	public void setUp() {
-		Review review = mock(Review.class);
+		TrustpilotReview review = mock(TrustpilotReview.class);
 		when(review.generateId()).thenReturn(123456789l);	
 		when(review.getHeadline()).thenReturn("Banco Sabadell's attitude & 'Customer…");		
 		when(review.getDatePublished()).thenReturn("2022-02-18T12:46:25.000Z");		
@@ -77,7 +77,7 @@ public class TestTrustpilotTransformer extends TestCase {
 		when(review.getReviewRating()).thenReturn(rating);		
 		when(review.getReviewRating().getRatingValue()).thenReturn("1");	
 				
-		reviews = new LinkedList<Review>();
+		reviews = new LinkedList<TrustpilotReview>();
 		reviews.add(review);
 	}
 	

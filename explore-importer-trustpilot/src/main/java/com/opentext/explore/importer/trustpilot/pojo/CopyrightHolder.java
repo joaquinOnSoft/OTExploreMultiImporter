@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,62 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "@type",
-    "bestRating",
-    "worstRating",
-    "ratingValue"
+    "@id"
 })
-public class ReviewRating {
+public class CopyrightHolder {
 
-    @JsonProperty("@type")
-    private String type;
-    @JsonProperty("bestRating")
-    private String bestRating;
-    @JsonProperty("worstRating")
-    private String worstRating;
-    @JsonProperty("ratingValue")
-    private String ratingValue;
+    @JsonProperty("@id")
+    private String id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("@type")
-    public String getType() {
-        return type;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("@type")
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @JsonProperty("bestRating")
-    public String getBestRating() {
-        return bestRating;
-    }
-
-    @JsonProperty("bestRating")
-    public void setBestRating(String bestRating) {
-        this.bestRating = bestRating;
-    }
-
-    @JsonProperty("worstRating")
-    public String getWorstRating() {
-        return worstRating;
-    }
-
-    @JsonProperty("worstRating")
-    public void setWorstRating(String worstRating) {
-        this.worstRating = worstRating;
-    }
-
-    @JsonProperty("ratingValue")
-    public String getRatingValue() {
-        return ratingValue;
-    }
-
-    @JsonProperty("ratingValue")
-    public void setRatingValue(String ratingValue) {
-        this.ratingValue = ratingValue;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

@@ -33,7 +33,7 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import com.opentext.explore.importer.AbstractTransformer;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
+import com.opentext.explore.importer.trustpilot.pojo.TrustpilotReview;
 
 /**
  * 
@@ -42,7 +42,7 @@ import com.opentext.explore.importer.trushpilot.pojo.Review;
  */
 public class TrustpilotTransformer extends AbstractTransformer {
 		
-	private static Document reviewsToDoc(List<Review> reviews, String tag) {
+	private static Document reviewsToDoc(List<TrustpilotReview> reviews, String tag) {
 		Document doc = null;		
 		
 		if(reviews != null && reviews.size() > 0) {
@@ -51,7 +51,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 			//Root Element
 			Element root=new Element("add");
 			
-			for (Review review : reviews) {
+			for (TrustpilotReview review : reviews) {
 				Element eDoc = new Element("doc");
 						
 			
@@ -92,8 +92,8 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @return path of the XML file created
 	 * @throws IOException
 	 */	
-	public static String reviewsToXMLFile(Review review, String fileName, String tag) throws IOException {
-		List<Review> reviews = new LinkedList<Review>();
+	public static String reviewsToXMLFile(TrustpilotReview review, String fileName, String tag) throws IOException {
+		List<TrustpilotReview> reviews = new LinkedList<TrustpilotReview>();
 		reviews.add(review);
 	
 		return reviewsToXMLFile(reviews, fileName, tag);
@@ -107,7 +107,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @return Absolute path of the XML file created
 	 * @throws IOException
 	 */
-	public static String reviewsToXMLFile(List<Review> reviews, String fileName, String tag) throws IOException {
+	public static String reviewsToXMLFile(List<TrustpilotReview> reviews, String fileName, String tag) throws IOException {
 		String xmlPath = null;
 		Document doc = reviewsToDoc(reviews, tag);
 
@@ -135,7 +135,7 @@ public class TrustpilotTransformer extends AbstractTransformer {
 	 * @param statuses
 	 * @return
 	 */
-	public static String reviewsToString(List<Review> reviews, String tag) {
+	public static String reviewsToString(List<TrustpilotReview> reviews, String tag) {
 		String xml = null;
 		Document doc = reviewsToDoc(reviews, tag);
 

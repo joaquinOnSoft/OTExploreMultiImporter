@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,21 +33,24 @@ import com.opentext.explore.util.Hash;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "@type",
+    "@id",
     "itemReviewed",
-    "author",
+    "author",    
     "datePublished",
     "headline",
     "reviewBody",
-    "reviewRating",
+    "reviewRating",    
     "publisher",
     "inLanguage"
 })
-public class Review {
-	
+public class TrustpilotReview {
+
     @JsonProperty("@type")
     private String type;
+    @JsonProperty("@id")
+    private String id;
     @JsonProperty("itemReviewed")
-    private ItemReviewed itemReviewed;
+    private ItemReviewed itemReviewed;    
     @JsonProperty("author")
     private Author author;
     @JsonProperty("datePublished")
@@ -56,11 +60,11 @@ public class Review {
     @JsonProperty("reviewBody")
     private String reviewBody;
     @JsonProperty("reviewRating")
-    private ReviewRating reviewRating;
+    private ReviewRating reviewRating;   
     @JsonProperty("publisher")
-    private Publisher publisher;
+    private Publisher publisher;    
     @JsonProperty("inLanguage")
-    private String inLanguage;
+    private String inLanguage;        
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -73,6 +77,37 @@ public class Review {
     public void setType(String type) {
         this.type = type;
     }
+
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
+    }
+
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @JsonProperty("publisher")
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    @JsonProperty("publisher")
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    @JsonProperty("inLanguage")
+    public String getInLanguage() {
+        return inLanguage;
+    }
+
+    @JsonProperty("inLanguage")
+    public void setInLanguage(String inLanguage) {
+        this.inLanguage = inLanguage;
+    }
+
 
     @JsonProperty("itemReviewed")
     public ItemReviewed getItemReviewed() {
@@ -134,26 +169,6 @@ public class Review {
         this.reviewRating = reviewRating;
     }
 
-    @JsonProperty("publisher")
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    @JsonProperty("publisher")
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
-
-    @JsonProperty("inLanguage")
-    public String getInLanguage() {
-        return inLanguage;
-    }
-
-    @JsonProperty("inLanguage")
-    public void setInLanguage(String inLanguage) {
-        this.inLanguage = inLanguage;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -164,14 +179,15 @@ public class Review {
         this.additionalProperties.put(name, value);
     }
     
-	public long generateId() {
-		StringBuffer id = new StringBuffer();
-		id.append(author.getName());
-		id.append("-");
-		id.append(headline);
-		id.append("-");
-		id.append(datePublished);
-		
-		return Hash.hash(id.toString());		
-	}
+    
+  	public long generateId() {
+  		StringBuffer id = new StringBuffer();
+  		id.append(author.getName());
+  		id.append("-");
+  		id.append(headline);
+  		id.append("-");
+  		id.append(datePublished);
+  		
+  		return Hash.hash(id.toString());		
+  	}    
 }

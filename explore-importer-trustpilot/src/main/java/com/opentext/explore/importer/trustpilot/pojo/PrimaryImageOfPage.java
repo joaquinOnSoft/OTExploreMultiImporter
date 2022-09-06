@@ -17,10 +17,10 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -31,49 +31,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "csvw:name",
-    "csvw:datatype",
-    "csvw:cells"
+    "@id"
 })
-public class CsvwColumn {
+public class PrimaryImageOfPage {
 
-    @JsonProperty("csvw:name")
-    private String csvwName;
-    @JsonProperty("csvw:datatype")
-    private String csvwDatatype;
-    @JsonProperty("csvw:cells")
-    private List<CsvwCell> csvwCells = null;
+    @JsonProperty("@id")
+    private String id;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("csvw:name")
-    public String getCsvwName() {
-        return csvwName;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("csvw:name")
-    public void setCsvwName(String csvwName) {
-        this.csvwName = csvwName;
-    }
-
-    @JsonProperty("csvw:datatype")
-    public String getCsvwDatatype() {
-        return csvwDatatype;
-    }
-
-    @JsonProperty("csvw:datatype")
-    public void setCsvwDatatype(String csvwDatatype) {
-        this.csvwDatatype = csvwDatatype;
-    }
-
-    @JsonProperty("csvw:cells")
-    public List<CsvwCell> getCsvwCells() {
-        return csvwCells;
-    }
-
-    @JsonProperty("csvw:cells")
-    public void setCsvwCells(List<CsvwCell> csvwCells) {
-        this.csvwCells = csvwCells;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
     @JsonAnyGetter

@@ -31,9 +31,10 @@ import org.jsoup.nodes.Element;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opentext.explore.importer.http.URLReader;
-import com.opentext.explore.importer.trushpilot.pojo.Review;
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainer;
-import com.opentext.explore.importer.trushpilot.pojo.TrustpilotReviewContainerType;
+import com.opentext.explore.importer.trustpilot.pojo.Graph;
+import com.opentext.explore.importer.trustpilot.pojo.GraphType;
+import com.opentext.explore.importer.trustpilot.pojo.TrustpilotReview;
+import com.opentext.explore.importer.trustpilot.pojo.TrustpilotReviewContainer;
 
 public class TrustpilotScraper {
 
@@ -74,38 +75,43 @@ public class TrustpilotScraper {
 		}
 	}
 
-	public List<Review> getReviews(){
+	public List<TrustpilotReview> getReviews(){
 		String pageURL = url;
-		List<Review> reviews = null;
-		List<Review> reviewsTmp = null;
-		TrustpilotReviewContainer[] reviewContainers = null;
+		List<TrustpilotReview> reviews = null;
+		TrustpilotReview reviewTmp = null;
+		TrustpilotReviewContainer container = null;
 		Document doc = null;
 
 		do {	
 			doc = readPage(pageURL);			
-			reviewContainers= getReviewsContainer(doc);
+			container= getReviewsContainer(doc);
 
-			TrustpilotReviewContainerType type = null;
-			for (TrustpilotReviewContainer container : reviewContainers) {
+			if(container != null) {				
+				GraphType type = null;
+			
+				for(Graph graph: container.getGraph()) {
+					type = GraphType.getGraphTypeFromString(graph.getType());
 
-				type = TrustpilotReviewContainerType.getContainerTypeFromString(container.getType());
-
-				switch(type) {
-				case LOCAL_BUSINESS:
-					reviewsTmp = container.getReview();
-					if(reviewsTmp != null && reviewsTmp.size() > 0 ) {
-						if (reviews == null) {
-							reviews = new LinkedList<Review>();
+					if(type != null) {
+						if (type == GraphType.REVIEW) {
+							reviewTmp = new TrustpilotReview();
+							if (reviews == null) {
+								reviews = new LinkedList<TrustpilotReview>();
+							}
+	
+							reviewTmp.setType(graph.getType());
+							reviewTmp.setId(graph.getId());
+							reviewTmp.setAuthor(graph.getAuthor());
+							reviewTmp.setDatePublished(graph.getDatePublished());
+							reviewTmp.setHeadline(graph.getHeadline());
+							reviewTmp.setReviewBody(graph.getReviewBody());
+							reviewTmp.setReviewRating(graph.getReviewRating());
+							reviewTmp.setPublisher(graph.getPublisher());
+							reviewTmp.setInLanguage(graph.getInLanguage());
+							
+							reviews.add(reviewTmp);								
 						}
-
-						reviews.addAll(reviewsTmp);
 					}
-					break;
-				case BREADCRUMB_LIST:
-					//Intentionally empty
-				case DATASET:
-					//Intentionally empty
-					break;	
 				}
 			}
 
@@ -147,8 +153,8 @@ public class TrustpilotScraper {
 	 * @param pageURL - Trustpilot page URL
 	 * @return 
 	 */
-	private TrustpilotReviewContainer[] getReviewsContainer(Document doc) {
-		TrustpilotReviewContainer[] reviewContainer = null;
+	private TrustpilotReviewContainer getReviewsContainer(Document doc) {
+		TrustpilotReviewContainer reviewContainer = null;
 
 		Element script = doc.select("script[data-business-unit-json-ld=true]").first();
 
@@ -160,12 +166,14 @@ public class TrustpilotScraper {
 
 			ObjectMapper objectMapper = new ObjectMapper();
 			try {
-				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer[].class);			
+				reviewContainer  = objectMapper.readValue(jsonStr, TrustpilotReviewContainer.class);			
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}
 
-			log.debug(reviewContainer);
+			if(reviewContainer.getGraph() != null) {
+				log.debug("# graphs in page: ", reviewContainer.getGraph().size());
+			}
 		}
 
 		return reviewContainer;

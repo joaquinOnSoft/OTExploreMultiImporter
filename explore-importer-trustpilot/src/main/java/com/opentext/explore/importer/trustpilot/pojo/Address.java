@@ -17,7 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.trushpilot.pojo;
+
+package com.opentext.explore.importer.trustpilot.pojo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,17 +32,26 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "@type",
-    "name",
-    "sameAs"
+    "@id",
+    "streetAddress",
+    "addressLocality",
+    "addressCountry",
+    "postalCode"
 })
-public class Publisher {
+public class Address {
 
     @JsonProperty("@type")
     private String type;
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("sameAs")
-    private String sameAs;
+    @JsonProperty("@id")
+    private String id;
+    @JsonProperty("streetAddress")
+    private String streetAddress;
+    @JsonProperty("addressLocality")
+    private String addressLocality;
+    @JsonProperty("addressCountry")
+    private String addressCountry;
+    @JsonProperty("postalCode")
+    private String postalCode;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -55,24 +65,54 @@ public class Publisher {
         this.type = type;
     }
 
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("@id")
+    public String getId() {
+        return id;
     }
 
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("@id")
+    public void setId(String id) {
+        this.id = id;
     }
 
-    @JsonProperty("sameAs")
-    public String getSameAs() {
-        return sameAs;
+    @JsonProperty("streetAddress")
+    public String getStreetAddress() {
+        return streetAddress;
     }
 
-    @JsonProperty("sameAs")
-    public void setSameAs(String sameAs) {
-        this.sameAs = sameAs;
+    @JsonProperty("streetAddress")
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    @JsonProperty("addressLocality")
+    public String getAddressLocality() {
+        return addressLocality;
+    }
+
+    @JsonProperty("addressLocality")
+    public void setAddressLocality(String addressLocality) {
+        this.addressLocality = addressLocality;
+    }
+
+    @JsonProperty("addressCountry")
+    public String getAddressCountry() {
+        return addressCountry;
+    }
+
+    @JsonProperty("addressCountry")
+    public void setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
+    }
+
+    @JsonProperty("postalCode")
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    @JsonProperty("postalCode")
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     @JsonAnyGetter
