@@ -21,12 +21,18 @@ jar {
 dependencies {
 	implementation project(':explore-importer-core')
 	
+	// Apache Commons Lang, a package of Java utility classes for the classes that are 
+	// in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang.	
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	implementation 'org.apache.commons:commons-lang3:3.12.0'	
 	
+	// General data-binding functionality for Jackson: works on core streaming API
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'		
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'		
 	
+	// soup is a Java library for working with real-world HTML. It provides a very convenient 
+	// API for fetching URLs and extracting and manipulating data, using the best of HTML5 DOM 
+	// methods and CSS selectors. jsoup implements the WHATWG HTML5 specification, and parses HTML to the same DOM as modern browsers do.
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
 	implementation 'org.jsoup:jsoup:1.14.3'			
 }

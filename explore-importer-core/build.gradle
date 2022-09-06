@@ -13,13 +13,19 @@ jar {
 
 
 dependencies {
+
+	// Apache HttpComponents HTTP/1.1 core components
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5
+	implementation 'org.apache.httpcomponents.core5:httpcore5:5.2-beta2'	
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore
-	implementation 'org.apache.httpcomponents:httpcore:4.4.15'	
+	//implementation 'org.apache.httpcomponents:httpcore:4.4.15'			
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-	implementation 'org.apache.httpcomponents:httpclient:4.5.13'	
+	//implementation 'org.apache.httpcomponents:httpclient:4.5.13'	
+	// Apache HttpComponents HttpClient - MIME coded entities	
 	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime
 	implementation 'org.apache.httpcomponents:httpmime:4.5.13'
 	
+	// General data-binding functionality for Jackson: works on core streaming API	
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
     	

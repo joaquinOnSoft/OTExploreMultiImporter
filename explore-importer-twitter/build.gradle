@@ -20,11 +20,14 @@ jar {
 dependencies {
 	implementation project(':explore-importer-core')
 		
+	// A Java library for the Twitter API
 	// https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
 	implementation 'org.twitter4j:twitter4j-core:4.0.7'
+	// A Java library for the Twitter API
 	// https://mvnrepository.com/artifact/org.twitter4j/twitter4j-stream
 	implementation 'org.twitter4j:twitter4j-stream:4.0.7'
 
+	// General data-binding functionality for Jackson: works on core streaming API
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4'
 }

@@ -25,32 +25,42 @@ subprojects {
     }
     
 	dependencies {
+		// Apache Commons CLI provides a simple API for presenting, processing and validating a Command Line Interface.		
 		// https://mvnrepository.com/artifact/commons-cli/commons-cli
 		implementation 'commons-cli:commons-cli:1.5.0'    	
 	
+		// A complete, Java-based solution for accessing, manipulating, and outputting XML data		
 		// https://mvnrepository.com/artifact/org.jdom/jdom
 		implementation 'org.jdom:jdom:2.0.2'	
 	
+		// API for Apache Log4J, a highly configurable logging tool that focuses on performance and low garbage generation. It has a plugin architecture that makes it extensible and supports asynchronous logging based on LMAX Disruptor.
 		// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
-		implementation 'org.apache.logging.log4j:log4j-api:2.17.1'	
+		implementation 'org.apache.logging.log4j:log4j-api:2.18.0'
+		// Implementation for Apache Log4J, a highly configurable logging tool that focuses on performance and low garbage generation. It has a plugin architecture that makes it extensible and supports asynchronous logging based on LMAX Disruptor.	
 		// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
-		implementation 'org.apache.logging.log4j:log4j-core:2.17.1'
+		implementation 'org.apache.logging.log4j:log4j-core:2.18.0'
 		
 		
 	    // Use JUnit test framework
 	    testImplementation 'junit:junit:4.12'	 
 	    
+	    // Mockito mock objects library core API and implementation	    
 		// https://mvnrepository.com/artifact/org.mockito/mockito-core
-		testImplementation 'org.mockito:mockito-core:4.3.1'
+		testImplementation 'org.mockito:mockito-core:4.7.0'
 	
+		// PowerMock API for Mockito 2.+..
 		// https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
 		testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
+		// PowerMock support module for JUnit 4.x rules with Java agent		
 		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule-agent
-		testImplementation 'org.powermock:powermock-module-junit4-rule-agent:2.0.9'	
+		testImplementation 'org.powermock:powermock-module-junit4-rule-agent:2.0.9'
+		// PowerMock support module for JUnit 4.x rules.
 		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4-rule
 		testImplementation 'org.powermock:powermock-module-junit4-rule:2.0.9'
+		// PowerMock support module for JUnit 4.x.		
 		// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4
 		testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
+		// PowerMock module for TestNG.		
 		// https://mvnrepository.com/artifact/org.powermock/powermock-module-testng
 		testImplementation 'org.powermock:powermock-module-testng:2.0.9'		    
 	}    
