@@ -17,10 +17,8 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.tripadvisor.multithread;
+package com.opentext.explore.importer.tripadvisor.v2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.LinkedList;
@@ -32,7 +30,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.opentext.explore.importer.tripadvisor.pojo.TAJobInfo;
-import com.opentext.explore.importer.tripadvisor.pojo.TAJobInfoType;
 
 public class TestTripadvisorScraperHotelConsumer {
 	private static final int ONE_MINUTE_IN_MILIS = 60000;

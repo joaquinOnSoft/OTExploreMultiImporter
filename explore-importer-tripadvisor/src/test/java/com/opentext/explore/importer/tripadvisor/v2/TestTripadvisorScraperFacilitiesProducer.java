@@ -17,7 +17,7 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.tripadvisor.multithread;
+package com.opentext.explore.importer.tripadvisor.v2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

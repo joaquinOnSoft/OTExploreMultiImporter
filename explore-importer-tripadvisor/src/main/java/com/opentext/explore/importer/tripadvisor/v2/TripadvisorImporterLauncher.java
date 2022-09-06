@@ -17,7 +17,7 @@
  *     Joaquín Garzón - initial implementation
  *
  */
-package com.opentext.explore.importer.tripadvisor;
+package com.opentext.explore.importer.tripadvisor.v2;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -29,6 +29,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.opentext.explore.importer.tripadvisor.v1.TripadvisorImporter;
+
 /**
  * 
  * @author Joaquín Garzón
@@ -38,6 +40,7 @@ public class TripadvisorImporterLauncher {
 	private static final String DEFAULT_SOLR_URL = "http://localhost:8983";
 	private static final String DEFAULT_TRIPADVISOR_IMPORT_TAG = "TripaAdvisor Review";
 	private static final int DEFAULT_POOLING_TIME_IN_SECONDS = 300;
+	private static final int DEFAULT_NUM_CONSUMERS = 2;
 	
 	private static final Logger log = LogManager.getLogger(TripadvisorImporterLauncher.class);
 
@@ -59,20 +62,23 @@ public class TripadvisorImporterLauncher {
 		
 		Option timeOption = new Option("t", "time", true, "Seconds between each call against Trustpilot.com. Default value 300 secs (5 minutes).");
 		options.addOption(timeOption);		
+
+		Option numConsumersOption = new Option("c", "consumers", true, "Number of consumers (threads) used simultaneouly to scrap the page.");
+		options.addOption(numConsumersOption);			
 		
 		CommandLineParser parser = new DefaultParser();
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLine cmd = null;
 
+		String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
+		String host = DEFAULT_SOLR_URL;
+		boolean exactMatch = false;
+		String searchTerm = null;
+		int timeInSeconds = DEFAULT_POOLING_TIME_IN_SECONDS;		
+		int numConsumers = DEFAULT_NUM_CONSUMERS;
+
 		try {
 			cmd = parser.parse(options, args);
-
-			String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
-			String host = DEFAULT_SOLR_URL;
-			boolean exactMatch = false;
-			String searchTerm = null;
-						
-			int timeInSeconds = DEFAULT_POOLING_TIME_IN_SECONDS;
 			
 			if (cmd.hasOption("itag") || cmd.hasOption("i")) {
 				itag = cmd.getOptionValue("itag");
@@ -89,32 +95,37 @@ public class TripadvisorImporterLauncher {
 			if (cmd.hasOption("search") || cmd.hasOption("s")) {
 				searchTerm = cmd.getOptionValue("search");
 			}	
+		
+			timeInSeconds = getNumericParam(cmd, "time", "t", DEFAULT_POOLING_TIME_IN_SECONDS);
 			
-			if (cmd.hasOption("time") || cmd.hasOption("t")) {
-				String strTimeInSeconds = cmd.getOptionValue("time");
-				try {
-					timeInSeconds = Integer.parseInt(strTimeInSeconds);
-				}
-				catch(NumberFormatException e) {
-					formatter.printHelp("java -jar OTExploreTripAdvisorImporter.22.09.01.jar --itag TripAdvisor --search \"club med\"", options);
-
-					exitInError(e);
-				}
-			}
+			numConsumers = getNumericParam(cmd, "consumers", "c", DEFAULT_NUM_CONSUMERS);			
 					
 			TripadvisorImporter importer = new TripadvisorImporter(host);
 			importer.start(searchTerm, exactMatch, itag, timeInSeconds);
 			
 		}
-		catch (ParseException e) {
-			formatter.printHelp("java -jar OTExploreTrustImporter.22.02.16.jar --itag Trustpilot --alias bancsabadell.com", options);
+		catch (ParseException | NumberFormatException e) {
+			formatter.printHelp("java -jar OTExploreTripadvisorImporter.22.02.16.jar --itag Trustpilot --alias bancsabadell.com", options);
 
-			exitInError(e);	
+			log.error(e.getMessage());
+			System.exit(-1);
 		}
 	}
-	
-	private static void exitInError(Exception e) {
-		log.error(e.getMessage());
-		System.exit(-1);	
+
+	private static int getNumericParam(CommandLine cmd, String longParamName, String shortParamName, int defaultValue) throws NumberFormatException {
+		int numParam = defaultValue;
+					
+		if (cmd.hasOption(longParamName) || cmd.hasOption(shortParamName)) {
+			String numParamStr = cmd.getOptionValue(longParamName);
+			try {
+				numParam = Integer.parseInt(numParamStr);
+			}
+			catch(NumberFormatException e) {
+				log.error("Invalid param value for parameter '{}'", longParamName);
+				throw e;
+			}
+		}
+		
+		return numParam;
 	}
 }

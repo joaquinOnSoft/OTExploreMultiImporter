@@ -1,4 +1,4 @@
-package com.opentext.explore.importer.tripadvisor;
+package com.opentext.explore.importer.tripadvisor.v1;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.opentext.explore.importer.tripadvisor.AbstractTripadvisorScraper;
 import com.opentext.explore.importer.tripadvisor.pojo.TAFacility;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.DateUtil;

@@ -1,4 +1,4 @@
-package com.opentext.explore.importer.tripadvisor.multithread;
+package com.opentext.explore.importer.tripadvisor.v2;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.opentext.explore.importer.tripadvisor.multithread;
+package com.opentext.explore.importer.tripadvisor.v2;
 
 import java.text.ParseException;
 import java.util.Date;

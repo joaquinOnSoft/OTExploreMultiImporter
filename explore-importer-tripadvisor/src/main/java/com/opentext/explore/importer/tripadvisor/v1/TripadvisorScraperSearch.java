@@ -1,10 +1,11 @@
-package com.opentext.explore.importer.tripadvisor;
+package com.opentext.explore.importer.tripadvisor.v1;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.opentext.explore.importer.tripadvisor.AbstractTripadvisorScraper;
 
 public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 	

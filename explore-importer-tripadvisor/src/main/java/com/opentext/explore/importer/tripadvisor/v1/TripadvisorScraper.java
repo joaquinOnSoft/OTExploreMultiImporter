@@ -17,11 +17,12 @@
  *     Joaquín Garzón - initial implementation
  * @since 22.09.01
  */
-package com.opentext.explore.importer.tripadvisor;
+package com.opentext.explore.importer.tripadvisor.v1;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import com.opentext.explore.importer.tripadvisor.AbstractTripadvisorScraper;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public class TripadvisorScraper extends AbstractTripadvisorScraper {

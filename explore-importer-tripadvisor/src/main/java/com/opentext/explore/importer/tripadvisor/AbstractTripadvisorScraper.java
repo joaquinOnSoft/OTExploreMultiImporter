@@ -14,6 +14,7 @@ import com.gargoylesoftware.htmlunit.HttpHeader;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.opentext.explore.importer.tripadvisor.v1.TripadvisorScraper;
 
 public abstract class AbstractTripadvisorScraper {
 
