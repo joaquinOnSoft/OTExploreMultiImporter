@@ -30,14 +30,16 @@ public class TripadvisorScraperFacilitiesProducer extends AbstractTripadvisorScr
 	@Override	
 	public void run() {
         try {
-        	for(String link: links) {
-        		log.debug("Link to find review pages: {}", link);
-        		processFacilityReviews(link);
-        	}
-        	
-        	for(int i=0; i<numConsumers; i++) {
-        		//JOB info to terminate the job in the consumer side
-        		queue.add(new TAJobInfo());
+        	if(links != null) {
+	        	for(String link: links) {
+	        		log.debug("Link to find review pages: {}", link);
+	        		processFacilityReviews(link);
+	        	}
+	        	
+	        	for(int i=0; i<numConsumers; i++) {
+	        		//JOB info to terminate the job in the consumer side
+	        		queue.add(new TAJobInfo());
+	        	}
         	}
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
