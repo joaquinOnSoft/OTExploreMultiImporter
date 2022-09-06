@@ -38,7 +38,7 @@ public class TestTripadvisorScraperFacilities {
 	
 	private TripadvisorScraperFacilities scraper = new TripadvisorScraperFacilities();
 	
-	@Test
+	//@Test
 	public void getHotelReviewsWith4900Reviews() {
 		List<TAReview> reviews = scraper.getHotelReviews(TRIPADVISOR_HOTEL_LINK_WITH_4900_REVIEWS);
 

@@ -36,7 +36,10 @@ import com.opentext.explore.importer.tripadvisor.pojo.TAJobInfoType;
 
 public class TestTripadvisorScraperFacilitiesProducer {
 	private static final int ONE_MINUTE_IN_MILIS = 60000;
+	private static final int TWO_MINUTE_IN_MILIS = 120000;
+	private static final int THREE_MINUTE_IN_MILIS = 180000;
 
+	
 	private static final int NUM_PAGES_WITH_REVIEWS = 4;
 	
 	//private static final String TRIPADVISOR_HOTEL_LINK_WITH_01_REVIEWS = "https://www.tripadvisor.com/Hotel_Review-g147293-d23012756-Reviews-Club_Med-Punta_Cana_La_Altagracia_Province_Dominican_Republic.html";
@@ -67,7 +70,7 @@ public class TestTripadvisorScraperFacilitiesProducer {
 		//TODO look for a way to avoid the use of a sleep in the test.
 		//The test can fail based on the connection speed. It's not ideal.
 		try {
-			Thread.sleep(ONE_MINUTE_IN_MILIS);
+			Thread.sleep(THREE_MINUTE_IN_MILIS);
 		} catch (InterruptedException e) {
 			fail(e.getMessage());
 		}

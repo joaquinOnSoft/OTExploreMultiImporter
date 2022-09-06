@@ -29,8 +29,6 @@ import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.opentext.explore.importer.tripadvisor.v1.TripadvisorImporter;
-
 /**
  * 
  * @author Joaquín Garzón
@@ -100,7 +98,7 @@ public class TripadvisorImporterLauncher {
 			
 			numConsumers = getNumericParam(cmd, "consumers", "c", DEFAULT_NUM_CONSUMERS);			
 					
-			TripadvisorImporter importer = new TripadvisorImporter(host);
+			TripadvisorImporter importer = new TripadvisorImporter(host, numConsumers);
 			importer.start(searchTerm, exactMatch, itag, timeInSeconds);
 			
 		}

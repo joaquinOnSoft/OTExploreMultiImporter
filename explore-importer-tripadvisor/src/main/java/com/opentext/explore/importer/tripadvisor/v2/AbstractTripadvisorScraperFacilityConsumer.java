@@ -14,24 +14,28 @@ import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runnable  {
 		
-	private BlockingQueue<TAJobInfo> queue;
-
 	private static final String RATING_CLASS_1 = "bubble_10"; 
 	private static final String RATING_CLASS_2 = "bubble_20";
 	private static final String RATING_CLASS_3 = "bubble_30";
 	private static final String RATING_CLASS_4 = "bubble_40";
 	private static final String RATING_CLASS_5 = "bubble_50";
-
+	
+	private BlockingQueue<TAJobInfo> queue;
+	private String host = null;
+	private String ttag = null;
+	
 	protected static final Logger log = LogManager.getLogger(AbstractTripadvisorScraperFacilityConsumer.class);
 
-	public AbstractTripadvisorScraperFacilityConsumer(BlockingQueue<TAJobInfo> queue) {
+	public AbstractTripadvisorScraperFacilityConsumer(BlockingQueue<TAJobInfo> queue, String host, String ttag) {
 		this.queue = queue;
+		this.host = host;
+		this.ttag = ttag;
 	}
 	
 	@Override
 	public void run() {
 		try {
-			TripadvisorSolrAPIWrapper api = new TripadvisorSolrAPIWrapper();
+			TripadvisorSolrAPIWrapper api = new TripadvisorSolrAPIWrapper(host);
 			List<TAReview> reviews = null;
             while (true) {
             	TAJobInfo jobInfo = queue.take();
@@ -45,7 +49,7 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
                 
                 if(reviews != null) {
                 	//TODO set tag in SOLR insert
-                	api.solrBatchUpdate("TODO - change", reviews);
+                	api.solrBatchUpdate(ttag, reviews);
                 }
                 else {
                 	log.info("No reviews found!");

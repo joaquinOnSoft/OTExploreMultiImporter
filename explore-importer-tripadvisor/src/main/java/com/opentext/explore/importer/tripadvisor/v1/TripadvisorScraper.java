@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.opentext.explore.importer.tripadvisor.AbstractTripadvisorScraper;
+import com.opentext.explore.importer.tripadvisor.TripadvisorScraperSearch;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 
 public class TripadvisorScraper extends AbstractTripadvisorScraper {

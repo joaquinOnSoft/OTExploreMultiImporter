@@ -1,11 +1,10 @@
-package com.opentext.explore.importer.tripadvisor.v1;
+package com.opentext.explore.importer.tripadvisor;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.opentext.explore.importer.tripadvisor.AbstractTripadvisorScraper;
 
 public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 	
@@ -14,8 +13,12 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 	public TripadvisorScraperSearch() {
 		super();
 	}
-	
+
 	public List<String> search(String searchTerm){
+		return search(searchTerm, false);
+	}
+	
+	public List<String> search(String searchTerm, boolean exactSearch){
 		List<String> links = null;
 		HtmlPage page = null;
 		url = BASE_URL + SEARCH_URL + searchTerm;	//URLEncoder.encode(searchTerm, StandardCharsets.UTF_8);
@@ -25,7 +28,7 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 		
 		if(page != null) {
 			//Recover links to hotels, restaurants... that match the search criteria
-			links = getListSearchResults(page);
+			links = getListSearchResults(page, searchTerm, exactSearch);
 		}		
 		
 		return links;
@@ -72,7 +75,7 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 		return page;
 	}
 
-	private List<String> getListSearchResults(HtmlPage page){
+	private List<String> getListSearchResults(HtmlPage page, String searchTerm, boolean exactSearch){
 		List<String> searchResults = null;
 		if(page != null) {
 			int start, end= -1;
@@ -95,8 +98,19 @@ public class TripadvisorScraperSearch extends AbstractTripadvisorScraper {
 					if(searchResults == null) {
 						searchResults = new LinkedList<String>();
 					}
-
-					searchResults.add(link);
+					
+					if(exactSearch) {						
+						//Ignore links that not include the search term in the link
+						if(!link.toLowerCase().contains(searchTerm.toLowerCase().replace(" ", "_"))) {
+							log.info("Skipping link: {}", link);
+						}
+						else {
+							searchResults.add(link);
+						}
+					}
+					else {
+						searchResults.add(link);
+					}					
 				}
 			}
 			

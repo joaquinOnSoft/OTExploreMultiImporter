@@ -27,6 +27,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.opentext.explore.importer.tripadvisor.TripadvisorScraperSearch;
+
 public class TestTripadvisorScraperSearch {
 
 	private TripadvisorScraperSearch scraper = new TripadvisorScraperSearch();

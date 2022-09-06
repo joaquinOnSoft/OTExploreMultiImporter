@@ -49,9 +49,7 @@ public class TestTripadvisorScraperHotelConsumer {
 		 links.add(TRIPADVISOR_HOTEL_LINK_WITH_36_REVIEWS);
 		 		 
 		 
-		 queue = new LinkedBlockingQueue<TAJobInfo>();
-		
-		 producer = new TripadvisorScraperFacilitiesProducer(links, queue, NUM_CONSUMERS);
+		 queue = new LinkedBlockingQueue<TAJobInfo>();		
 		 producer = new TripadvisorScraperFacilitiesProducer(links, queue, NUM_CONSUMERS);
 
 	 }
@@ -62,7 +60,7 @@ public class TestTripadvisorScraperHotelConsumer {
 
 		new Thread(producer).start();
 		for(int i=0; i<NUM_CONSUMERS; i++) {
-			new Thread(new TripadvisorScraperHotelConsumer(queue)).start();
+			new Thread(new TripadvisorScraperHotelConsumer(queue, "localhost:8983", "Tripadvisor")).start();
 		}
 		
 		//TODO look for a way to avoid the use of a sleep in the test.

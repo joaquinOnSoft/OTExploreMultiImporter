@@ -15,8 +15,8 @@ import com.opentext.explore.util.DateUtil;
 
 public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperFacilityConsumer {
 
-	public TripadvisorScraperHotelConsumer(BlockingQueue<TAJobInfo> queue) {
-		super(queue);
+	public TripadvisorScraperHotelConsumer(BlockingQueue<TAJobInfo> queue, String host, String ttag) {
+		super(queue, host, ttag);
 	}
 	
 	protected List<TAReview> getFacilityReviews(HtmlPage page, int reviewsPageNumber) {
