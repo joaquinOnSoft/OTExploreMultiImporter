@@ -61,7 +61,7 @@ public class TripadvisorImporterLauncher {
 		Option timeOption = new Option("t", "time", true, "Seconds between each call against Trustpilot.com. Default value 300 secs (5 minutes).");
 		options.addOption(timeOption);		
 
-		Option numConsumersOption = new Option("c", "consumers", true, "Number of consumers (threads) used simultaneouly to scrap the page.");
+		Option numConsumersOption = new Option("c", "consumers", true, "Number of consumers (threads) used simultaneously to scrap the page.");
 		options.addOption(numConsumersOption);			
 		
 		CommandLineParser parser = new DefaultParser();

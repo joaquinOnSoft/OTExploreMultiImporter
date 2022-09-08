@@ -1,6 +1,6 @@
 # OTExploreMultiImporter
 Multiple content types importer for OpenText Explore (Voice of the customer solution).
-This command-line application read an input (**Excel file, Twitter messages, or a Reddit threat**) to ingest the information of our interest, into OpenText Explore. 
+This command-line application read an input (**Excel file, Twitter messages, Tripadvisor and Trustpilot reviews or a Reddit threat**) to ingest the information of our interest, into OpenText Explore. 
 
 These text messages are inserted into the Solr Server used by **OpenText Explore**. 
 
@@ -13,6 +13,7 @@ This project contains 4 auto-executable jar files to import different type of co
  * [OpenText Explore Excel Importer](doc/ot-explore-excel-importer.md)
  * [OpenText Explore Twitter Importer](doc/ot-explore-twitter-importer.md)
  * [OpenText Explore Reddit Importer](doc/ot-explore-reddit-importer.md)
+ * [OpenText Explore Tripadvisor Importer](doc/ot-explore-tripadvisor-importer.md)
  * [OpenText Explore Trustpilot Importer](doc/ot-explore-trustpilot-importer.md)
  
 

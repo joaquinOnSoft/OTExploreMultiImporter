@@ -47,15 +47,17 @@ The configuration file **Explore.Configuration.xml** is located at **<EXPLORE_HO
 D:\Program Files (x86)\OpenText\Explore\Explore.Configuration.xml 
 ```
 
-### Twitter DocType
+### Trustpilot DocType
 
-We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.xml in order to identify Twitter as a new input/document type analyzed by Explore:
+We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.xml in order to identify Trustpilot as a new input/document type analyzed by Explore:
+
+> **TODO**: REVIEW doc type definition. It's a copy and paste from Twitter doc type. It's not ok.
 
 ```xml
   <DocTypes>
     ... 
     <DocType> 
-      <Name>Twitter</Name>
+      <Name>Trustpilot</Name>
       <GridFields>
         <Field column="Source">
           <Name>Followers</Name>
