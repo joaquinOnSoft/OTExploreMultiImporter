@@ -42,7 +42,7 @@ The configuration file **Explore.Configuration.xml** is located at **<EXPLORE_HO
 D:\Program Files (x86)\OpenText\Explore\Explore.Configuration.xml 
 ```
 
-### Twitter DocType
+### Tripadvisor DocType
 
 We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.xml in order to identify Tripadvisor as a new input/document type analyzed by Explore:
 
