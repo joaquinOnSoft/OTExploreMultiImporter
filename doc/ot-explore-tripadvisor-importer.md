@@ -196,4 +196,4 @@ We must define new fields to be able to import extra metadata related with each 
 
 
 ## Apply the changes on your instance
-Please, see [apply the changes on your instance](.(applying-changes-on-your-instance.md)
+Please, see [apply the changes on your instance](./applying-changes-on-your-instance.md)
