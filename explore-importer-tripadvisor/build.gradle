@@ -5,7 +5,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'OpenText Explore Tripadvisor Importer',  
         	'Implementation-Version': version,
-        	'Main-Class': 'com.opentext.explore.importer.tripadvisor.tripadvisor.v2.TripadvisorImporterLauncher'
+        	'Main-Class': 'com.opentext.explore.importer.tripadvisor.v2.TripadvisorImporterLauncher'
     }
  
     from {
