@@ -22,7 +22,6 @@ usage: java -jar OTExploreMultiImporter-tripadvisor-22.09.01 --itag Tripadvisor 
  -i --itag <arg>    Explore Importer tag. Added to each article importer. Default value `TripaAdvisor Review`
  -e --exact         Exact match. If set the search term must be contained in the page title or url
  -s --search        Search term to look for in tripadvisor.com
- -t --time          Seconds between each call against Trustpilot.com. Default value 300 secs (5 minutes).
  -c --consumers     Number of consumers (threads) used simultaneously to scrap the page.
 ```
 
@@ -135,7 +134,7 @@ Tripadvisor as a new group that can be used to filter by:
 
       <CriteriaItem parametric="true" groupBy ="alphabetical" numberBuckets="20">
         <Name>Tripadvisor tag</Name>
-        <Tag>Tripadvisor</Tag>
+        <Tag>ttag</Tag>
         <ComparatorGroup>string</ComparatorGroup>
         <AssociatedDocTypes>
           <DocType>Tripadvisor</DocType>

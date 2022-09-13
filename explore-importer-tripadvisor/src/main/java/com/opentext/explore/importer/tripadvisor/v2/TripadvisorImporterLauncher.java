@@ -37,7 +37,6 @@ import org.apache.logging.log4j.Logger;
 public class TripadvisorImporterLauncher {
 	private static final String DEFAULT_SOLR_URL = "http://localhost:8983";
 	private static final String DEFAULT_TRIPADVISOR_IMPORT_TAG = "TripaAdvisor Review";
-	private static final int DEFAULT_POOLING_TIME_IN_SECONDS = 300;
 	private static final int DEFAULT_NUM_CONSUMERS = 2;
 	
 	private static final Logger log = LogManager.getLogger(TripadvisorImporterLauncher.class);
@@ -57,10 +56,7 @@ public class TripadvisorImporterLauncher {
 		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com");
 		aliasOption.setRequired(true);
 		options.addOption(aliasOption);
-		
-		Option timeOption = new Option("t", "time", true, "Seconds between each call against Trustpilot.com. Default value 300 secs (5 minutes).");
-		options.addOption(timeOption);		
-
+	
 		Option numConsumersOption = new Option("c", "consumers", true, "Number of consumers (threads) used simultaneously to scrap the page.");
 		options.addOption(numConsumersOption);			
 		
@@ -71,8 +67,7 @@ public class TripadvisorImporterLauncher {
 		String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
 		String host = DEFAULT_SOLR_URL;
 		boolean exactMatch = false;
-		String searchTerm = null;
-		int timeInSeconds = DEFAULT_POOLING_TIME_IN_SECONDS;		
+		String searchTerm = null;		
 		int numConsumers = DEFAULT_NUM_CONSUMERS;
 
 		try {
@@ -93,13 +88,11 @@ public class TripadvisorImporterLauncher {
 			if (cmd.hasOption("search") || cmd.hasOption("s")) {
 				searchTerm = cmd.getOptionValue("search");
 			}	
-		
-			timeInSeconds = getNumericParam(cmd, "time", "t", DEFAULT_POOLING_TIME_IN_SECONDS);
-			
+					
 			numConsumers = getNumericParam(cmd, "consumers", "c", DEFAULT_NUM_CONSUMERS);			
 					
 			TripadvisorImporter importer = new TripadvisorImporter(host, numConsumers);
-			importer.start(searchTerm, exactMatch, itag, timeInSeconds);
+			importer.start(searchTerm, exactMatch, itag);
 			
 		}
 		catch (ParseException | NumberFormatException e) {
