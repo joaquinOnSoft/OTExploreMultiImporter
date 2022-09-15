@@ -21,6 +21,7 @@ package com.opentext.explore.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -128,5 +129,16 @@ public class FileUtil {
 		name += extension.startsWith(".") ? extension :  "." + extension;
 		
 		return name;
+	}
+	
+	public static File[] filterFilesByExtension(String path, String extension) {
+		File dir = new File(path);
+		File[] files = dir.listFiles(new FilenameFilter() {
+		    public boolean accept(File dir, String name) {
+		        return name.toLowerCase().endsWith(extension);
+		    }
+		});		
+		
+		return files;
 	}
 }

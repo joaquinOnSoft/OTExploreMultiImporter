@@ -36,7 +36,6 @@ public abstract class AbstractTripadvisorScraperHotelConsumer extends AbstractTr
 		List<DomElement> reviewTabDivs = page.getByXPath("//div[@data-test-target='reviews-tab']");
 	
 		if(reviewTabDivs != null && reviewTabDivs.size() > 0) {
-			StringBuilder content = new StringBuilder(); 
 			String ratingDateStr = null;
 			String ratingClassStr = null;
 			Date ratingDate = null;			
@@ -62,12 +61,9 @@ public abstract class AbstractTripadvisorScraperHotelConsumer extends AbstractTr
 					taReview.setId(idList.get(i).getAttribute("data-reviewid"));
 					
 					taReview.setTitle(titleList.get(i).asNormalizedText());
-	
-					for(DomElement span: contentList) {
-						content.append(span.asNormalizedText()).append(" "); 
-					}
-					taReview.setContent(content.toString());
-					content.setLength(0); //Clear the content
+					
+					//TODO process extended content (text after `...`)
+					taReview.setContent(contentList.get(i).asNormalizedText());					
 					
 					ratingClassStr = ratingList.get(i).getAttribute("class");
 					taReview.setRating(getRatingFromClass(ratingClassStr));

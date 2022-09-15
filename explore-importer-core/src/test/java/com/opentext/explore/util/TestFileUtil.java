@@ -19,6 +19,7 @@
  */
 package com.opentext.explore.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -27,10 +28,13 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 
 import org.junit.Test;
 
 public class TestFileUtil{
+	private static final String XML_EXAMPLE_FILE_NAME = "1257656312529186816.xml";
+
 	@Test
 	public void testDeleteFile() {
 		String fileName = "filename.txt";
@@ -51,7 +55,7 @@ public class TestFileUtil{
 	
 	@Test
 	public void testGetFileFromResources() {
-		File f = FileUtil.getFileFromResources("1257656312529186816.xml");
+		File f = FileUtil.getFileFromResources(XML_EXAMPLE_FILE_NAME);
 		assertNotNull(f);
 		assertTrue(f.exists());
 	}
@@ -67,5 +71,20 @@ public class TestFileUtil{
 		}
 		
 		assertFalse(FileUtil.isFile(cwd));
+	}
+	
+	@Test
+	public void filterFilesByExtension() {
+		
+		URL resource = getClass().getClassLoader().getResource(XML_EXAMPLE_FILE_NAME);
+		if(resource != null) {			
+			File[] files = FileUtil.filterFilesByExtension(resource.getPath().replace(XML_EXAMPLE_FILE_NAME, ""), ".xml");
+			assertNotNull(files);
+			assertEquals(1, files.length);
+			assertEquals(XML_EXAMPLE_FILE_NAME, files[0].getName());
+		}
+		else {
+			fail("Resource `1257656312529186816.xml` not found.");
+		}
 	}
 }

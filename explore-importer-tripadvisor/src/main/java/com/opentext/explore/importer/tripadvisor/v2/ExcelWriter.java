@@ -97,6 +97,7 @@ public class ExcelWriter {
 					switch (columnName) {
 					case "id":
 						value = review.getId();
+						break;
 					case "author":
 						value = review.getAuthor();
 						break;

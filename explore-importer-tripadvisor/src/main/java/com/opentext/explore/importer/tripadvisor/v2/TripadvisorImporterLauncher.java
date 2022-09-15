@@ -53,7 +53,7 @@ public class TripadvisorImporterLauncher {
 		Option exactOption = new Option("e", "exact", false, "Exact match. If set the search term must be contained in the page title or url");
 		options.addOption(exactOption);				
 
-		Option excellOption = new Option("x", "excell", false, "Use excell output instead of the default insert in Solr.");
+		Option excellOption = new Option("x", "excel", false, "Use MS Excel output file instead of the default insert in Solr.");
 		options.addOption(excellOption);				
 		
 		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com");
@@ -89,7 +89,7 @@ public class TripadvisorImporterLauncher {
 				exactMatch = true;
 			}				
 
-			if (cmd.hasOption("excell") || cmd.hasOption("x")) {
+			if (cmd.hasOption("excel") || cmd.hasOption("x")) {
 				excellOutput = true;
 			}				
 									
