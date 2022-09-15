@@ -13,12 +13,12 @@ import com.opentext.explore.importer.tripadvisor.pojo.TAJobInfo;
 import com.opentext.explore.importer.tripadvisor.pojo.TAReview;
 import com.opentext.explore.util.DateUtil;
 
-public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperFacilityConsumer {
+public abstract class AbstractTripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperFacilityConsumer {
 
-	public TripadvisorScraperHotelConsumer(BlockingQueue<TAJobInfo> queue, String host, String ttag) {
+	public AbstractTripadvisorScraperHotelConsumer(BlockingQueue<TAJobInfo> queue, String host, String ttag) {
 		super(queue, host, ttag);
 	}
-	
+
 	protected List<TAReview> getFacilityReviews(HtmlPage page, int reviewsPageNumber) {
 		TAFacility facility = null;
 		List<TAReview> reviews = null;
@@ -34,13 +34,13 @@ public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperF
 		}
 		
 		List<DomElement> reviewTabDivs = page.getByXPath("//div[@data-test-target='reviews-tab']");
-
+	
 		if(reviewTabDivs != null && reviewTabDivs.size() > 0) {
 			StringBuilder content = new StringBuilder(); 
 			String ratingDateStr = null;
 			String ratingClassStr = null;
 			Date ratingDate = null;			
-
+	
 			List<DomElement> titleList = reviewTabDivs.get(0).getByXPath("//div[@data-test-target='review-title']"); 
 			
 			if(titleList != null) {
@@ -62,7 +62,7 @@ public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperF
 					taReview.setId(idList.get(i).getAttribute("data-reviewid"));
 					
 					taReview.setTitle(titleList.get(i).asNormalizedText());
-
+	
 					for(DomElement span: contentList) {
 						content.append(span.asNormalizedText()).append(" "); 
 					}
@@ -79,9 +79,9 @@ public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperF
 					} catch (ParseException e) {
 						log.error("Invalid date format: {}", ratingDateStr);
 					}
-
+	
 					taReview.setAuthor(authorList.get(i).asNormalizedText());
-
+	
 					//taReview.setLocation(locationList.get(i).asNormalizedText());
 					
 					if(facility != null) {
@@ -99,5 +99,6 @@ public class TripadvisorScraperHotelConsumer extends AbstractTripadvisorScraperF
 			}
 		}
 		return reviews;
-	}	
+	}
+
 }

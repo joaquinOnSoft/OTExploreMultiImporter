@@ -52,7 +52,10 @@ public class TripadvisorImporterLauncher {
 		
 		Option exactOption = new Option("e", "exact", false, "Exact match. If set the search term must be contained in the page title or url");
 		options.addOption(exactOption);				
-				
+
+		Option excellOption = new Option("x", "excell", false, "Use excell output instead of the default insert in Solr.");
+		options.addOption(excellOption);				
+		
 		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com");
 		aliasOption.setRequired(true);
 		options.addOption(aliasOption);
@@ -67,6 +70,7 @@ public class TripadvisorImporterLauncher {
 		String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
 		String host = DEFAULT_SOLR_URL;
 		boolean exactMatch = false;
+		boolean excellOutput = false;
 		String searchTerm = null;		
 		int numConsumers = DEFAULT_NUM_CONSUMERS;
 
@@ -84,7 +88,11 @@ public class TripadvisorImporterLauncher {
 			if (cmd.hasOption("exact") || cmd.hasOption("e")) {
 				exactMatch = true;
 			}				
-			
+
+			if (cmd.hasOption("excell") || cmd.hasOption("x")) {
+				excellOutput = true;
+			}				
+									
 			if (cmd.hasOption("search") || cmd.hasOption("s")) {
 				searchTerm = cmd.getOptionValue("search");
 			}	
@@ -92,7 +100,7 @@ public class TripadvisorImporterLauncher {
 			numConsumers = getNumericParam(cmd, "consumers", "c", DEFAULT_NUM_CONSUMERS);			
 					
 			TripadvisorImporter importer = new TripadvisorImporter(host, numConsumers);
-			importer.start(searchTerm, exactMatch, itag);
+			importer.start(searchTerm, exactMatch, itag, excellOutput);
 			
 		}
 		catch (ParseException | NumberFormatException e) {

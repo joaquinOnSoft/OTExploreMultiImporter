@@ -21,8 +21,8 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
 	private static final String RATING_CLASS_5 = "bubble_50";
 	
 	private BlockingQueue<TAJobInfo> queue;
-	private String host = null;
-	private String ttag = null;
+	protected String host = null;
+	protected String ttag = null;
 	
 	protected static final Logger log = LogManager.getLogger(AbstractTripadvisorScraperFacilityConsumer.class);
 
@@ -35,7 +35,6 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
 	@Override
 	public void run() {
 		try {
-			TripadvisorSolrAPIWrapper api = new TripadvisorSolrAPIWrapper(host);
 			List<TAReview> reviews = null;
             while (true) {
             	TAJobInfo jobInfo = queue.take();
@@ -47,13 +46,8 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
                 
                 reviews = getFacilityReviews(jobInfo.getPage(), jobInfo.getPageNumber());
                 
-                if(reviews != null) {
-                	//TODO set tag in SOLR insert
-                	api.solrBatchUpdate(ttag, reviews);
-                }
-                else {
-                	log.info("No reviews found!");
-                }
+                processReviews(reviews);
+
             }
         } catch (InterruptedException e) {
         	log.error("Thread interrupted: ", e);
@@ -62,6 +56,8 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
 	}		
 
 	protected abstract  List<TAReview> getFacilityReviews(HtmlPage page, int reviewsPageNumber);
+	
+	protected abstract void processReviews(List<TAReview> reviews);
 	
 	protected String getTextContentFromElementByXPath(DomElement element, String xPahtExpr) {
 		List<DomElement> elementsFound = element.getByXPath(xPahtExpr);

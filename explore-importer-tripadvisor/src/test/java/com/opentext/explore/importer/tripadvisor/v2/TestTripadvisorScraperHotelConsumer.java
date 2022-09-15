@@ -60,7 +60,7 @@ public class TestTripadvisorScraperHotelConsumer {
 
 		new Thread(producer).start();
 		for(int i=0; i<NUM_CONSUMERS; i++) {
-			new Thread(new TripadvisorScraperHotelConsumer(queue, "localhost:8983", "Tripadvisor")).start();
+			new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, "localhost:8983", "Tripadvisor")).start();
 		}
 		
 		//TODO look for a way to avoid the use of a sleep in the test.

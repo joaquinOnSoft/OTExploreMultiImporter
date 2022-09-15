@@ -56,7 +56,7 @@ public class TripadvisorImporter {
 	 * @param tTag          - Tripadvisor Importer tag
 	 * @param timeInSeconds - Seconds between each call against Tripadvisor site
 	 */
-	public void start(String searchTerm, boolean exactSearch, String tTag) {
+	public void start(String searchTerm, boolean exactSearch, String tTag, boolean excellOutput) {
 		List<String> links = null;
 		TripadvisorScraperSearch scraper = new TripadvisorScraperSearch();
 		BlockingQueue<TAJobInfo> queue = new LinkedBlockingQueue<TAJobInfo>();
@@ -68,9 +68,13 @@ public class TripadvisorImporter {
 
 		new Thread(new TripadvisorScraperFacilitiesProducer(links, queue, numComsumers)).start();
 		for (int i = 0; i < numComsumers; i++) {
-			log.info("new consumr thread #{}", i);
-			new Thread(new TripadvisorScraperHotelConsumer(queue, host, tTag)).start();
+			log.info("new consumer thread #{}", i);
+			if(excellOutput) {
+				new Thread(new TripadvisorScraperHotelConsumer2Excel(queue, host, tTag)).start();
+			}
+			else {
+				new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, host, tTag)).start();
+			}
 		}
-
 	}
 }

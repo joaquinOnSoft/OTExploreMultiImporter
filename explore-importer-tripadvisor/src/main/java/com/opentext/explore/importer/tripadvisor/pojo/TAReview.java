@@ -23,6 +23,7 @@ import java.util.Date;
 
 public class TAReview {
 	private static final String LANG_ENGLISH = "en";
+	private static final String DEFAULT_TTAG = "Tripadvisor";
 	
 	private String id;
 	private String author;
@@ -35,10 +36,13 @@ public class TAReview {
 	
 	private String language;
 	
+	private String ttag;
+	
 	private TAFacility facility;
 	
 	public TAReview() {
 		this.language = LANG_ENGLISH;
+		this.ttag = DEFAULT_TTAG;
 	}
 	
 	public String getId() {
@@ -109,6 +113,16 @@ public class TAReview {
 		this.language = language;
 	}
 	
+	
+	
+	public String getTtag() {
+		return ttag;
+	}
+
+	public void setTtag(String ttag) {
+		this.ttag = ttag;
+	}
+
 	public TAFacility getFacility() {
 		return facility;
 	}
@@ -127,10 +141,29 @@ public class TAReview {
 			.append(", rating=").append(rating)
 			.append(", creationDate=").append(creationDate)
 			.append(", language=").append(language)
+			.append(", ttag=").append(ttag)
 			.append(", facility=").append(facility).append("]");
 		
 		return sBuilder.toString();
 	}
 	
-	
+	public String[] getColumnsNames() {
+		String[] columns = {
+				"id",
+				"author",
+				"location",
+				"title",
+				"content",
+				"rating",
+				"creationDate",
+				"language",
+				"ttag",
+				"facilityName",
+				"facilityAddress",
+				"facilityPhone",
+				"facilityWeb"				
+		};
+		
+		return columns;
+	}
 }

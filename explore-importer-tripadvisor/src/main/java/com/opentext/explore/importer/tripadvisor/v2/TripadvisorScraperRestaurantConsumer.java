@@ -88,5 +88,10 @@ public class TripadvisorScraperRestaurantConsumer extends AbstractTripadvisorScr
 		}
 
 		return reviews;
+	}
+
+	@Override
+	protected void processReviews(List<TAReview> reviews) {
+		// TODO Auto-generated method stub		
 	}		
 }
