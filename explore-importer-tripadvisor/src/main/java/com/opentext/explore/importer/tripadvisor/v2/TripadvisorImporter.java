@@ -14,7 +14,7 @@
  *   limitations under the License.
  *
  *   Contributors:
- *     Joaquín Garzón - initial implementation
+ *     Joaquï¿½n Garzï¿½n - initial implementation
  *
  */
 package com.opentext.explore.importer.tripadvisor.v2;
@@ -32,7 +32,7 @@ import com.opentext.explore.importer.tripadvisor.pojo.TAJobInfo;
 /**
  * Tripadvisor importer for OpenText Explore (Voice of the customer solution)
  * 
- * @author Joaquín Garzón
+ * @author Joaquï¿½n Garzï¿½n
  * @since 22.09.01
  */
 public class TripadvisorImporter {
@@ -64,17 +64,20 @@ public class TripadvisorImporter {
 		links = scraper.search(searchTerm, exactSearch);
 		if (links != null) {
 			log.info("# links recovered: {}", links.size());
+			
+			new Thread(new TripadvisorScraperFacilitiesProducer(links, queue, numComsumers)).start();
+			for (int i = 0; i < numComsumers; i++) {
+				log.info("new consumer thread #{}", i);
+				if(excellOutput) {
+					new Thread(new TripadvisorScraperHotelConsumer2Excel(queue, host, tTag)).start();
+				}
+				else {
+					new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, host, tTag)).start();
+				}
+			}			
 		}
-
-		new Thread(new TripadvisorScraperFacilitiesProducer(links, queue, numComsumers)).start();
-		for (int i = 0; i < numComsumers; i++) {
-			log.info("new consumer thread #{}", i);
-			if(excellOutput) {
-				new Thread(new TripadvisorScraperHotelConsumer2Excel(queue, host, tTag)).start();
-			}
-			else {
-				new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, host, tTag)).start();
-			}
+		else {
+			log.info("No hotel links found!!!");			
 		}
 	}
 }
