@@ -59,23 +59,29 @@ We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.
           <Name>Facility name</Name>
           <Tag>facility_name</Tag>
         </Field>
-        <Field column="Source">
+      </GridFields>	   
+      <DetailFields>             
+        <Field>
+          <Name>Facility name</Name>
+          <Tag>facility_name</Tag>
+        </Field>
+        <Field>
           <Name>Facility address</Name>
           <Tag>facility_address</Tag>
         </Field>
-        <Field column="Source">
+        <Field>
           <Name>Facility phone</Name>
           <Tag>facility_phone</Tag>
         </Field>
-        <Field column="Source">
+        <Field>
           <Name>Facility web</Name>
           <Tag>facility_web</Tag>
         </Field>
-        <Field column="Source">
+        <Field>
           <Name>Tripadvisor tag</Name>
           <Tag>ttag</Tag>
-        </Field>
-      </GridFields>	          
+        </Field>      
+      </DetailFields>                   
     </DocType>            
   </DocTypes>
 ```

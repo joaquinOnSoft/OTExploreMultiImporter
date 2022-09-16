@@ -17,6 +17,24 @@ jar {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE			
 }
 
+task clientJar(type: Jar) {  
+	archiveFileName = "${rootProject.name}-tripadvisor-from-excel-${archiveVersion.get()}.jar"
+
+    manifest {
+        attributes 'Implementation-Title': 'OpenText Explore Tripadvisor Importer from Excell',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.opentext.explore.importer.tripadvisor.v2.excel.TripadvisorImporterFromExcelLauncher'
+    }
+ 
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    
+    //https://discuss.gradle.org/t/generate-runnable-jar-pakage-dependencies/28171
+	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE	 
+}
+
 
 dependencies {
 	implementation project(':explore-importer-core')
