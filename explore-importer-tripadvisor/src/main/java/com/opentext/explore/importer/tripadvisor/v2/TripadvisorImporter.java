@@ -19,6 +19,7 @@
  */
 package com.opentext.explore.importer.tripadvisor.v2;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -52,11 +53,34 @@ public class TripadvisorImporter {
 	}
 
 	/**
-	 * @param searchTerm    - search term to look for in tripadvisor.com
-	 * @param tTag          - Tripadvisor Importer tag
-	 * @param timeInSeconds - Seconds between each call against Tripadvisor site
+	 * @param url         - Facility URL in tripadvisor.com. 
+	 * @param tTag        - Tripadvisor Importer tag
+	 * @param excelOutput - Flag to choose Excel ouput (.xls), when is true. 
 	 */
-	public void start(String searchTerm, boolean exactSearch, String tTag, boolean excellOutput) {
+	public void start(String url, String tTag, boolean excellOutput) {
+		BlockingQueue<TAJobInfo> queue = new LinkedBlockingQueue<TAJobInfo>();
+		
+		if (url != null) {
+			List<String> links = new LinkedList<String>();
+			links.add(url);
+			
+			log.info("# links recovered: {}", links.size());
+			
+			new Thread(new TripadvisorScraperFacilitiesProducer(links, queue, numComsumers)).start();
+			startConsurmers(tTag, excellOutput, queue);			
+		}
+		else {
+			log.info("No hotel links found!!!");			
+		}
+	}	
+	
+	/**
+	 * @param searchTerm  - search term to look for in tripadvisor.com
+	 * @param exactSearch - Exact match. If set the search term must be contained in the page title or url.
+	 * @param tTag        - Tripadvisor Importer tag
+	 * @param excelOutput - Flag to choose Excel ouput (.xls), when is true. 
+	 */
+	public void start(String searchTerm, boolean exactSearch, String tTag, boolean excelOutput) {
 		List<String> links = null;
 		TripadvisorScraperSearch scraper = new TripadvisorScraperSearch();
 		BlockingQueue<TAJobInfo> queue = new LinkedBlockingQueue<TAJobInfo>();
@@ -66,18 +90,22 @@ public class TripadvisorImporter {
 			log.info("# links recovered: {}", links.size());
 			
 			new Thread(new TripadvisorScraperFacilitiesProducer(links, queue, numComsumers)).start();
-			for (int i = 0; i < numComsumers; i++) {
-				log.info("new consumer thread #{}", i);
-				if(excellOutput) {
-					new Thread(new TripadvisorScraperHotelConsumer2Excel(queue, host, tTag)).start();
-				}
-				else {
-					new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, host, tTag)).start();
-				}
-			}			
+			startConsurmers(tTag, excelOutput, queue);			
 		}
 		else {
 			log.info("No hotel links found!!!");			
+		}
+	}
+
+	private void startConsurmers(String tTag, boolean excellOutput, BlockingQueue<TAJobInfo> queue) {
+		for (int i = 0; i < numComsumers; i++) {
+			log.info("new consumer thread #{}", i);
+			if(excellOutput) {
+				new Thread(new TripadvisorScraperHotelConsumer2Excel(queue, host, tTag)).start();
+			}
+			else {
+				new Thread(new TripadvisorScraperHotelConsumer2Solr(queue, host, tTag)).start();
+			}
 		}
 	}
 }

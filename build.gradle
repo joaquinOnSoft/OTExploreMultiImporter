@@ -10,7 +10,7 @@
 subprojects {
     apply plugin: 'java'
 
-	version = '22.09.15' 
+	version = '22.09.19' 
 
 	java {
 	    sourceCompatibility = JavaVersion.VERSION_11

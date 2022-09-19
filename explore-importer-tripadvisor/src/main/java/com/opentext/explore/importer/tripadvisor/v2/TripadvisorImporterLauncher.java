@@ -50,16 +50,18 @@ public class TripadvisorImporterLauncher {
 		Option itagOption = new Option("i", "itag", true, "Explore Importer tag. Added to each article importer. Default value `TripaAdvisor Review`");
 		options.addOption(itagOption);
 		
-		Option exactOption = new Option("e", "exact", false, "Exact match. If set the search term must be contained in the page title or url");
-		options.addOption(exactOption);				
-
 		Option excellOption = new Option("x", "excel", false, "Use MS Excel output file instead of the default insert in Solr.");
 		options.addOption(excellOption);				
 		
-		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com");
-		aliasOption.setRequired(true);
+		Option urlOption = new Option("u", "url", true, "Facility URL in tripadvisor.com. (Incompatible with `search` option)");
+		options.addOption(urlOption);		
+		
+		Option aliasOption = new Option("s", "search", true, "Search term to look for in tripadvisor.com. (Incompatible with `url` option)");
 		options.addOption(aliasOption);
 	
+		Option exactOption = new Option("e", "exact", false, "Exact match. If set the search term must be contained in the page title or url. Used only with `search` option");
+		options.addOption(exactOption);			
+		
 		Option numConsumersOption = new Option("c", "consumers", true, "Number of consumers (threads) used simultaneously to scrap the page.");
 		options.addOption(numConsumersOption);			
 		
@@ -69,6 +71,7 @@ public class TripadvisorImporterLauncher {
 
 		String itag = DEFAULT_TRIPADVISOR_IMPORT_TAG;
 		String host = DEFAULT_SOLR_URL;
+		String url = null;
 		boolean exactMatch = false;
 		boolean excellOutput = false;
 		String searchTerm = null;		
@@ -76,35 +79,48 @@ public class TripadvisorImporterLauncher {
 
 		try {
 			cmd = parser.parse(options, args);
+						
+			if (cmd.hasOption("host") || cmd.hasOption("h")) {
+				host = cmd.getOptionValue("host");
+			}
 			
 			if (cmd.hasOption("itag") || cmd.hasOption("i")) {
 				itag = cmd.getOptionValue("itag");
-			}
-
-			if (cmd.hasOption("host") || cmd.hasOption("h")) {
-				host = cmd.getOptionValue("host");
-			}				
-
-			if (cmd.hasOption("exact") || cmd.hasOption("e")) {
-				exactMatch = true;
-			}				
+			}		
 
 			if (cmd.hasOption("excel") || cmd.hasOption("x")) {
 				excellOutput = true;
 			}				
-									
+
+			if (cmd.hasOption("url") || cmd.hasOption("u")) {
+				url = cmd.getOptionValue("url");			
+			}				
+			
 			if (cmd.hasOption("search") || cmd.hasOption("s")) {
 				searchTerm = cmd.getOptionValue("search");
 			}	
+			
+			if (cmd.hasOption("exact") || cmd.hasOption("e")) {
+				exactMatch = true;
+			}				
 					
 			numConsumers = getNumericParam(cmd, "consumers", "c", DEFAULT_NUM_CONSUMERS);			
-					
-			TripadvisorImporter importer = new TripadvisorImporter(host, numConsumers);
-			importer.start(searchTerm, exactMatch, itag, excellOutput);
-			
+
+			if(searchTerm == null  && url == null) {
+				formatter.printHelp("java -jar OTExploreTripadvisorImporter.22.02.19.jar --itag Tripadvisor --search \"Club Med\"", options);
+			}
+			else {
+				TripadvisorImporter importer = new TripadvisorImporter(host, numConsumers);
+				if(url != null) {
+					importer.start(url, itag, excellOutput);
+				}
+				else {
+					importer.start(searchTerm, exactMatch, itag, excellOutput);
+				}
+			}			
 		}
 		catch (ParseException | NumberFormatException e) {
-			formatter.printHelp("java -jar OTExploreTripadvisorImporter.22.02.16.jar --itag Trustpilot --alias bancsabadell.com", options);
+			formatter.printHelp("java -jar OTExploreTripadvisorImporter.22.02.19.jar --itag Tripadvisor  --search \"Club Med\"", options);
 
 			log.error(e.getMessage());
 			System.exit(-1);

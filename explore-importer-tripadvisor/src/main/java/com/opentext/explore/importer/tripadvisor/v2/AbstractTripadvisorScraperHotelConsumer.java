@@ -94,6 +94,7 @@ public abstract class AbstractTripadvisorScraperHotelConsumer extends AbstractTr
 				}
 			}
 		}
+						
 		return reviews;
 	}
 

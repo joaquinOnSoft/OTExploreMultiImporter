@@ -45,9 +45,14 @@ public abstract class AbstractTripadvisorScraperFacilityConsumer implements Runn
                 log.debug("{} - # pag reviews: {} - URL: {}: ", Thread.currentThread().getName(), jobInfo.getPageNumber(), jobInfo.getUrl());
                 
                 reviews = getFacilityReviews(jobInfo.getPage(), jobInfo.getPageNumber());
-                
+        		
+                //Runs the garbage collector in the Java Virtual Machine. 
+        		System.gc();
+        		
                 processReviews(reviews);
-
+                
+        		//Runs the garbage collector in the Java Virtual Machine. 
+        		System.gc();
             }
         } catch (InterruptedException e) {
         	log.error("Thread interrupted: ", e);
