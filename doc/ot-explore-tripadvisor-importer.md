@@ -53,7 +53,7 @@ We must add a new DocType tag under the **<DocTypes>** in Explore.Configuration.
   <DocTypes>
     ... 
     <DocType> 
-      <Name>Tripadvisor</Name>
+      <Name>TripAdvisor</Name>
       <GridFields>
         <Field column="Source">
           <Name>Rating value</Name>
@@ -120,7 +120,7 @@ Tripadvisor as a new group that can be used to filter by:
         <Tag>ratingValue</Tag>
         <ComparatorGroup>numeric</ComparatorGroup>
         <AssociatedDocTypes>
-          <DocType>Tripadvisor</DocType>
+          <DocType>TripAdvisor</DocType>
         </AssociatedDocTypes>
       </CriteriaItem>
 
@@ -129,7 +129,7 @@ Tripadvisor as a new group that can be used to filter by:
         <Tag>facility_name</Tag>
         <ComparatorGroup>string</ComparatorGroup>
         <AssociatedDocTypes>
-          <DocType>Tripadvisor</DocType>
+          <DocType>TripAdvisor</DocType>
         </AssociatedDocTypes>
       </CriteriaItem>
       
@@ -138,7 +138,7 @@ Tripadvisor as a new group that can be used to filter by:
         <Tag>facility_phone</Tag>
         <ComparatorGroup>string</ComparatorGroup>
         <AssociatedDocTypes>
-          <DocType>Tripadvisor</DocType>
+          <DocType>TripAdvisor</DocType>
         </AssociatedDocTypes>
       </CriteriaItem>
 
@@ -147,7 +147,7 @@ Tripadvisor as a new group that can be used to filter by:
         <Tag>ttag</Tag>
         <ComparatorGroup>string</ComparatorGroup>
         <AssociatedDocTypes>
-          <DocType>Tripadvisor</DocType>
+          <DocType>TripAdvisor</DocType>
         </AssociatedDocTypes>
       </CriteriaItem>            
     </Group>  
