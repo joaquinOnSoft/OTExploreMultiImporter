@@ -16,19 +16,23 @@ This utility is distributed as a runnable .jar file.
 These are the accepted parameters:
 
 ```
-$ java -jar  OTExploreMultiImporter-tripadvisor-22.09.01
-usage: java -jar OTExploreMultiImporter-tripadvisor-22.09.01 --itag Tripadvisor --search "Club Med"
+$ java -jar  OTExploreMultiImporter-tripadvisor-22.09.19
+usage: java -jar OTExploreMultiImporter-tripadvisor-22.09.19 --itag Tripadvisor --search "Club Med"
  -h,--host <arg>    Solr URL. Default value: http://localhost:8983
  -i --itag <arg>    Explore Importer tag. Added to each article importer. Default value `TripaAdvisor Review`
- -e --exact         Exact match. If set the search term must be contained in the page title or url
- -s --search        Search term to look for in tripadvisor.com
+ -x --excel         Use MS Excel output file instead of the default insert in Solr.
+ -u --url           Facility URL in tripadvisor.com. (Incompatible with `search` option)
+ -s --search        Search term to look for in tripadvisor.com. (Incompatible with `url` option)
+ -e --exact         Exact match. If set the search term must be contained in the page title or URL. Used only with `search` option
  -c --consumers     Number of consumers (threads) used simultaneously to scrap the page.
 ```
 
 ### Example of invocation
 
 ```
-$ java -jar OTExploreMultiImporter-tripadvisor-22.09.01 --search "Club Med" --itag Tripadvisor
+$ java -jar OTExploreMultiImporter-tripadvisor-22.09.19 --search "Club Med" --itag Tripadvisor
+
+$ java -jar OTExploreMultiImporter-tripadvisor-22.09.19 --itag Tripadvisor --excel --url https://www.tripadvisor.com/Hotel_Review-g298296-d2193909-Reviews-LaVilla_by_Holiday_Villa_Cherating-Kuantan_Kuantan_District_Pahang.html
 ```
 
 ## Explore configuration
