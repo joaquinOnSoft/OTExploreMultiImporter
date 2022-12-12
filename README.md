@@ -8,6 +8,8 @@ Once the messages are available in **OpenText Explore** you can create your own 
 
 > [OpenText™ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
 
+> **NOTE**:: This importer is using the Solr API to import the different types of inputs. So, no sentiment analysis, summary generation, or AutoScore(TM) is applied to these inputs.
+
 ## OpenText Explore importers
 This project contains 4 auto-executable jar files to import different type of contents:
  * [OpenText Explore Excel Importer](doc/ot-explore-excel-importer.md)
