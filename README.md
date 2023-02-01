@@ -6,7 +6,7 @@ These text messages are inserted into the Solr Server used by **OpenText Explore
 
 Once the messages are available in **OpenText Explore** you can create your own dashboards to analyze the information listened to.
 
-> [OpenText™ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
+> [OpenTextâ„¢ Explore](https://www.opentext.com/products-and-solutions/products/customer-experience-management/contact-center-workforce-optimization/opentext-explore) is a business discovery solution that allows business and call center professionals to view cross-channel interactions collectively for a comprehensive picture of customer behaviors and relationships. 
 
 > **NOTE**:: This importer is using the Solr API to import the different types of inputs. So, no sentiment analysis, summary generation, or AutoScore(TM) is applied to these inputs.
 
@@ -30,10 +30,3 @@ Some [tips & tricks](doc/tips-and-tricks.md) that you can apply in your import p
 
 ## Applying changes on your instance
 Once you have configured _Explore_ to import a new content type you must [apply the changes on your instance](doc/applying-changes-on-your-instance.md)
-
-## Warning
-This project deprecates 3 pre-existing projects:
-
-  * [OTExploreExcelImporter](https://github.com/joaquinOnSoft/OTExploreExcelImporter) `DEPRECATED`
-  * [OTExploreRedditImporter](https://github.com/joaquinOnSoft/OTExploreRedditImporter) `DEPRECATED`
-  * [OTExploreTwitterImporter](https://github.com/joaquinOnSoft/OTExploreTwitterImporter) `DEPRECATED`
