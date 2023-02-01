@@ -5,9 +5,9 @@ Once you have modified **Explore.Configuration.xml** and **schema.xml** files yo
  - Execute this command from a terminal/console as Administrator:
 
 ```
-d:> cd c:\SolrCloud\solr-7.7.3\bin
+c:> cd d:\SolrCloud\solr-7.7.3\bin
 
-d:\SolrCloud\solr-7.7.3\bin> solr.cmd zk -z 127.0.0.1 upconfig -d c:\SolrCloud\solr-7.7.3\server\solr\configsets\interaction_config -n interaction_config 
+d:\SolrCloud\solr-7.7.3\bin> solr.cmd zk -z 127.0.0.1 upconfig -d d:\SolrCloud\solr-7.7.3\server\solr\configsets\interaction_config -n interaction_config 
 ```
 
 - Open a browser and access to this URL: 
