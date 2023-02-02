@@ -75,7 +75,7 @@ Search for otcaBatchUpdateHandler and do the following for each language you exp
    - Locate the `<str name="otca.language.whitelist">en,es</str>` field and add the two-character language code
 
 	
-I was missing the part related to solrconfig.xml. The section related to schemaxml was in place.
+I was missing the part related to **solrconfig.xml**. The section related to *schema.xml* was in place.
 	
 ```xml
 
